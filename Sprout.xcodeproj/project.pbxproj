@@ -39,6 +39,7 @@
 		7C5FA99C2D5E46C200DF8F8B /* SproutTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C5FA99B2D5E46C200DF8F8B /* SproutTests.swift */; };
 		7C5FA9A62D5E46C200DF8F8B /* SproutUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C5FA9A52D5E46C200DF8F8B /* SproutUITests.swift */; };
 		7C5FA9A82D5E46C200DF8F8B /* SproutUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C5FA9A72D5E46C200DF8F8B /* SproutUITestsLaunchTests.swift */; };
+		7CEF7C7F2D68F0FB00D6A430 /* HealthDataGetter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CEF7C7E2D68F0FB00D6A430 /* HealthDataGetter.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -70,6 +71,8 @@
 		7C5FA9A12D5E46C200DF8F8B /* SproutUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SproutUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		7C5FA9A52D5E46C200DF8F8B /* SproutUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SproutUITests.swift; sourceTree = "<group>"; };
 		7C5FA9A72D5E46C200DF8F8B /* SproutUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SproutUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		7CEF7C7E2D68F0FB00D6A430 /* HealthDataGetter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthDataGetter.swift; sourceTree = "<group>"; };
+		7CEF7C802D68F1D400D6A430 /* Sprout.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Sprout.entitlements; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -151,8 +154,10 @@
 		7C5FA9892D5E46C000DF8F8B /* Sprout */ = {
 			isa = PBXGroup;
 			children = (
+				7CEF7C802D68F1D400D6A430 /* Sprout.entitlements */,
 				7C11EDC42D65136C00C1BB02 /* GoogleService-Info.plist */,
 				7C5FA98A2D5E46C000DF8F8B /* SproutApp.swift */,
+				7CEF7C7D2D68F08600D6A430 /* HealthAvatar */,
 				7C5FA98C2D5E46C000DF8F8B /* ContentView.swift */,
 				7C5FA98E2D5E46C200DF8F8B /* Assets.xcassets */,
 				7C11EDF72D66A39400C1BB02 /* Home Screen */,
@@ -184,6 +189,14 @@
 				7C5FA9A72D5E46C200DF8F8B /* SproutUITestsLaunchTests.swift */,
 			);
 			path = SproutUITests;
+			sourceTree = "<group>";
+		};
+		7CEF7C7D2D68F08600D6A430 /* HealthAvatar */ = {
+			isa = PBXGroup;
+			children = (
+				7CEF7C7E2D68F0FB00D6A430 /* HealthDataGetter.swift */,
+			);
+			path = HealthAvatar;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -348,6 +361,7 @@
 			files = (
 				7C5FA98D2D5E46C000DF8F8B /* ContentView.swift in Sources */,
 				7C5FA98B2D5E46C000DF8F8B /* SproutApp.swift in Sources */,
+				7CEF7C7F2D68F0FB00D6A430 /* HealthDataGetter.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -508,6 +522,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Sprout/Sprout.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Sprout/Preview Content\"";
@@ -536,6 +551,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Sprout/Sprout.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Sprout/Preview Content\"";
