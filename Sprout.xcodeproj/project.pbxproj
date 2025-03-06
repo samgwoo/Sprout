@@ -44,6 +44,15 @@
 		7CEF7CBB2D78C1C700D6A430 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CEF7CBA2D78C1C700D6A430 /* LoginView.swift */; };
 		7CEF7CC22D78C97100D6A430 /* AuthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CEF7CC12D78C97100D6A430 /* AuthViewModel.swift */; };
 		7CEF7CC42D78C9C000D6A430 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CEF7CC32D78C9C000D6A430 /* HomeView.swift */; };
+		8E2F78E42D7A2A600092F4C0 /* Cabin-Regular-TTF.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8E2F78E12D7A2A600092F4C0 /* Cabin-Regular-TTF.ttf */; };
+		8E2F78E52D7A2A600092F4C0 /* Cabin-Regular-TTF.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8E2F78E12D7A2A600092F4C0 /* Cabin-Regular-TTF.ttf */; };
+		8E2F78E62D7A2A600092F4C0 /* Cabin-Regular-TTF.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8E2F78E12D7A2A600092F4C0 /* Cabin-Regular-TTF.ttf */; };
+		8E2F78E72D7A2A600092F4C0 /* Chewy-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8E2F78E22D7A2A600092F4C0 /* Chewy-Regular.ttf */; };
+		8E2F78E82D7A2A600092F4C0 /* Chewy-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8E2F78E22D7A2A600092F4C0 /* Chewy-Regular.ttf */; };
+		8E2F78E92D7A2A600092F4C0 /* Chewy-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8E2F78E22D7A2A600092F4C0 /* Chewy-Regular.ttf */; };
+		8E2F78EA2D7A2A600092F4C0 /* Dekko-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8E2F78E32D7A2A600092F4C0 /* Dekko-Regular.ttf */; };
+		8E2F78EB2D7A2A600092F4C0 /* Dekko-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8E2F78E32D7A2A600092F4C0 /* Dekko-Regular.ttf */; };
+		8E2F78EC2D7A2A600092F4C0 /* Dekko-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8E2F78E32D7A2A600092F4C0 /* Dekko-Regular.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -81,6 +90,10 @@
 		7CEF7CBA2D78C1C700D6A430 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		7CEF7CC12D78C97100D6A430 /* AuthViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewModel.swift; sourceTree = "<group>"; };
 		7CEF7CC32D78C9C000D6A430 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		8E2F78DF2D7A28580092F4C0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		8E2F78E12D7A2A600092F4C0 /* Cabin-Regular-TTF.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Cabin-Regular-TTF.ttf"; sourceTree = "<group>"; };
+		8E2F78E22D7A2A600092F4C0 /* Chewy-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Chewy-Regular.ttf"; sourceTree = "<group>"; };
+		8E2F78E32D7A2A600092F4C0 /* Dekko-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Dekko-Regular.ttf"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -155,6 +168,8 @@
 		7C5FA9892D5E46C000DF8F8B /* Sprout */ = {
 			isa = PBXGroup;
 			children = (
+				8E2F78E02D7A2A4B0092F4C0 /* Fonts */,
+				8E2F78DF2D7A28580092F4C0 /* Info.plist */,
 				7CEF7C802D68F1D400D6A430 /* Sprout.entitlements */,
 				7C11EDC42D65136C00C1BB02 /* GoogleService-Info.plist */,
 				7C5FA98A2D5E46C000DF8F8B /* SproutApp.swift */,
@@ -225,6 +240,16 @@
 			children = (
 			);
 			path = Controllers;
+			sourceTree = "<group>";
+		};
+		8E2F78E02D7A2A4B0092F4C0 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				8E2F78E12D7A2A600092F4C0 /* Cabin-Regular-TTF.ttf */,
+				8E2F78E22D7A2A600092F4C0 /* Chewy-Regular.ttf */,
+				8E2F78E32D7A2A600092F4C0 /* Dekko-Regular.ttf */,
+			);
+			path = Fonts;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -360,6 +385,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8E2F78E72D7A2A600092F4C0 /* Chewy-Regular.ttf in Resources */,
+				8E2F78E42D7A2A600092F4C0 /* Cabin-Regular-TTF.ttf in Resources */,
+				8E2F78EA2D7A2A600092F4C0 /* Dekko-Regular.ttf in Resources */,
 				7C5FA9922D5E46C200DF8F8B /* Preview Assets.xcassets in Resources */,
 				7C5FA98F2D5E46C200DF8F8B /* Assets.xcassets in Resources */,
 				7C11EDC52D65136C00C1BB02 /* GoogleService-Info.plist in Resources */,
@@ -370,6 +398,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8E2F78E82D7A2A600092F4C0 /* Chewy-Regular.ttf in Resources */,
+				8E2F78E52D7A2A600092F4C0 /* Cabin-Regular-TTF.ttf in Resources */,
+				8E2F78EB2D7A2A600092F4C0 /* Dekko-Regular.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -377,6 +408,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8E2F78E92D7A2A600092F4C0 /* Chewy-Regular.ttf in Resources */,
+				8E2F78E62D7A2A600092F4C0 /* Cabin-Regular-TTF.ttf in Resources */,
+				8E2F78EC2D7A2A600092F4C0 /* Dekko-Regular.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -560,6 +594,7 @@
 				DEVELOPMENT_ASSET_PATHS = "\"Sprout/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Sprout/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -589,6 +624,7 @@
 				DEVELOPMENT_ASSET_PATHS = "\"Sprout/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Sprout/Info.plist;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
