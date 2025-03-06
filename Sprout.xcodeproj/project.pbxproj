@@ -40,6 +40,10 @@
 		7C5FA9A62D5E46C200DF8F8B /* SproutUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C5FA9A52D5E46C200DF8F8B /* SproutUITests.swift */; };
 		7C5FA9A82D5E46C200DF8F8B /* SproutUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C5FA9A72D5E46C200DF8F8B /* SproutUITestsLaunchTests.swift */; };
 		7CEF7C7F2D68F0FB00D6A430 /* HealthDataGetter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CEF7C7E2D68F0FB00D6A430 /* HealthDataGetter.swift */; };
+		7CEF7CB82D723C3D00D6A430 /* HealthData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CEF7CB72D723C3D00D6A430 /* HealthData.swift */; };
+		7CEF7CBB2D78C1C700D6A430 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CEF7CBA2D78C1C700D6A430 /* LoginView.swift */; };
+		7CEF7CC22D78C97100D6A430 /* AuthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CEF7CC12D78C97100D6A430 /* AuthViewModel.swift */; };
+		7CEF7CC42D78C9C000D6A430 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CEF7CC32D78C9C000D6A430 /* HomeView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -73,6 +77,10 @@
 		7C5FA9A72D5E46C200DF8F8B /* SproutUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SproutUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		7CEF7C7E2D68F0FB00D6A430 /* HealthDataGetter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthDataGetter.swift; sourceTree = "<group>"; };
 		7CEF7C802D68F1D400D6A430 /* Sprout.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Sprout.entitlements; sourceTree = "<group>"; };
+		7CEF7CB72D723C3D00D6A430 /* HealthData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthData.swift; sourceTree = "<group>"; };
+		7CEF7CBA2D78C1C700D6A430 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
+		7CEF7CC12D78C97100D6A430 /* AuthViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewModel.swift; sourceTree = "<group>"; };
+		7CEF7CC32D78C9C000D6A430 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -124,13 +132,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		7C11EDF72D66A39400C1BB02 /* Home Screen */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = "Home Screen";
-			sourceTree = "<group>";
-		};
 		7C5FA97E2D5E46C000DF8F8B = {
 			isa = PBXGroup;
 			children = (
@@ -157,10 +158,11 @@
 				7CEF7C802D68F1D400D6A430 /* Sprout.entitlements */,
 				7C11EDC42D65136C00C1BB02 /* GoogleService-Info.plist */,
 				7C5FA98A2D5E46C000DF8F8B /* SproutApp.swift */,
-				7CEF7C7D2D68F08600D6A430 /* HealthAvatar */,
-				7C5FA98C2D5E46C000DF8F8B /* ContentView.swift */,
+				7CEF7CC02D78C6B200D6A430 /* Controllers */,
+				7CEF7CBF2D78C66900D6A430 /* Views */,
+				7CEF7CBE2D78C53600D6A430 /* Models */,
+				7CEF7CBD2D78C4FF00D6A430 /* Services */,
 				7C5FA98E2D5E46C200DF8F8B /* Assets.xcassets */,
-				7C11EDF72D66A39400C1BB02 /* Home Screen */,
 				7C5FA9902D5E46C200DF8F8B /* Preview Content */,
 			);
 			path = Sprout;
@@ -191,12 +193,38 @@
 			path = SproutUITests;
 			sourceTree = "<group>";
 		};
-		7CEF7C7D2D68F08600D6A430 /* HealthAvatar */ = {
+		7CEF7CBD2D78C4FF00D6A430 /* Services */ = {
 			isa = PBXGroup;
 			children = (
 				7CEF7C7E2D68F0FB00D6A430 /* HealthDataGetter.swift */,
 			);
-			path = HealthAvatar;
+			path = Services;
+			sourceTree = "<group>";
+		};
+		7CEF7CBE2D78C53600D6A430 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				7CEF7CB72D723C3D00D6A430 /* HealthData.swift */,
+				7CEF7CC12D78C97100D6A430 /* AuthViewModel.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		7CEF7CBF2D78C66900D6A430 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				7C5FA98C2D5E46C000DF8F8B /* ContentView.swift */,
+				7CEF7CBA2D78C1C700D6A430 /* LoginView.swift */,
+				7CEF7CC32D78C9C000D6A430 /* HomeView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		7CEF7CC02D78C6B200D6A430 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Controllers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -360,8 +388,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				7C5FA98D2D5E46C000DF8F8B /* ContentView.swift in Sources */,
+				7CEF7CC42D78C9C000D6A430 /* HomeView.swift in Sources */,
 				7C5FA98B2D5E46C000DF8F8B /* SproutApp.swift in Sources */,
+				7CEF7CC22D78C97100D6A430 /* AuthViewModel.swift in Sources */,
 				7CEF7C7F2D68F0FB00D6A430 /* HealthDataGetter.swift in Sources */,
+				7CEF7CBB2D78C1C700D6A430 /* LoginView.swift in Sources */,
+				7CEF7CB82D723C3D00D6A430 /* HealthData.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
