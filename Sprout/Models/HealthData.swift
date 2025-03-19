@@ -9,7 +9,7 @@ import Foundation
 import FirebaseFirestore
 
 class HealthData: Codable {
-    let uuid: String
+
     var timeStamp = Date()
     var stepCount: Int
     var distanceWalkingRunning: Double
@@ -52,7 +52,6 @@ class HealthData: Codable {
         walkingDoubleSupportPercentage: Double = 0.0,
         workoutSessions: Int = 0
     ) {
-        self.uuid = UUID().uuidString
         self.timeStamp = Date()
         self.stepCount = stepCount
         self.distanceWalkingRunning = distanceWalkingRunning
@@ -75,7 +74,6 @@ class HealthData: Codable {
     // Convert to JSON for sharing
     func toDictionary() -> [String: Any] {
             return [
-                "uuid": uuid,
                 "timestamp": Timestamp(date: timeStamp),
                 "stepCount": stepCount,
                 "distanceWalkingRunning": distanceWalkingRunning,

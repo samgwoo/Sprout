@@ -5,7 +5,7 @@
 //  Created by Samuel Wu (student LM) on 2/21/25.
 //
 
-import Foundation
+import SwiftUI
 import HealthKit
 import FirebaseFirestore
 
@@ -28,33 +28,33 @@ func requestHealthKitPermission() {
     let stepCountType = HKObjectType.quantityType(forIdentifier: .stepCount)!
     let distanceWalkingRunningType = HKObjectType.quantityType(forIdentifier: .distanceWalkingRunning)!
     let flightsClimbedType = HKObjectType.quantityType(forIdentifier: .flightsClimbed)!
-
+    
     // Heart & Vitals
     let heartRateType = HKObjectType.quantityType(forIdentifier: .heartRate)!
     let heartRateVariabilityType = HKObjectType.quantityType(forIdentifier: .heartRateVariabilitySDNN)!
     let respiratoryRateType = HKObjectType.quantityType(forIdentifier: .respiratoryRate)!
-
+    
     let bodyMassType = HKObjectType.quantityType(forIdentifier: .bodyMass)! // Weight
     let heightType = HKObjectType.quantityType(forIdentifier: .height)!
-
+    
     // Hygiene & Environmental
     let handwashingEventType = HKObjectType.categoryType(forIdentifier: .handwashingEvent)!
     let environmentalAudioExposureType = HKObjectType.quantityType(forIdentifier: .environmentalAudioExposure)!
     let headphoneAudioExposureType = HKObjectType.quantityType(forIdentifier: .headphoneAudioExposure)!
-
-
+    
+    
     // Sleep & Mindfulness
     let sleepAnalysisType = HKObjectType.categoryType(forIdentifier: .sleepAnalysis)!
-
+    
     // Mobility & Walking Metrics
     let walkingSpeedType = HKObjectType.quantityType(forIdentifier: .walkingSpeed)!
     let walkingAsymmetryPercentageType = HKObjectType.quantityType(forIdentifier: .walkingAsymmetryPercentage)!
     let walkingDoubleSupportPercentageType = HKObjectType.quantityType(forIdentifier: .walkingDoubleSupportPercentage)!
-
+    
     // Workout Data
     let workoutType = HKObjectType.workoutType()
-
-
+    
+    
     let typesToRead: Set<HKObjectType> = [heartRateType, stepCountType, distanceWalkingRunningType, flightsClimbedType, heartRateType, heartRateVariabilityType, respiratoryRateType, bodyMassType, heightType, handwashingEventType, environmentalAudioExposureType, headphoneAudioExposureType, sleepAnalysisType, walkingSpeedType, walkingAsymmetryPercentageType, walkingDoubleSupportPercentageType, workoutType]
     
     healthStore.requestAuthorization(toShare: nil, read: typesToRead) { success, error in
@@ -65,7 +65,7 @@ func requestHealthKitPermission() {
             print("HealthKit permission denied: \(error?.localizedDescription ?? "Unknown error")")
         }
     }
-    
+}
     func saveHealthDataToFirestore(_ healthData: HealthData) {
         let userId = "user_123" // Replace with actual user ID (can use Firebase Auth)
         
@@ -114,4 +114,4 @@ func requestHealthKitPermission() {
                 completion(healthData)
             }
     }
-}
+

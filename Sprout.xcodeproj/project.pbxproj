@@ -39,11 +39,14 @@
 		7C5FA99C2D5E46C200DF8F8B /* SproutTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C5FA99B2D5E46C200DF8F8B /* SproutTests.swift */; };
 		7C5FA9A62D5E46C200DF8F8B /* SproutUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C5FA9A52D5E46C200DF8F8B /* SproutUITests.swift */; };
 		7C5FA9A82D5E46C200DF8F8B /* SproutUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C5FA9A72D5E46C200DF8F8B /* SproutUITestsLaunchTests.swift */; };
-		7CEF7C7F2D68F0FB00D6A430 /* HealthDataGetter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CEF7C7E2D68F0FB00D6A430 /* HealthDataGetter.swift */; };
+		7C8608F92D809EC6005D2DE7 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C8608F82D809EC6005D2DE7 /* User.swift */; };
+		7C8608FB2D80A0F2005D2DE7 /* Appearance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C8608FA2D80A0F2005D2DE7 /* Appearance.swift */; };
+		7C8608FE2D81FEA2005D2DE7 /* HealthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C8608FD2D81FEA2005D2DE7 /* HealthViewModel.swift */; };
 		7CEF7CB82D723C3D00D6A430 /* HealthData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CEF7CB72D723C3D00D6A430 /* HealthData.swift */; };
 		7CEF7CBB2D78C1C700D6A430 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CEF7CBA2D78C1C700D6A430 /* LoginView.swift */; };
 		7CEF7CC22D78C97100D6A430 /* AuthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CEF7CC12D78C97100D6A430 /* AuthViewModel.swift */; };
 		7CEF7CC42D78C9C000D6A430 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CEF7CC32D78C9C000D6A430 /* HomeView.swift */; };
+		7CEF7CC62D7A2A5B00D6A430 /* AvatarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CEF7CC52D7A2A5B00D6A430 /* AvatarView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -75,12 +78,15 @@
 		7C5FA9A12D5E46C200DF8F8B /* SproutUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SproutUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		7C5FA9A52D5E46C200DF8F8B /* SproutUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SproutUITests.swift; sourceTree = "<group>"; };
 		7C5FA9A72D5E46C200DF8F8B /* SproutUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SproutUITestsLaunchTests.swift; sourceTree = "<group>"; };
-		7CEF7C7E2D68F0FB00D6A430 /* HealthDataGetter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthDataGetter.swift; sourceTree = "<group>"; };
+		7C8608F82D809EC6005D2DE7 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		7C8608FA2D80A0F2005D2DE7 /* Appearance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Appearance.swift; sourceTree = "<group>"; };
+		7C8608FD2D81FEA2005D2DE7 /* HealthViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthViewModel.swift; sourceTree = "<group>"; };
 		7CEF7C802D68F1D400D6A430 /* Sprout.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Sprout.entitlements; sourceTree = "<group>"; };
 		7CEF7CB72D723C3D00D6A430 /* HealthData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthData.swift; sourceTree = "<group>"; };
 		7CEF7CBA2D78C1C700D6A430 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		7CEF7CC12D78C97100D6A430 /* AuthViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewModel.swift; sourceTree = "<group>"; };
 		7CEF7CC32D78C9C000D6A430 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		7CEF7CC52D7A2A5B00D6A430 /* AvatarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -158,10 +164,9 @@
 				7CEF7C802D68F1D400D6A430 /* Sprout.entitlements */,
 				7C11EDC42D65136C00C1BB02 /* GoogleService-Info.plist */,
 				7C5FA98A2D5E46C000DF8F8B /* SproutApp.swift */,
-				7CEF7CC02D78C6B200D6A430 /* Controllers */,
+				7C8608FC2D81FE8E005D2DE7 /* ViewModel */,
 				7CEF7CBF2D78C66900D6A430 /* Views */,
 				7CEF7CBE2D78C53600D6A430 /* Models */,
-				7CEF7CBD2D78C4FF00D6A430 /* Services */,
 				7C5FA98E2D5E46C200DF8F8B /* Assets.xcassets */,
 				7C5FA9902D5E46C200DF8F8B /* Preview Content */,
 			);
@@ -193,19 +198,21 @@
 			path = SproutUITests;
 			sourceTree = "<group>";
 		};
-		7CEF7CBD2D78C4FF00D6A430 /* Services */ = {
+		7C8608FC2D81FE8E005D2DE7 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
-				7CEF7C7E2D68F0FB00D6A430 /* HealthDataGetter.swift */,
+				7CEF7CC12D78C97100D6A430 /* AuthViewModel.swift */,
+				7C8608FD2D81FEA2005D2DE7 /* HealthViewModel.swift */,
 			);
-			path = Services;
+			path = ViewModel;
 			sourceTree = "<group>";
 		};
 		7CEF7CBE2D78C53600D6A430 /* Models */ = {
 			isa = PBXGroup;
 			children = (
 				7CEF7CB72D723C3D00D6A430 /* HealthData.swift */,
-				7CEF7CC12D78C97100D6A430 /* AuthViewModel.swift */,
+				7C8608F82D809EC6005D2DE7 /* User.swift */,
+				7C8608FA2D80A0F2005D2DE7 /* Appearance.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -216,15 +223,9 @@
 				7C5FA98C2D5E46C000DF8F8B /* ContentView.swift */,
 				7CEF7CBA2D78C1C700D6A430 /* LoginView.swift */,
 				7CEF7CC32D78C9C000D6A430 /* HomeView.swift */,
+				7CEF7CC52D7A2A5B00D6A430 /* AvatarView.swift */,
 			);
 			path = Views;
-			sourceTree = "<group>";
-		};
-		7CEF7CC02D78C6B200D6A430 /* Controllers */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Controllers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -391,8 +392,11 @@
 				7CEF7CC42D78C9C000D6A430 /* HomeView.swift in Sources */,
 				7C5FA98B2D5E46C000DF8F8B /* SproutApp.swift in Sources */,
 				7CEF7CC22D78C97100D6A430 /* AuthViewModel.swift in Sources */,
-				7CEF7C7F2D68F0FB00D6A430 /* HealthDataGetter.swift in Sources */,
+				7CEF7CC62D7A2A5B00D6A430 /* AvatarView.swift in Sources */,
+				7C8608FB2D80A0F2005D2DE7 /* Appearance.swift in Sources */,
 				7CEF7CBB2D78C1C700D6A430 /* LoginView.swift in Sources */,
+				7C8608F92D809EC6005D2DE7 /* User.swift in Sources */,
+				7C8608FE2D81FEA2005D2DE7 /* HealthViewModel.swift in Sources */,
 				7CEF7CB82D723C3D00D6A430 /* HealthData.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
