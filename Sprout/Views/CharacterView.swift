@@ -14,12 +14,12 @@ struct CharacterView: View {
     @State private var selectedEyeColor: Int = 1
     
     
-
+    
     let categories = ["Skin Tone", "Hair", "Eyes"]
     let skinTones = ["1x", "2x", "3x"]
     let hairColors = ["hair1", "hair2", "hair3", "hair4"]
     let eyeShape = ["eye1", "eye2", "eye3", "eye4"]
-
+    
     var body: some View {
         VStack {
             AvatarPreview(skinTone: selectedSkinTone, hairColor: selectedHairColor, eyeShape: selectedEyeColor)
@@ -37,7 +37,7 @@ struct CharacterView: View {
                 }
             }
             .padding()
-
+            
             
             
             
@@ -88,48 +88,48 @@ struct CharacterView: View {
             .padding()
         }
     }
-
-
-
-
-
-
-
-// Avatar Preview
-struct AvatarPreview: View {
-    var skinTone: Int
-    var hairColor: Int
-    var eyeShape: Int
-
-    var body: some View {
-        VStack {
-            Image("avatarBase")
-                .resizable()
-                .scaledToFit()
-                .frame(height: 250)
-                .overlay(
-                    Image("skin\(skinTone)")
-                        .resizable()
-                        .scaledToFit()
-                )
-                .overlay(
-                    Image("hair\(hairColor)")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(height:90)
-                        .position(x: 130,y: 65)
-                )
-                .overlay(
-                Image("eye\(eyeShape)")
+    
+    
+    
+    
+    
+    
+    
+    // Avatar Preview
+    struct AvatarPreview: View {
+        var skinTone: Int
+        var hairColor: Int
+        var eyeShape: Int
+        
+        var body: some View {
+            VStack {
+                Image("avatarBase")
                     .resizable()
                     .scaledToFit()
-                    .frame(height:50)
-                    .position(x: 123,y: 85)
-                )
+                    .frame(height: 250)
+                    .overlay(
+                        Image("skin\(skinTone)")
+                            .resizable()
+                            .scaledToFit()
+                    )
+                    .overlay(
+                        Image("hair\(hairColor)")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(height:90)
+                            .position(x: 130,y: 65)
+                    )
+                    .overlay(
+                        Image("eye\(eyeShape)")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(height:50)
+                            .position(x: 123,y: 85)
+                    )
+            }
         }
     }
 }
-
 
 #Preview {
     CharacterView()
