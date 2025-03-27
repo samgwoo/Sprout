@@ -21,15 +21,18 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 struct SproutApp: App {
     
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
-    @StateObject private var authViewModel = AuthViewModel()
+    @StateObject var authViewModel = AuthViewModel()
+    
     
     var body: some Scene {
         WindowGroup {
-            if authViewModel.userSession != nil {
-                        HomeView()
-                    } else {
-                        LoginView()
-                    }
+            if authViewModel.userSession == nil {
+                LoginView()
+                    .environmentObject(authViewModel)
+            } else {
+                HomeView()
+                    .environmentObject(authViewModel)
+            }
         }
     }
 }

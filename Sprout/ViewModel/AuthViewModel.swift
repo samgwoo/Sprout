@@ -83,10 +83,9 @@ class AuthViewModel: ObservableObject {
                 if let error = error {
                     print("Error fetching user profile: \(error.localizedDescription)")
                 } else if let snapshot = snapshot, snapshot.exists {
-                    // Deserialize the user profile data and update the UI
                     let data = snapshot.data()
                     print("User profile fetched: \(data ?? [:])")
-                    // You can now pass the profile data to your views or models
+                    
                 }
             }
         }
