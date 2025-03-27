@@ -10,7 +10,7 @@ import FirebaseAuth
 
 struct HomeView: View {
     @Environment(\.presentationMode) var presentationMode
-        @StateObject private var viewModel = AuthViewModel()
+    @EnvironmentObject var viewModel : AuthViewModel
 
         var body: some View {
             VStack {
