@@ -2,7 +2,7 @@
 //  ShopView.swift
 //  Sprout
 //
-//  Created by Emily Wang (student LM) on 3/6/25.
+//  Created by Emily Wang (student LM) on 4/1/25.
 //
 
 import SwiftUI
