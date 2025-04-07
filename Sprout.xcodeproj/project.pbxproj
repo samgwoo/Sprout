@@ -7,6 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2BD12ADA2DA452A9008A184E /* Workout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BD12AD92DA452A9008A184E /* Workout.swift */; };
+		2BD12ADC2DA452C6008A184E /* WorkoutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BD12ADB2DA452C6008A184E /* WorkoutView.swift */; };
+		2BD12ADE2DA452F4008A184E /* AddWorkoutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BD12ADD2DA452F4008A184E /* AddWorkoutView.swift */; };
+		2BD12AE02DA45305008A184E /* WorkoutListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BD12ADF2DA45305008A184E /* WorkoutListView.swift */; };
+		2BD12AE22DA45318008A184E /* WorkoutHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BD12AE12DA45318008A184E /* WorkoutHistoryView.swift */; };
+		2BD12AE42DA4539C008A184E /* WorkoutHistoryDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BD12AE32DA4539C008A184E /* WorkoutHistoryDetailView.swift */; };
+		2BD12AE62DA453B1008A184E /* WorkoutHistoryEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BD12AE52DA453B1008A184E /* WorkoutHistoryEntry.swift */; };
+		2BD12AE82DA453C8008A184E /* WorkoutHistoryDetailPopup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BD12AE72DA453C8008A184E /* WorkoutHistoryDetailPopup.swift */; };
 		7C11EDC52D65136C00C1BB02 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7C11EDC42D65136C00C1BB02 /* GoogleService-Info.plist */; };
 		7C11EDC82D65141000C1BB02 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 7C11EDC72D65141000C1BB02 /* FirebaseAnalytics */; };
 		7C11EDCA2D65141000C1BB02 /* FirebaseAnalyticsOnDeviceConversion in Frameworks */ = {isa = PBXBuildFile; productRef = 7C11EDC92D65141000C1BB02 /* FirebaseAnalyticsOnDeviceConversion */; };
@@ -67,6 +75,14 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		2BD12AD92DA452A9008A184E /* Workout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Workout.swift; sourceTree = "<group>"; };
+		2BD12ADB2DA452C6008A184E /* WorkoutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutView.swift; sourceTree = "<group>"; };
+		2BD12ADD2DA452F4008A184E /* AddWorkoutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddWorkoutView.swift; sourceTree = "<group>"; };
+		2BD12ADF2DA45305008A184E /* WorkoutListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutListView.swift; sourceTree = "<group>"; };
+		2BD12AE12DA45318008A184E /* WorkoutHistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutHistoryView.swift; sourceTree = "<group>"; };
+		2BD12AE32DA4539C008A184E /* WorkoutHistoryDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutHistoryDetailView.swift; sourceTree = "<group>"; };
+		2BD12AE52DA453B1008A184E /* WorkoutHistoryEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutHistoryEntry.swift; sourceTree = "<group>"; };
+		2BD12AE72DA453C8008A184E /* WorkoutHistoryDetailPopup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutHistoryDetailPopup.swift; sourceTree = "<group>"; };
 		7C11EDC42D65136C00C1BB02 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		7C5FA9872D5E46C000DF8F8B /* Sprout.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Sprout.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7C5FA98A2D5E46C000DF8F8B /* SproutApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SproutApp.swift; sourceTree = "<group>"; };
@@ -213,6 +229,9 @@
 				7CEF7CB72D723C3D00D6A430 /* HealthData.swift */,
 				7C8608F82D809EC6005D2DE7 /* User.swift */,
 				7C8608FA2D80A0F2005D2DE7 /* Appearance.swift */,
+				2BD12AE52DA453B1008A184E /* WorkoutHistoryEntry.swift */,
+				2BD12AE72DA453C8008A184E /* WorkoutHistoryDetailPopup.swift */,
+				2BD12AD92DA452A9008A184E /* Workout.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -222,6 +241,11 @@
 			children = (
 				7C5FA98C2D5E46C000DF8F8B /* ContentView.swift */,
 				7CEF7CBA2D78C1C700D6A430 /* LoginView.swift */,
+				2BD12ADB2DA452C6008A184E /* WorkoutView.swift */,
+				2BD12ADD2DA452F4008A184E /* AddWorkoutView.swift */,
+				2BD12ADF2DA45305008A184E /* WorkoutListView.swift */,
+				2BD12AE12DA45318008A184E /* WorkoutHistoryView.swift */,
+				2BD12AE32DA4539C008A184E /* WorkoutHistoryDetailView.swift */,
 				7CEF7CC32D78C9C000D6A430 /* HomeView.swift */,
 				7CEF7CC52D7A2A5B00D6A430 /* AvatarView.swift */,
 			);
@@ -392,11 +416,19 @@
 				7CEF7CC42D78C9C000D6A430 /* HomeView.swift in Sources */,
 				7C5FA98B2D5E46C000DF8F8B /* SproutApp.swift in Sources */,
 				7CEF7CC22D78C97100D6A430 /* AuthViewModel.swift in Sources */,
+				2BD12AE42DA4539C008A184E /* WorkoutHistoryDetailView.swift in Sources */,
+				2BD12AE22DA45318008A184E /* WorkoutHistoryView.swift in Sources */,
 				7CEF7CC62D7A2A5B00D6A430 /* AvatarView.swift in Sources */,
 				7C8608FB2D80A0F2005D2DE7 /* Appearance.swift in Sources */,
+				2BD12AE82DA453C8008A184E /* WorkoutHistoryDetailPopup.swift in Sources */,
+				2BD12ADA2DA452A9008A184E /* Workout.swift in Sources */,
 				7CEF7CBB2D78C1C700D6A430 /* LoginView.swift in Sources */,
 				7C8608F92D809EC6005D2DE7 /* User.swift in Sources */,
 				7C8608FE2D81FEA2005D2DE7 /* HealthViewModel.swift in Sources */,
+				2BD12AE02DA45305008A184E /* WorkoutListView.swift in Sources */,
+				2BD12ADC2DA452C6008A184E /* WorkoutView.swift in Sources */,
+				2BD12ADE2DA452F4008A184E /* AddWorkoutView.swift in Sources */,
+				2BD12AE62DA453B1008A184E /* WorkoutHistoryEntry.swift in Sources */,
 				7CEF7CB82D723C3D00D6A430 /* HealthData.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
