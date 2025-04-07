@@ -10,6 +10,7 @@ import SwiftUI
 
 struct LoginView: View {
     @EnvironmentObject  var viewModel : AuthViewModel
+    @EnvironmentObject var healthviewModel : HealthViewModel
         @State private var email = ""
         @State private var password = ""
 
@@ -51,7 +52,7 @@ struct LoginView: View {
                     .padding(.horizontal)
 
                     Button(action: {
-                        viewModel.signUp(email: email, password: password)
+                        viewModel.signUp(email: email, password: password, healthVM: healthviewModel)
                     }) {
                         Text("Sign Up")
                             .font(.headline)
