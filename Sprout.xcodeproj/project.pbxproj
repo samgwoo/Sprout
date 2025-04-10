@@ -61,7 +61,6 @@
 		7C11EDF42D65141100C1BB02 /* FirebaseStorageCombine-Community in Frameworks */ = {isa = PBXBuildFile; productRef = 7C11EDF32D65141100C1BB02 /* FirebaseStorageCombine-Community */; };
 		7C11EDF62D65141100C1BB02 /* FirebaseVertexAI in Frameworks */ = {isa = PBXBuildFile; productRef = 7C11EDF52D65141100C1BB02 /* FirebaseVertexAI */; };
 		7C5FA98B2D5E46C000DF8F8B /* SproutApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C5FA98A2D5E46C000DF8F8B /* SproutApp.swift */; };
-		7C5FA98D2D5E46C000DF8F8B /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C5FA98C2D5E46C000DF8F8B /* ContentView.swift */; };
 		7C5FA98F2D5E46C200DF8F8B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7C5FA98E2D5E46C200DF8F8B /* Assets.xcassets */; };
 		7C5FA9922D5E46C200DF8F8B /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7C5FA9912D5E46C200DF8F8B /* Preview Assets.xcassets */; };
 		7C5FA99C2D5E46C200DF8F8B /* SproutTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C5FA99B2D5E46C200DF8F8B /* SproutTests.swift */; };
@@ -123,7 +122,6 @@
 		7C11EDC42D65136C00C1BB02 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		7C5FA9872D5E46C000DF8F8B /* Sprout.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Sprout.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7C5FA98A2D5E46C000DF8F8B /* SproutApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SproutApp.swift; sourceTree = "<group>"; };
-		7C5FA98C2D5E46C000DF8F8B /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		7C5FA98E2D5E46C200DF8F8B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		7C5FA9912D5E46C200DF8F8B /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		7C5FA9972D5E46C200DF8F8B /* SproutTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SproutTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -304,8 +302,10 @@
 		7CEF7CBF2D78C66900D6A430 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+
 				2BFA78DA2DA83CDA00BDF6C0 /* Views */,
 				7C5FA98C2D5E46C000DF8F8B /* ContentView.swift */,
+
 				7CEF7CBA2D78C1C700D6A430 /* LoginView.swift */,
 				2BD12ADB2DA452C6008A184E /* WorkoutView.swift */,
 				2BD12ADD2DA452F4008A184E /* AddWorkoutView.swift */,
@@ -479,11 +479,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+
 				2BFA78EA2DA83CDA00BDF6C0 /* WorkoutListView.swift in Sources */,
 				7C5FA98D2D5E46C000DF8F8B /* ContentView.swift in Sources */,
 				2BFA78E52DA83CDA00BDF6C0 /* LoginView.swift in Sources */,
 				2BFA78E42DA83CDA00BDF6C0 /* HomeView.swift in Sources */,
 				2BFA78E12DA83CDA00BDF6C0 /* AddWorkoutView.swift in Sources */,
+
 				7CEF7CC42D78C9C000D6A430 /* HomeView.swift in Sources */,
 				7C5FA98B2D5E46C000DF8F8B /* SproutApp.swift in Sources */,
 				7CEF7CC22D78C97100D6A430 /* AuthViewModel.swift in Sources */,

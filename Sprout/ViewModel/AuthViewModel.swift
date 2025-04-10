@@ -33,7 +33,7 @@ class AuthViewModel: ObservableObject {
         }
     }
     
-    func signUp(email: String, password: String) {
+    func signUp(email: String, password: String, healthVM : HealthViewModel) {
         Auth.auth().createUser(withEmail: email, password: password) { result, error in
             DispatchQueue.main.async {
                 if let error = error {
@@ -41,6 +41,8 @@ class AuthViewModel: ObservableObject {
                 } else {
                     self.userSession = result?.user
                     self.createUserProfile()
+                    
+                    healthVM.fetchHealthData()
                 }
             }
         }

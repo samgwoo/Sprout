@@ -11,7 +11,7 @@ import FirebaseCore
 
 class AppDelegate: NSObject, UIApplicationDelegate {
   func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
-    FirebaseApp.configure()
+      FirebaseApp.configure()
 
     return true
   }
@@ -22,6 +22,13 @@ struct SproutApp: App {
     
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
     @StateObject var authViewModel = AuthViewModel()
+    @StateObject var healthViewModel: HealthViewModel
+
+    init() {
+        let authVM = AuthViewModel()
+        _authViewModel = StateObject(wrappedValue: authVM)
+        _healthViewModel = StateObject(wrappedValue: HealthViewModel(authViewModel: authVM))
+    }
     
     
     var body: some Scene {
@@ -29,9 +36,11 @@ struct SproutApp: App {
             if authViewModel.userSession == nil {
                 LoginView()
                     .environmentObject(authViewModel)
+                    .environmentObject(healthViewModel)
             } else {
                 HomeView()
                     .environmentObject(authViewModel)
+                    .environmentObject(healthViewModel)
             }
         }
     }
