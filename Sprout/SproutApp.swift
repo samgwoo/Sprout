@@ -8,12 +8,11 @@
 import SwiftUI
 import FirebaseCore
 
-
 @main
 struct SproutApp: App {
     
-    @StateObject var authViewModel = AuthViewModel()
-    @StateObject var healthViewModel: HealthViewModel
+    @StateObject private var authViewModel: AuthViewModel
+    @StateObject private var healthViewModel: HealthViewModel
 
     init() {
         FirebaseApp.configure()
@@ -22,17 +21,29 @@ struct SproutApp: App {
         _healthViewModel = StateObject(wrappedValue: HealthViewModel(authViewModel: authVM))
     }
     
-    
     var body: some Scene {
         WindowGroup {
-            if authViewModel.userSession == nil {
-                LoginView()
-                    .environmentObject(authViewModel)
-                    .environmentObject(healthViewModel)
-            } else {
-                HomeView()
-                    .environmentObject(authViewModel)
-                    .environmentObject(healthViewModel)
+            RootView()
+                .environmentObject(authViewModel)
+                .environmentObject(healthViewModel)
+        }
+    }
+}
+
+struct RootView: View {
+    @EnvironmentObject var authViewModel: AuthViewModel
+    
+    var body: some View {
+        ZStack{
+            Color(.systemBackground)
+                .ignoresSafeArea()
+            
+            Group {
+                if authViewModel.userSession == nil {
+                    LoginView()
+                } else {
+                    HomeView()
+                }
             }
         }
     }

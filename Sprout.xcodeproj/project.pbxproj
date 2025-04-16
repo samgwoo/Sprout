@@ -12,12 +12,6 @@
 		2BD12AE02DA45305008A184E /* WorkoutListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BD12ADF2DA45305008A184E /* WorkoutListView.swift */; };
 		2BD12AE22DA45318008A184E /* WorkoutHistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BD12AE12DA45318008A184E /* WorkoutHistoryView.swift */; };
 		2BD12AE42DA4539C008A184E /* WorkoutHistoryDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BD12AE32DA4539C008A184E /* WorkoutHistoryDetailView.swift */; };
-		2BFA78C22DA83AD500BDF6C0 /* Appearance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BFA78BB2DA83AD500BDF6C0 /* Appearance.swift */; };
-		2BFA78C32DA83AD500BDF6C0 /* HealthData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BFA78BC2DA83AD500BDF6C0 /* HealthData.swift */; };
-		2BFA78C42DA83AD500BDF6C0 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BFA78BD2DA83AD500BDF6C0 /* User.swift */; };
-		2BFA78C52DA83AD500BDF6C0 /* Workout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BFA78BE2DA83AD500BDF6C0 /* Workout.swift */; };
-		2BFA78C62DA83AD500BDF6C0 /* WorkoutHistoryDetailPopup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BFA78BF2DA83AD500BDF6C0 /* WorkoutHistoryDetailPopup.swift */; };
-		2BFA78C72DA83AD500BDF6C0 /* WorkoutHistoryEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2BFA78C02DA83AD500BDF6C0 /* WorkoutHistoryEntry.swift */; };
 		7C11EDC52D65136C00C1BB02 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 7C11EDC42D65136C00C1BB02 /* GoogleService-Info.plist */; };
 		7C11EDC82D65141000C1BB02 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 7C11EDC72D65141000C1BB02 /* FirebaseAnalytics */; };
 		7C11EDCA2D65141000C1BB02 /* FirebaseAnalyticsOnDeviceConversion in Frameworks */ = {isa = PBXBuildFile; productRef = 7C11EDC92D65141000C1BB02 /* FirebaseAnalyticsOnDeviceConversion */; };
@@ -50,6 +44,14 @@
 		7C5FA9A62D5E46C200DF8F8B /* SproutUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C5FA9A52D5E46C200DF8F8B /* SproutUITests.swift */; };
 		7C5FA9A82D5E46C200DF8F8B /* SproutUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C5FA9A72D5E46C200DF8F8B /* SproutUITestsLaunchTests.swift */; };
 		7C8608FE2D81FEA2005D2DE7 /* HealthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C8608FD2D81FEA2005D2DE7 /* HealthViewModel.swift */; };
+		7CCA22812DAD84DA009C14E0 /* Workout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CCA227D2DAD84DA009C14E0 /* Workout.swift */; };
+		7CCA22822DAD84DA009C14E0 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CCA227C2DAD84DA009C14E0 /* User.swift */; };
+		7CCA22832DAD84DA009C14E0 /* Appearance.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CCA227A2DAD84DA009C14E0 /* Appearance.swift */; };
+		7CCA22842DAD84DA009C14E0 /* WorkoutHistoryDetailPopup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CCA227E2DAD84DA009C14E0 /* WorkoutHistoryDetailPopup.swift */; };
+		7CCA22852DAD84DA009C14E0 /* HealthData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CCA227B2DAD84DA009C14E0 /* HealthData.swift */; };
+		7CCA22862DAD84DA009C14E0 /* WorkoutHistoryEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CCA227F2DAD84DA009C14E0 /* WorkoutHistoryEntry.swift */; };
+		7CCA228A2DAD8FC4009C14E0 /* UserViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CCA22892DAD8FC4009C14E0 /* UserViewModel.swift */; };
+		7CCA228E2DB04840009C14E0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7CCA228D2DB04840009C14E0 /* LaunchScreen.storyboard */; };
 		7CEF7CBB2D78C1C700D6A430 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CEF7CBA2D78C1C700D6A430 /* LoginView.swift */; };
 		7CEF7CC22D78C97100D6A430 /* AuthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CEF7CC12D78C97100D6A430 /* AuthViewModel.swift */; };
 		7CEF7CC42D78C9C000D6A430 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CEF7CC32D78C9C000D6A430 /* HomeView.swift */; };
@@ -79,12 +81,6 @@
 		2BD12ADF2DA45305008A184E /* WorkoutListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutListView.swift; sourceTree = "<group>"; };
 		2BD12AE12DA45318008A184E /* WorkoutHistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutHistoryView.swift; sourceTree = "<group>"; };
 		2BD12AE32DA4539C008A184E /* WorkoutHistoryDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutHistoryDetailView.swift; sourceTree = "<group>"; };
-		2BFA78BB2DA83AD500BDF6C0 /* Appearance.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Appearance.swift; sourceTree = "<group>"; };
-		2BFA78BC2DA83AD500BDF6C0 /* HealthData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HealthData.swift; sourceTree = "<group>"; };
-		2BFA78BD2DA83AD500BDF6C0 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
-		2BFA78BE2DA83AD500BDF6C0 /* Workout.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Workout.swift; sourceTree = "<group>"; };
-		2BFA78BF2DA83AD500BDF6C0 /* WorkoutHistoryDetailPopup.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WorkoutHistoryDetailPopup.swift; sourceTree = "<group>"; };
-		2BFA78C02DA83AD500BDF6C0 /* WorkoutHistoryEntry.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WorkoutHistoryEntry.swift; sourceTree = "<group>"; };
 		7C11EDC42D65136C00C1BB02 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		7C5FA9872D5E46C000DF8F8B /* Sprout.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Sprout.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7C5FA98A2D5E46C000DF8F8B /* SproutApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SproutApp.swift; sourceTree = "<group>"; };
@@ -96,11 +92,20 @@
 		7C5FA9A52D5E46C200DF8F8B /* SproutUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SproutUITests.swift; sourceTree = "<group>"; };
 		7C5FA9A72D5E46C200DF8F8B /* SproutUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SproutUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		7C8608FD2D81FEA2005D2DE7 /* HealthViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthViewModel.swift; sourceTree = "<group>"; };
+		7CCA227A2DAD84DA009C14E0 /* Appearance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Appearance.swift; sourceTree = "<group>"; };
+		7CCA227B2DAD84DA009C14E0 /* HealthData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthData.swift; sourceTree = "<group>"; };
+		7CCA227C2DAD84DA009C14E0 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		7CCA227D2DAD84DA009C14E0 /* Workout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Workout.swift; sourceTree = "<group>"; };
+		7CCA227E2DAD84DA009C14E0 /* WorkoutHistoryDetailPopup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutHistoryDetailPopup.swift; sourceTree = "<group>"; };
+		7CCA227F2DAD84DA009C14E0 /* WorkoutHistoryEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutHistoryEntry.swift; sourceTree = "<group>"; };
+		7CCA22892DAD8FC4009C14E0 /* UserViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewModel.swift; sourceTree = "<group>"; };
+		7CCA228D2DB04840009C14E0 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		7CEF7C802D68F1D400D6A430 /* Sprout.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Sprout.entitlements; sourceTree = "<group>"; };
 		7CEF7CBA2D78C1C700D6A430 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		7CEF7CC12D78C97100D6A430 /* AuthViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewModel.swift; sourceTree = "<group>"; };
 		7CEF7CC32D78C9C000D6A430 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		7CEF7CC52D7A2A5B00D6A430 /* AvatarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarView.swift; sourceTree = "<group>"; };
+		7CF99CB62DA9985400FA49ED /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -152,19 +157,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		2BFA78C12DA83AD500BDF6C0 /* Models */ = {
-			isa = PBXGroup;
-			children = (
-				2BFA78BB2DA83AD500BDF6C0 /* Appearance.swift */,
-				2BFA78BC2DA83AD500BDF6C0 /* HealthData.swift */,
-				2BFA78BD2DA83AD500BDF6C0 /* User.swift */,
-				2BFA78BE2DA83AD500BDF6C0 /* Workout.swift */,
-				2BFA78BF2DA83AD500BDF6C0 /* WorkoutHistoryDetailPopup.swift */,
-				2BFA78C02DA83AD500BDF6C0 /* WorkoutHistoryEntry.swift */,
-			);
-			path = Models;
-			sourceTree = "<group>";
-		};
 		7C5FA97E2D5E46C000DF8F8B = {
 			isa = PBXGroup;
 			children = (
@@ -188,9 +180,12 @@
 		7C5FA9892D5E46C000DF8F8B /* Sprout */ = {
 			isa = PBXGroup;
 			children = (
-				7CEF7C802D68F1D400D6A430 /* Sprout.entitlements */,
-				7C11EDC42D65136C00C1BB02 /* GoogleService-Info.plist */,
 				7C5FA98A2D5E46C000DF8F8B /* SproutApp.swift */,
+				7CEF7C802D68F1D400D6A430 /* Sprout.entitlements */,
+				7CCA228D2DB04840009C14E0 /* LaunchScreen.storyboard */,
+				7C11EDC42D65136C00C1BB02 /* GoogleService-Info.plist */,
+				7CF99CB62DA9985400FA49ED /* Info.plist */,
+				7CCA22802DAD84DA009C14E0 /* Models */,
 				7C8608FC2D81FE8E005D2DE7 /* ViewModel */,
 				7CEF7CBF2D78C66900D6A430 /* Views */,
 				7C5FA98E2D5E46C200DF8F8B /* Assets.xcassets */,
@@ -229,8 +224,21 @@
 			children = (
 				7CEF7CC12D78C97100D6A430 /* AuthViewModel.swift */,
 				7C8608FD2D81FEA2005D2DE7 /* HealthViewModel.swift */,
+				7CCA22892DAD8FC4009C14E0 /* UserViewModel.swift */,
 			);
 			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		7CCA22802DAD84DA009C14E0 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				7CCA227A2DAD84DA009C14E0 /* Appearance.swift */,
+				7CCA227B2DAD84DA009C14E0 /* HealthData.swift */,
+				7CCA227C2DAD84DA009C14E0 /* User.swift */,
+				7CCA227D2DAD84DA009C14E0 /* Workout.swift */,
+				7CCA227F2DAD84DA009C14E0 /* WorkoutHistoryEntry.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 		7CEF7CBF2D78C66900D6A430 /* Views */ = {
@@ -238,13 +246,13 @@
 			children = (
 				7CEF7CBA2D78C1C700D6A430 /* LoginView.swift */,
 				2BD12ADB2DA452C6008A184E /* WorkoutView.swift */,
+				7CCA227E2DAD84DA009C14E0 /* WorkoutHistoryDetailPopup.swift */,
 				2BD12ADD2DA452F4008A184E /* AddWorkoutView.swift */,
 				2BD12ADF2DA45305008A184E /* WorkoutListView.swift */,
 				2BD12AE12DA45318008A184E /* WorkoutHistoryView.swift */,
 				2BD12AE32DA4539C008A184E /* WorkoutHistoryDetailView.swift */,
 				7CEF7CC32D78C9C000D6A430 /* HomeView.swift */,
 				7CEF7CC52D7A2A5B00D6A430 /* AvatarView.swift */,
-				2BFA78C12DA83AD500BDF6C0 /* Models */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -339,7 +347,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1540;
-				LastUpgradeCheck = 1540;
+				LastUpgradeCheck = 1620;
 				TargetAttributes = {
 					7C5FA9862D5E46C000DF8F8B = {
 						CreatedOnToolsVersion = 15.4;
@@ -383,6 +391,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7C5FA9922D5E46C200DF8F8B /* Preview Assets.xcassets in Resources */,
+				7CCA228E2DB04840009C14E0 /* LaunchScreen.storyboard in Resources */,
 				7C5FA98F2D5E46C200DF8F8B /* Assets.xcassets in Resources */,
 				7C11EDC52D65136C00C1BB02 /* GoogleService-Info.plist in Resources */,
 			);
@@ -416,16 +425,17 @@
 				2BD12AE22DA45318008A184E /* WorkoutHistoryView.swift in Sources */,
 				7CEF7CC62D7A2A5B00D6A430 /* AvatarView.swift in Sources */,
 				7CEF7CBB2D78C1C700D6A430 /* LoginView.swift in Sources */,
-				2BFA78C72DA83AD500BDF6C0 /* WorkoutHistoryEntry.swift in Sources */,
-				2BFA78C32DA83AD500BDF6C0 /* HealthData.swift in Sources */,
+				7CCA228A2DAD8FC4009C14E0 /* UserViewModel.swift in Sources */,
 				7C8608FE2D81FEA2005D2DE7 /* HealthViewModel.swift in Sources */,
 				2BD12AE02DA45305008A184E /* WorkoutListView.swift in Sources */,
 				2BD12ADC2DA452C6008A184E /* WorkoutView.swift in Sources */,
-				2BFA78C22DA83AD500BDF6C0 /* Appearance.swift in Sources */,
-				2BFA78C52DA83AD500BDF6C0 /* Workout.swift in Sources */,
-				2BFA78C62DA83AD500BDF6C0 /* WorkoutHistoryDetailPopup.swift in Sources */,
+				7CCA22812DAD84DA009C14E0 /* Workout.swift in Sources */,
+				7CCA22822DAD84DA009C14E0 /* User.swift in Sources */,
+				7CCA22832DAD84DA009C14E0 /* Appearance.swift in Sources */,
+				7CCA22842DAD84DA009C14E0 /* WorkoutHistoryDetailPopup.swift in Sources */,
+				7CCA22852DAD84DA009C14E0 /* HealthData.swift in Sources */,
+				7CCA22862DAD84DA009C14E0 /* WorkoutHistoryEntry.swift in Sources */,
 				2BD12ADE2DA452F4008A184E /* AddWorkoutView.swift in Sources */,
-				2BFA78C42DA83AD500BDF6C0 /* User.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -590,8 +600,11 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Sprout/Preview Content\"";
+				DEVELOPMENT_TEAM = UY4R4QN6FM;
 				ENABLE_PREVIEWS = YES;
-				GENERATE_INFOPLIST_FILE = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = Sprout/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Sprout;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -619,8 +632,11 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"Sprout/Preview Content\"";
+				DEVELOPMENT_TEAM = UY4R4QN6FM;
 				ENABLE_PREVIEWS = YES;
-				GENERATE_INFOPLIST_FILE = YES;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = Sprout/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Sprout;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -642,7 +658,6 @@
 		7C5FA9AF2D5E46C200DF8F8B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -661,7 +676,6 @@
 		7C5FA9B02D5E46C200DF8F8B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -680,7 +694,6 @@
 		7C5FA9B22D5E46C200DF8F8B /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -697,7 +710,6 @@
 		7C5FA9B32D5E46C200DF8F8B /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;

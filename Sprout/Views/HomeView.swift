@@ -51,7 +51,6 @@ struct HealthDataView: View {
 
 struct ProfileView: View {
     @EnvironmentObject var viewModel: AuthViewModel
-    @Environment(\.presentationMode) var presentationMode
 
     var body: some View {
         VStack {
@@ -61,7 +60,6 @@ struct ProfileView: View {
 
             Button(action: {
                 viewModel.logout()
-                presentationMode.wrappedValue.dismiss()
             }) {
                 Text("Logout")
                     .font(.headline)
