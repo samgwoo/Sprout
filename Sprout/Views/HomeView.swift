@@ -9,7 +9,8 @@ import SwiftUI
 import FirebaseAuth
 
 struct HomeView: View {
-    @EnvironmentObject var viewModel : AuthViewModel
+    @EnvironmentObject var authViewModel : AuthViewModel
+    @EnvironmentObject var userViewModel : UserViewModel
 
         var body: some View {
             TabView {

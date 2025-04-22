@@ -52,6 +52,37 @@
 		7CCA22862DAD84DA009C14E0 /* WorkoutHistoryEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CCA227F2DAD84DA009C14E0 /* WorkoutHistoryEntry.swift */; };
 		7CCA228A2DAD8FC4009C14E0 /* UserViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CCA22892DAD8FC4009C14E0 /* UserViewModel.swift */; };
 		7CCA228E2DB04840009C14E0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7CCA228D2DB04840009C14E0 /* LaunchScreen.storyboard */; };
+		7CCA22902DB6D835009C14E0 /* ShopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CCA228F2DB6D835009C14E0 /* ShopView.swift */; };
+		7CCA22922DB6D969009C14E0 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CCA22912DB6D969009C14E0 /* Constants.swift */; };
+		7CCA22B62DB6DA3C009C14E0 /* Cabin_Condensed-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7CCA22962DB6DA3C009C14E0 /* Cabin_Condensed-Italic.ttf */; };
+		7CCA22B72DB6DA3C009C14E0 /* Cabin-MediumItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7CCA22A82DB6DA3C009C14E0 /* Cabin-MediumItalic.ttf */; };
+		7CCA22B82DB6DA3C009C14E0 /* Chewy-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7CCA22B32DB6DA3C009C14E0 /* Chewy-Regular.ttf */; };
+		7CCA22B92DB6DA3C009C14E0 /* Cabin_Condensed-SemiBoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7CCA229B2DB6DA3C009C14E0 /* Cabin_Condensed-SemiBoldItalic.ttf */; };
+		7CCA22BA2DB6DA3C009C14E0 /* Cabin-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7CCA22A52DB6DA3C009C14E0 /* Cabin-BoldItalic.ttf */; };
+		7CCA22BB2DB6DA3C009C14E0 /* Dekko-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7CCA22B42DB6DA3C009C14E0 /* Dekko-Regular.ttf */; };
+		7CCA22BC2DB6DA3C009C14E0 /* Cabin_Condensed-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7CCA22992DB6DA3C009C14E0 /* Cabin_Condensed-Regular.ttf */; };
+		7CCA22BD2DB6DA3C009C14E0 /* Cabin_Condensed-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7CCA22952DB6DA3C009C14E0 /* Cabin_Condensed-BoldItalic.ttf */; };
+		7CCA22BE2DB6DA3C009C14E0 /* Cabin_SemiCondensed-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7CCA229E2DB6DA3C009C14E0 /* Cabin_SemiCondensed-Italic.ttf */; };
+		7CCA22BF2DB6DA3C009C14E0 /* Cabin_SemiCondensed-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7CCA229F2DB6DA3C009C14E0 /* Cabin_SemiCondensed-Medium.ttf */; };
+		7CCA22C02DB6DA3C009C14E0 /* Cabin-SemiBoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7CCA22AA2DB6DA3C009C14E0 /* Cabin-SemiBoldItalic.ttf */; };
+		7CCA22C12DB6DA3C009C14E0 /* Cabin-Italic-VariableFont_wdth,wght.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7CCA22AC2DB6DA3C009C14E0 /* Cabin-Italic-VariableFont_wdth,wght.ttf */; };
+		7CCA22C22DB6DA3C009C14E0 /* Cabin_SemiCondensed-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7CCA22A12DB6DA3C009C14E0 /* Cabin_SemiCondensed-Regular.ttf */; };
+		7CCA22C32DB6DA3C009C14E0 /* Cabin-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7CCA22A72DB6DA3C009C14E0 /* Cabin-Medium.ttf */; };
+		7CCA22C42DB6DA3C009C14E0 /* Cabin_SemiCondensed-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7CCA229C2DB6DA3C009C14E0 /* Cabin_SemiCondensed-Bold.ttf */; };
+		7CCA22C52DB6DA3C009C14E0 /* Cabin-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7CCA22A42DB6DA3C009C14E0 /* Cabin-Bold.ttf */; };
+		7CCA22C62DB6DA3C009C14E0 /* Cabin_SemiCondensed-MediumItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7CCA22A02DB6DA3C009C14E0 /* Cabin_SemiCondensed-MediumItalic.ttf */; };
+		7CCA22C72DB6DA3C009C14E0 /* Cabin-VariableFont_wdth,wght.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7CCA22AD2DB6DA3C009C14E0 /* Cabin-VariableFont_wdth,wght.ttf */; };
+		7CCA22C82DB6DA3C009C14E0 /* Cabin-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7CCA22B22DB6DA3C009C14E0 /* Cabin-Regular.ttf */; };
+		7CCA22C92DB6DA3C009C14E0 /* Cabin_Condensed-MediumItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7CCA22982DB6DA3C009C14E0 /* Cabin_Condensed-MediumItalic.ttf */; };
+		7CCA22CA2DB6DA3C009C14E0 /* Cabin_SemiCondensed-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7CCA22A22DB6DA3C009C14E0 /* Cabin_SemiCondensed-SemiBold.ttf */; };
+		7CCA22CB2DB6DA3C009C14E0 /* Cabin_Condensed-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7CCA22972DB6DA3C009C14E0 /* Cabin_Condensed-Medium.ttf */; };
+		7CCA22CC2DB6DA3C009C14E0 /* Cabin_SemiCondensed-SemiBoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7CCA22A32DB6DA3C009C14E0 /* Cabin_SemiCondensed-SemiBoldItalic.ttf */; };
+		7CCA22CD2DB6DA3C009C14E0 /* Cabin_SemiCondensed-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7CCA229D2DB6DA3C009C14E0 /* Cabin_SemiCondensed-BoldItalic.ttf */; };
+		7CCA22CE2DB6DA3C009C14E0 /* Cabin-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7CCA22A62DB6DA3C009C14E0 /* Cabin-Italic.ttf */; };
+		7CCA22CF2DB6DA3C009C14E0 /* Cabin_Condensed-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7CCA229A2DB6DA3C009C14E0 /* Cabin_Condensed-SemiBold.ttf */; };
+		7CCA22D02DB6DA3C009C14E0 /* LICENSE.txt in Resources */ = {isa = PBXBuildFile; fileRef = 7CCA22AF2DB6DA3C009C14E0 /* LICENSE.txt */; };
+		7CCA22D12DB6DA3C009C14E0 /* Cabin-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7CCA22A92DB6DA3C009C14E0 /* Cabin-SemiBold.ttf */; };
+		7CCA22D22DB6DA3C009C14E0 /* Cabin_Condensed-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7CCA22942DB6DA3C009C14E0 /* Cabin_Condensed-Bold.ttf */; };
 		7CEF7CBB2D78C1C700D6A430 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CEF7CBA2D78C1C700D6A430 /* LoginView.swift */; };
 		7CEF7CC22D78C97100D6A430 /* AuthViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CEF7CC12D78C97100D6A430 /* AuthViewModel.swift */; };
 		7CEF7CC42D78C9C000D6A430 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CEF7CC32D78C9C000D6A430 /* HomeView.swift */; };
@@ -100,6 +131,37 @@
 		7CCA227F2DAD84DA009C14E0 /* WorkoutHistoryEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutHistoryEntry.swift; sourceTree = "<group>"; };
 		7CCA22892DAD8FC4009C14E0 /* UserViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewModel.swift; sourceTree = "<group>"; };
 		7CCA228D2DB04840009C14E0 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
+		7CCA228F2DB6D835009C14E0 /* ShopView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopView.swift; sourceTree = "<group>"; };
+		7CCA22912DB6D969009C14E0 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		7CCA22942DB6DA3C009C14E0 /* Cabin_Condensed-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Cabin_Condensed-Bold.ttf"; sourceTree = "<group>"; };
+		7CCA22952DB6DA3C009C14E0 /* Cabin_Condensed-BoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Cabin_Condensed-BoldItalic.ttf"; sourceTree = "<group>"; };
+		7CCA22962DB6DA3C009C14E0 /* Cabin_Condensed-Italic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Cabin_Condensed-Italic.ttf"; sourceTree = "<group>"; };
+		7CCA22972DB6DA3C009C14E0 /* Cabin_Condensed-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Cabin_Condensed-Medium.ttf"; sourceTree = "<group>"; };
+		7CCA22982DB6DA3C009C14E0 /* Cabin_Condensed-MediumItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Cabin_Condensed-MediumItalic.ttf"; sourceTree = "<group>"; };
+		7CCA22992DB6DA3C009C14E0 /* Cabin_Condensed-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Cabin_Condensed-Regular.ttf"; sourceTree = "<group>"; };
+		7CCA229A2DB6DA3C009C14E0 /* Cabin_Condensed-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Cabin_Condensed-SemiBold.ttf"; sourceTree = "<group>"; };
+		7CCA229B2DB6DA3C009C14E0 /* Cabin_Condensed-SemiBoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Cabin_Condensed-SemiBoldItalic.ttf"; sourceTree = "<group>"; };
+		7CCA229C2DB6DA3C009C14E0 /* Cabin_SemiCondensed-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Cabin_SemiCondensed-Bold.ttf"; sourceTree = "<group>"; };
+		7CCA229D2DB6DA3C009C14E0 /* Cabin_SemiCondensed-BoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Cabin_SemiCondensed-BoldItalic.ttf"; sourceTree = "<group>"; };
+		7CCA229E2DB6DA3C009C14E0 /* Cabin_SemiCondensed-Italic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Cabin_SemiCondensed-Italic.ttf"; sourceTree = "<group>"; };
+		7CCA229F2DB6DA3C009C14E0 /* Cabin_SemiCondensed-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Cabin_SemiCondensed-Medium.ttf"; sourceTree = "<group>"; };
+		7CCA22A02DB6DA3C009C14E0 /* Cabin_SemiCondensed-MediumItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Cabin_SemiCondensed-MediumItalic.ttf"; sourceTree = "<group>"; };
+		7CCA22A12DB6DA3C009C14E0 /* Cabin_SemiCondensed-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Cabin_SemiCondensed-Regular.ttf"; sourceTree = "<group>"; };
+		7CCA22A22DB6DA3C009C14E0 /* Cabin_SemiCondensed-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Cabin_SemiCondensed-SemiBold.ttf"; sourceTree = "<group>"; };
+		7CCA22A32DB6DA3C009C14E0 /* Cabin_SemiCondensed-SemiBoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Cabin_SemiCondensed-SemiBoldItalic.ttf"; sourceTree = "<group>"; };
+		7CCA22A42DB6DA3C009C14E0 /* Cabin-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Cabin-Bold.ttf"; sourceTree = "<group>"; };
+		7CCA22A52DB6DA3C009C14E0 /* Cabin-BoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Cabin-BoldItalic.ttf"; sourceTree = "<group>"; };
+		7CCA22A62DB6DA3C009C14E0 /* Cabin-Italic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Cabin-Italic.ttf"; sourceTree = "<group>"; };
+		7CCA22A72DB6DA3C009C14E0 /* Cabin-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Cabin-Medium.ttf"; sourceTree = "<group>"; };
+		7CCA22A82DB6DA3C009C14E0 /* Cabin-MediumItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Cabin-MediumItalic.ttf"; sourceTree = "<group>"; };
+		7CCA22A92DB6DA3C009C14E0 /* Cabin-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Cabin-SemiBold.ttf"; sourceTree = "<group>"; };
+		7CCA22AA2DB6DA3C009C14E0 /* Cabin-SemiBoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Cabin-SemiBoldItalic.ttf"; sourceTree = "<group>"; };
+		7CCA22AC2DB6DA3C009C14E0 /* Cabin-Italic-VariableFont_wdth,wght.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Cabin-Italic-VariableFont_wdth,wght.ttf"; sourceTree = "<group>"; };
+		7CCA22AD2DB6DA3C009C14E0 /* Cabin-VariableFont_wdth,wght.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Cabin-VariableFont_wdth,wght.ttf"; sourceTree = "<group>"; };
+		7CCA22AF2DB6DA3C009C14E0 /* LICENSE.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE.txt; sourceTree = "<group>"; };
+		7CCA22B22DB6DA3C009C14E0 /* Cabin-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Cabin-Regular.ttf"; sourceTree = "<group>"; };
+		7CCA22B32DB6DA3C009C14E0 /* Chewy-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Chewy-Regular.ttf"; sourceTree = "<group>"; };
+		7CCA22B42DB6DA3C009C14E0 /* Dekko-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Dekko-Regular.ttf"; sourceTree = "<group>"; };
 		7CEF7C802D68F1D400D6A430 /* Sprout.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Sprout.entitlements; sourceTree = "<group>"; };
 		7CEF7CBA2D78C1C700D6A430 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		7CEF7CC12D78C97100D6A430 /* AuthViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewModel.swift; sourceTree = "<group>"; };
@@ -185,6 +247,8 @@
 				7CCA228D2DB04840009C14E0 /* LaunchScreen.storyboard */,
 				7C11EDC42D65136C00C1BB02 /* GoogleService-Info.plist */,
 				7CF99CB62DA9985400FA49ED /* Info.plist */,
+				7CCA22912DB6D969009C14E0 /* Constants.swift */,
+				7CCA22B52DB6DA3C009C14E0 /* Fonts */,
 				7CCA22802DAD84DA009C14E0 /* Models */,
 				7C8608FC2D81FE8E005D2DE7 /* ViewModel */,
 				7CEF7CBF2D78C66900D6A430 /* Views */,
@@ -241,6 +305,74 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
+		7CCA22AB2DB6DA3C009C14E0 /* static */ = {
+			isa = PBXGroup;
+			children = (
+				7CCA22942DB6DA3C009C14E0 /* Cabin_Condensed-Bold.ttf */,
+				7CCA22952DB6DA3C009C14E0 /* Cabin_Condensed-BoldItalic.ttf */,
+				7CCA22962DB6DA3C009C14E0 /* Cabin_Condensed-Italic.ttf */,
+				7CCA22972DB6DA3C009C14E0 /* Cabin_Condensed-Medium.ttf */,
+				7CCA22982DB6DA3C009C14E0 /* Cabin_Condensed-MediumItalic.ttf */,
+				7CCA22992DB6DA3C009C14E0 /* Cabin_Condensed-Regular.ttf */,
+				7CCA229A2DB6DA3C009C14E0 /* Cabin_Condensed-SemiBold.ttf */,
+				7CCA229B2DB6DA3C009C14E0 /* Cabin_Condensed-SemiBoldItalic.ttf */,
+				7CCA229C2DB6DA3C009C14E0 /* Cabin_SemiCondensed-Bold.ttf */,
+				7CCA229D2DB6DA3C009C14E0 /* Cabin_SemiCondensed-BoldItalic.ttf */,
+				7CCA229E2DB6DA3C009C14E0 /* Cabin_SemiCondensed-Italic.ttf */,
+				7CCA229F2DB6DA3C009C14E0 /* Cabin_SemiCondensed-Medium.ttf */,
+				7CCA22A02DB6DA3C009C14E0 /* Cabin_SemiCondensed-MediumItalic.ttf */,
+				7CCA22A12DB6DA3C009C14E0 /* Cabin_SemiCondensed-Regular.ttf */,
+				7CCA22A22DB6DA3C009C14E0 /* Cabin_SemiCondensed-SemiBold.ttf */,
+				7CCA22A32DB6DA3C009C14E0 /* Cabin_SemiCondensed-SemiBoldItalic.ttf */,
+				7CCA22A42DB6DA3C009C14E0 /* Cabin-Bold.ttf */,
+				7CCA22A52DB6DA3C009C14E0 /* Cabin-BoldItalic.ttf */,
+				7CCA22A62DB6DA3C009C14E0 /* Cabin-Italic.ttf */,
+				7CCA22A72DB6DA3C009C14E0 /* Cabin-Medium.ttf */,
+				7CCA22A82DB6DA3C009C14E0 /* Cabin-MediumItalic.ttf */,
+				7CCA22A92DB6DA3C009C14E0 /* Cabin-SemiBold.ttf */,
+				7CCA22AA2DB6DA3C009C14E0 /* Cabin-SemiBoldItalic.ttf */,
+			);
+			path = static;
+			sourceTree = "<group>";
+		};
+		7CCA22AE2DB6DA3C009C14E0 /* Cabin */ = {
+			isa = PBXGroup;
+			children = (
+				7CCA22AB2DB6DA3C009C14E0 /* static */,
+				7CCA22AC2DB6DA3C009C14E0 /* Cabin-Italic-VariableFont_wdth,wght.ttf */,
+				7CCA22AD2DB6DA3C009C14E0 /* Cabin-VariableFont_wdth,wght.ttf */,
+			);
+			path = Cabin;
+			sourceTree = "<group>";
+		};
+		7CCA22B02DB6DA3C009C14E0 /* Chewy */ = {
+			isa = PBXGroup;
+			children = (
+				7CCA22AF2DB6DA3C009C14E0 /* LICENSE.txt */,
+			);
+			path = Chewy;
+			sourceTree = "<group>";
+		};
+		7CCA22B12DB6DA3C009C14E0 /* Cabin,Chewy,Dekko */ = {
+			isa = PBXGroup;
+			children = (
+				7CCA22AE2DB6DA3C009C14E0 /* Cabin */,
+				7CCA22B02DB6DA3C009C14E0 /* Chewy */,
+			);
+			path = "Cabin,Chewy,Dekko";
+			sourceTree = "<group>";
+		};
+		7CCA22B52DB6DA3C009C14E0 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				7CCA22B12DB6DA3C009C14E0 /* Cabin,Chewy,Dekko */,
+				7CCA22B22DB6DA3C009C14E0 /* Cabin-Regular.ttf */,
+				7CCA22B32DB6DA3C009C14E0 /* Chewy-Regular.ttf */,
+				7CCA22B42DB6DA3C009C14E0 /* Dekko-Regular.ttf */,
+			);
+			path = Fonts;
+			sourceTree = "<group>";
+		};
 		7CEF7CBF2D78C66900D6A430 /* Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -253,6 +385,7 @@
 				2BD12AE32DA4539C008A184E /* WorkoutHistoryDetailView.swift */,
 				7CEF7CC32D78C9C000D6A430 /* HomeView.swift */,
 				7CEF7CC52D7A2A5B00D6A430 /* AvatarView.swift */,
+				7CCA228F2DB6D835009C14E0 /* ShopView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -392,6 +525,35 @@
 			files = (
 				7C5FA9922D5E46C200DF8F8B /* Preview Assets.xcassets in Resources */,
 				7CCA228E2DB04840009C14E0 /* LaunchScreen.storyboard in Resources */,
+				7CCA22B62DB6DA3C009C14E0 /* Cabin_Condensed-Italic.ttf in Resources */,
+				7CCA22B72DB6DA3C009C14E0 /* Cabin-MediumItalic.ttf in Resources */,
+				7CCA22B82DB6DA3C009C14E0 /* Chewy-Regular.ttf in Resources */,
+				7CCA22B92DB6DA3C009C14E0 /* Cabin_Condensed-SemiBoldItalic.ttf in Resources */,
+				7CCA22BA2DB6DA3C009C14E0 /* Cabin-BoldItalic.ttf in Resources */,
+				7CCA22BB2DB6DA3C009C14E0 /* Dekko-Regular.ttf in Resources */,
+				7CCA22BC2DB6DA3C009C14E0 /* Cabin_Condensed-Regular.ttf in Resources */,
+				7CCA22BD2DB6DA3C009C14E0 /* Cabin_Condensed-BoldItalic.ttf in Resources */,
+				7CCA22BE2DB6DA3C009C14E0 /* Cabin_SemiCondensed-Italic.ttf in Resources */,
+				7CCA22BF2DB6DA3C009C14E0 /* Cabin_SemiCondensed-Medium.ttf in Resources */,
+				7CCA22C02DB6DA3C009C14E0 /* Cabin-SemiBoldItalic.ttf in Resources */,
+				7CCA22C12DB6DA3C009C14E0 /* Cabin-Italic-VariableFont_wdth,wght.ttf in Resources */,
+				7CCA22C22DB6DA3C009C14E0 /* Cabin_SemiCondensed-Regular.ttf in Resources */,
+				7CCA22C32DB6DA3C009C14E0 /* Cabin-Medium.ttf in Resources */,
+				7CCA22C42DB6DA3C009C14E0 /* Cabin_SemiCondensed-Bold.ttf in Resources */,
+				7CCA22C52DB6DA3C009C14E0 /* Cabin-Bold.ttf in Resources */,
+				7CCA22C62DB6DA3C009C14E0 /* Cabin_SemiCondensed-MediumItalic.ttf in Resources */,
+				7CCA22C72DB6DA3C009C14E0 /* Cabin-VariableFont_wdth,wght.ttf in Resources */,
+				7CCA22C82DB6DA3C009C14E0 /* Cabin-Regular.ttf in Resources */,
+				7CCA22C92DB6DA3C009C14E0 /* Cabin_Condensed-MediumItalic.ttf in Resources */,
+				7CCA22CA2DB6DA3C009C14E0 /* Cabin_SemiCondensed-SemiBold.ttf in Resources */,
+				7CCA22CB2DB6DA3C009C14E0 /* Cabin_Condensed-Medium.ttf in Resources */,
+				7CCA22CC2DB6DA3C009C14E0 /* Cabin_SemiCondensed-SemiBoldItalic.ttf in Resources */,
+				7CCA22CD2DB6DA3C009C14E0 /* Cabin_SemiCondensed-BoldItalic.ttf in Resources */,
+				7CCA22CE2DB6DA3C009C14E0 /* Cabin-Italic.ttf in Resources */,
+				7CCA22CF2DB6DA3C009C14E0 /* Cabin_Condensed-SemiBold.ttf in Resources */,
+				7CCA22D02DB6DA3C009C14E0 /* LICENSE.txt in Resources */,
+				7CCA22D12DB6DA3C009C14E0 /* Cabin-SemiBold.ttf in Resources */,
+				7CCA22D22DB6DA3C009C14E0 /* Cabin_Condensed-Bold.ttf in Resources */,
 				7C5FA98F2D5E46C200DF8F8B /* Assets.xcassets in Resources */,
 				7C11EDC52D65136C00C1BB02 /* GoogleService-Info.plist in Resources */,
 			);
@@ -422,6 +584,7 @@
 				7C5FA98B2D5E46C000DF8F8B /* SproutApp.swift in Sources */,
 				7CEF7CC22D78C97100D6A430 /* AuthViewModel.swift in Sources */,
 				2BD12AE42DA4539C008A184E /* WorkoutHistoryDetailView.swift in Sources */,
+				7CCA22902DB6D835009C14E0 /* ShopView.swift in Sources */,
 				2BD12AE22DA45318008A184E /* WorkoutHistoryView.swift in Sources */,
 				7CEF7CC62D7A2A5B00D6A430 /* AvatarView.swift in Sources */,
 				7CEF7CBB2D78C1C700D6A430 /* LoginView.swift in Sources */,
@@ -432,6 +595,7 @@
 				7CCA22812DAD84DA009C14E0 /* Workout.swift in Sources */,
 				7CCA22822DAD84DA009C14E0 /* User.swift in Sources */,
 				7CCA22832DAD84DA009C14E0 /* Appearance.swift in Sources */,
+				7CCA22922DB6D969009C14E0 /* Constants.swift in Sources */,
 				7CCA22842DAD84DA009C14E0 /* WorkoutHistoryDetailPopup.swift in Sources */,
 				7CCA22852DAD84DA009C14E0 /* HealthData.swift in Sources */,
 				7CCA22862DAD84DA009C14E0 /* WorkoutHistoryEntry.swift in Sources */,

@@ -8,121 +8,109 @@
 import SwiftUI
 
 struct AvatarView: View {
-    @State private var selectedCategory: String = "Skin Tone"
-    @State private var selectedSkinTone: Int = 0
-    @State private var selectedHairStyle: Int = 0
-    @State private var selectedEyeStyle: Int = 0
+    @Binding var user: User
 
-    let categories = ["Skin Tone", "Hair", "Eyes"]
-    let skinTones = ["skin1", "skin2", "skin3"]
-    let hairStyles = ["hair1", "hair2", "hair3", "hair4"]
-    let eyeStyles = ["eye1", "eye2", "eye3", "eye4"]
+    // Asset names
+    private let skinTones        = ["skin1", "skin2", "skin3"]
+    private let accessoryAssets  = ["hat1", "glasses1", "necklace1"]
+
+    // Pick a border color based on heart rate
+    private var borderColor: Color {
+        let hr = user.healthData.heartRate
+        switch hr {
+        case ..<60:    return .blue    // resting
+        case 60..<100: return .green   // normal
+        default:       return .red     // elevated
+        }
+    }
 
     var body: some View {
-        VStack(spacing: 30) {
-            AvatarPreview(
-                skinTone: skinTones[selectedSkinTone],
-                hairColor: hairStyles[selectedHairStyle],
-                eyeShape: eyeStyles[selectedEyeStyle]
-            )
-            .frame(height: 250)
-
-            HStack(spacing: 15) {
-                ForEach(categories, id: \.self) { category in
-                    Button(action: {
-                        selectedCategory = category
-                    }) {
-                        Text(category)
-                            .foregroundColor(.white)
-                            .padding()
-                            .background(selectedCategory == category ? Color.green : Color.tealy)
-                            .cornerRadius(10)
-                    }
-                }
-            }
-
-            HStack(spacing: 15) {
-                if selectedCategory == "Skin Tone" {
-                    ForEach(skinTones.indices, id: \.self) { index in
-                        Image(skinTones[index])
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 60, height: 60)
-                            .overlay(Circle().stroke(index == selectedSkinTone ? Color.green : Color.clear, lineWidth: 3))
-                            .onTapGesture {
-                                selectedSkinTone = index
-                            }
-                    }
-                } else if selectedCategory == "Hair" {
-                    ForEach(hairStyles.indices, id: \.self) { index in
-                        Image(hairStyles[index])
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 60, height: 60)
-                            .overlay(Circle().stroke(index == selectedHairStyle ? Color.green : Color.clear, lineWidth: 3))
-                            .onTapGesture {
-                                selectedHairStyle = index
-                            }
-                    }
-                } else if selectedCategory == "Eyes" {
-                    ForEach(eyeStyles.indices, id: \.self) { index in
-                        Image(eyeStyles[index])
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 60, height: 60)
-                            .overlay(Circle().stroke(index == selectedEyeStyle ? Color.green : Color.clear, lineWidth: 3))
-                            .onTapGesture {
-                                selectedEyeStyle = index
-                            }
-                    }
-                }
-            }
-            .padding(.bottom)
-        }
+        AvatarPreview(
+            skinImage:     skinTones[safe: user.appearance.skinColor] ?? skinTones[0],
+            accessories:   selectedAccessories()
+        )
+        .frame(height: 250)
         .padding()
+        .overlay(
+            RoundedRectangle(cornerRadius: 12)
+                .stroke(borderColor, lineWidth: 4)
+        )
+    }
+
+    // Helper to pull out the chosen accessory image names
+    private func selectedAccessories() -> [String] {
+        [user.appearance.accessory1,
+         user.appearance.accessory2,
+         user.appearance.accessory3]
+        .compactMap { $0 }                             // drop nils
+        .compactMap { accessoryAssets[safe: $0] }     // map to names, drop OOB
     }
 }
 
-
-// Avatar Preview
 struct AvatarPreview: View {
-    var skinTone: String
-    var hairColor: String
-    var eyeShape: String
+    let skinImage:    String
+    let accessories:  [String]
 
     var body: some View {
-        VStack {
-            Image("avatarBase")
-                .resizable()
-                .scaledToFit()
-                .frame(height: 250)
-                .overlay(
-                    Image(skinTone)
-                        .resizable()
-                        .scaledToFit()
-                )
-                .overlay(
-                    Image(hairColor)
-                        .resizable()
-                        .scaledToFit()
-                        .frame(height:90)
-                        .position(x: 130,y: 65)
-                )
-                .overlay(
-                Image(eyeShape)
+        Image("avatarBase")
+            .resizable()
+            .scaledToFit()
+            // skin tone
+            .overlay(
+                Image(skinImage)
                     .resizable()
                     .scaledToFit()
-                    .frame(height:50)
-                    .position(x: 123,y: 85)
-                )
+            )
+            // accessories
+            .overlay(
+                ForEach(accessories.indices, id: \.self) { i in
+                    Image(accessories[i])
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 80, height: 80)
+                        .offset(accessoryOffset(for: i))
+                }
+            )
+    }
+
+    // adjust each accessory’s position
+    private func accessoryOffset(for index: Int) -> CGSize {
+        switch index {
+        case 0: return CGSize(width: 0,   height: -80)  // e.g. hat
+        case 1: return CGSize(width: 0,   height: 20)   // e.g. glasses
+        case 2: return CGSize(width: 0,   height: 80)   // e.g. necklace
+        default:return .zero
         }
+    }
+}
+
+// Safe‐indexing extension to avoid OOB crashes
+private extension Array {
+    subscript(safe idx: Int) -> Element? {
+        indices.contains(idx) ? self[idx] : nil
     }
 }
 
 #Preview {
-    AvatarView()
+  AvatarView(
+    user: .constant(
+      User(
+        uid: "preview‑uid",
+        email: "preview@gmail.com",
+        appearance: Appearance(
+          skinColor: 1,
+          accessory1: 0,
+          accessory2: 1,
+          accessory3: nil,
+          unlockedSkins: [0,1,2],
+          unlockedAccessories: [0,1]
+        ),
+        healthData: HealthData(),
+        coins: 100
+      )
+    )
+  )
 }
-
 
 
 

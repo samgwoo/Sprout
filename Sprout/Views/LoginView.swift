@@ -10,36 +10,40 @@ import SwiftUI
 struct LoginView: View {
     @EnvironmentObject var authViewModel: AuthViewModel
     @EnvironmentObject var healthViewModel: HealthViewModel
-    @State private var email: String = ""
-    @State private var password: String = ""
-    
+
+    @State private var email    = ""
+    @State private var password = ""
+    @State private var path     = NavigationPath()
+
+    enum Route: Hashable {
+        case home
+    }
+
     var body: some View {
-        NavigationView {
+        NavigationStack(path: $path) {
             VStack(spacing: 16) {
                 Text("Login")
                     .font(.largeTitle)
                     .fontWeight(.bold)
-                
+
                 TextField("Email", text: $email)
-                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                    .textFieldStyle(.roundedBorder)
                     .keyboardType(.emailAddress)
                     .autocapitalization(.none)
                     .padding(.horizontal)
-                
+
                 SecureField("Password", text: $password)
-                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                    .textFieldStyle(.roundedBorder)
                     .padding(.horizontal)
-                
+
                 if let error = authViewModel.errorMessage {
                     Text(error)
                         .foregroundColor(.red)
                         .font(.caption)
                         .padding(.horizontal)
                 }
-                
-                Button(action: {
-                    authViewModel.login(email: email, password: password)
-                }) {
+
+                NavigationLink(value: Route.home) {
                     Text("Login")
                         .font(.headline)
                         .foregroundColor(.white)
@@ -47,43 +51,37 @@ struct LoginView: View {
                         .padding()
                         .background(Color.blue)
                         .cornerRadius(8)
+                        .padding(.horizontal)
                 }
-                .padding(.horizontal)
-                
-                Button(action: {
+                .simultaneousGesture(TapGesture().onEnded {
+                    authViewModel.login(email: email, password: password)
+                })
+
+                Button("Sign Up") {
                     authViewModel.signUp(email: email, password: password)
-                }) {
-                    Text("Sign Up")
-                        .font(.headline)
-                        .foregroundColor(.blue)
                 }
+                .font(.headline)
+                .foregroundColor(.blue)
                 .padding(.top, 8)
-                
+
                 Spacer()
             }
             .padding()
-            // Overlay a NavigationLink that's active when userSession becomes non-nil.
-            .overlay(
-                NavigationLink(
-                    destination: HomeView()
+
+            .navigationDestination(for: Route.self) { route in
+                switch route {
+                case .home:
+                    HomeView()
                         .environmentObject(authViewModel)
-                        .environmentObject(healthViewModel),
-                    isActive: Binding<Bool>(
-                        get: { authViewModel.userSession != nil },
-                        set: { _ in }
-                    )
-                ) {
-                    EmptyView()
+                        .environmentObject(healthViewModel)
                 }
-                .hidden()
-            )
+            }
         }
     }
 }
 
 struct LoginView_Previews: PreviewProvider {
     static var previews: some View {
-        // Provide mock environment objects for previewing.
         let authVM = AuthViewModel()
         let healthVM = HealthViewModel(authViewModel: authVM)
         LoginView()

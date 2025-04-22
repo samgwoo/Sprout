@@ -8,14 +8,14 @@
 import Foundation
 
 class Appearance: ObservableObject, Codable {
-    var skinColor: Int
-    var accessory1: Int?
-    var accessory2: Int?
-    var accessory3: Int?
+    @Published var skinColor: Int
+    @Published var accessory1: Int?
+    @Published var accessory2: Int?
+    @Published var accessory3: Int?
     var unlockedSkins: [Int]
     var unlockedAccessories: [Int]
     
-    init(skinColor: Int = 0, accessory1: Int? = nil, accessory2: Int? = nil, accessory3: Int? = nil, unlockedSkins: [Int], unlockedAccessories: [Int]) {
+    init(skinColor: Int = 0, accessory1: Int? = nil, accessory2: Int? = nil, accessory3: Int? = nil, unlockedSkins: [Int] = [], unlockedAccessories: [Int] = []) {
         self.skinColor = skinColor
         self.accessory1 = accessory1
         self.accessory2 = accessory2

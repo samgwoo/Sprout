@@ -12,7 +12,7 @@ class HealthViewModel: ObservableObject {
     var userId: String? {
         return authViewModel.userSession?.uid  // Get user ID from AuthViewModel
     }
-
+    
     init(authViewModel: AuthViewModel) {
         self.authViewModel = authViewModel
         requestHealthKitPermission()
@@ -23,78 +23,76 @@ class HealthViewModel: ObservableObject {
     }
     
     func requestHealthKitPermission() {
-            guard isHealthKitAvailable() else {
-                print("HealthKit is not available on this device")
-                return
-            }
-            
-            var typesToRead = Set<HKObjectType>()
-            
-            if let stepType = HKQuantityType.quantityType(forIdentifier: .stepCount) {
-                typesToRead.insert(stepType)
-            }
-            if let distanceType = HKQuantityType.quantityType(forIdentifier: .distanceWalkingRunning) {
-                typesToRead.insert(distanceType)
-            }
-            if let flightsType = HKQuantityType.quantityType(forIdentifier: .flightsClimbed) {
-                typesToRead.insert(flightsType)
-            }
-            if let heartRateType = HKQuantityType.quantityType(forIdentifier: .heartRate) {
-                typesToRead.insert(heartRateType)
-            }
-            if let hrvType = HKQuantityType.quantityType(forIdentifier: .heartRateVariabilitySDNN) {
-                typesToRead.insert(hrvType)
-            }
-            if let respType = HKQuantityType.quantityType(forIdentifier: .respiratoryRate) {
-                typesToRead.insert(respType)
-            }
-            if let massType = HKQuantityType.quantityType(forIdentifier: .bodyMass) {
-                typesToRead.insert(massType)
-            }
-            if let heightType = HKQuantityType.quantityType(forIdentifier: .height) {
-                typesToRead.insert(heightType)
-            }
-            if let washType = HKObjectType.categoryType(forIdentifier: .handwashingEvent) {
-                typesToRead.insert(washType)
-            }
-            if let envAudioType = HKQuantityType.quantityType(forIdentifier: .environmentalAudioExposure) {
-                typesToRead.insert(envAudioType)
-            }
-            if let headphoneAudioType = HKQuantityType.quantityType(forIdentifier: .headphoneAudioExposure) {
-                typesToRead.insert(headphoneAudioType)
-            }
-            if let sleepType = HKObjectType.categoryType(forIdentifier: .sleepAnalysis) {
-                typesToRead.insert(sleepType)
-            }
-            if let walkingSpeedType = HKQuantityType.quantityType(forIdentifier: .walkingSpeed) {
-                typesToRead.insert(walkingSpeedType)
-            }
-            if let walkingAsymmetryType = HKQuantityType.quantityType(forIdentifier: .walkingAsymmetryPercentage) {
-                typesToRead.insert(walkingAsymmetryType)
-            }
-            if let walkingDoubleSupportType = HKQuantityType.quantityType(forIdentifier: .walkingDoubleSupportPercentage) {
-                typesToRead.insert(walkingDoubleSupportType)
-            }
-            // Workout type always available
-            typesToRead.insert(HKObjectType.workoutType())
-            
-            guard !typesToRead.isEmpty else {
-                print("No HealthKit types available to request authorization for")
-                return
-            }
-
-            healthStore.requestAuthorization(toShare: nil, read: typesToRead) { success, error in
-                if success {
-                    print("HealthKit permission granted.")
-                    self.fetchHealthData() // ✅ Fetch data after permission is granted
-                } else {
-                    print("HealthKit permission denied: \(error?.localizedDescription ?? "Unknown error")")
-                }
+        guard isHealthKitAvailable() else {
+            print("HealthKit is not available on this device")
+            return
+        }
+        
+        var typesToRead = Set<HKObjectType>()
+        
+        if let stepType = HKQuantityType.quantityType(forIdentifier: .stepCount) {
+            typesToRead.insert(stepType)
+        }
+        if let distanceType = HKQuantityType.quantityType(forIdentifier: .distanceWalkingRunning) {
+            typesToRead.insert(distanceType)
+        }
+        if let flightsType = HKQuantityType.quantityType(forIdentifier: .flightsClimbed) {
+            typesToRead.insert(flightsType)
+        }
+        if let heartRateType = HKQuantityType.quantityType(forIdentifier: .heartRate) {
+            typesToRead.insert(heartRateType)
+        }
+        if let hrvType = HKQuantityType.quantityType(forIdentifier: .heartRateVariabilitySDNN) {
+            typesToRead.insert(hrvType)
+        }
+        if let respType = HKQuantityType.quantityType(forIdentifier: .respiratoryRate) {
+            typesToRead.insert(respType)
+        }
+        if let massType = HKQuantityType.quantityType(forIdentifier: .bodyMass) {
+            typesToRead.insert(massType)
+        }
+        if let heightType = HKQuantityType.quantityType(forIdentifier: .height) {
+            typesToRead.insert(heightType)
+        }
+        if let washType = HKObjectType.categoryType(forIdentifier: .handwashingEvent) {
+            typesToRead.insert(washType)
+        }
+        if let envAudioType = HKQuantityType.quantityType(forIdentifier: .environmentalAudioExposure) {
+            typesToRead.insert(envAudioType)
+        }
+        if let headphoneAudioType = HKQuantityType.quantityType(forIdentifier: .headphoneAudioExposure) {
+            typesToRead.insert(headphoneAudioType)
+        }
+        if let sleepType = HKObjectType.categoryType(forIdentifier: .sleepAnalysis) {
+            typesToRead.insert(sleepType)
+        }
+        if let walkingSpeedType = HKQuantityType.quantityType(forIdentifier: .walkingSpeed) {
+            typesToRead.insert(walkingSpeedType)
+        }
+        if let walkingAsymmetryType = HKQuantityType.quantityType(forIdentifier: .walkingAsymmetryPercentage) {
+            typesToRead.insert(walkingAsymmetryType)
+        }
+        if let walkingDoubleSupportType = HKQuantityType.quantityType(forIdentifier: .walkingDoubleSupportPercentage) {
+            typesToRead.insert(walkingDoubleSupportType)
+        }
+        
+        guard !typesToRead.isEmpty else {
+            print("No HealthKit types available to request authorization for")
+            return
+        }
+        
+        healthStore.requestAuthorization(toShare: nil, read: typesToRead) { success, error in
+            if success {
+                print("HealthKit permission granted.")
+                self.fetchHealthData() // ✅ Fetch data after permission is granted
+            } else {
+                print("HealthKit permission denied: \(error?.localizedDescription ?? "Unknown error")")
             }
         }
+    }
     
     func fetchHealthData() {
-        guard let userId = userId else {
+        guard let _ = userId else {
             print("User is not logged in, cannot fetch health data.")
             return
         }
@@ -117,8 +115,7 @@ class HealthViewModel: ObservableObject {
         var walkingSpeed: Double = 0.0
         var walkingAsymmetryPercentage: Double = 0.0
         var walkingDoubleSupportPercentage: Double = 0.0
-        var workoutSessions = 0
-
+        
         // STEP COUNT
         if let stepType = HKQuantityType.quantityType(forIdentifier: .stepCount) {
             dispatchGroup.enter()
@@ -305,16 +302,6 @@ class HealthViewModel: ObservableObject {
             healthStore.execute(query)
         }
         
-        // WORKOUT SESSIONS
-        let workoutType = HKWorkoutType.workoutType()
-        dispatchGroup.enter()
-        let workoutQuery = HKSampleQuery(sampleType: workoutType, predicate: nil, limit: 0, sortDescriptors: nil) { _, results, _ in
-            if let results = results {
-                workoutSessions = results.count
-            }
-            dispatchGroup.leave()
-        }
-        healthStore.execute(workoutQuery)
         
         // When all queries have completed, compile the health data and save it
         dispatchGroup.notify(queue: .main) {
@@ -333,23 +320,22 @@ class HealthViewModel: ObservableObject {
                 sleepHours: sleepHours,
                 walkingSpeed: walkingSpeed,
                 walkingAsymmetryPercentage: walkingAsymmetryPercentage,
-                walkingDoubleSupportPercentage: walkingDoubleSupportPercentage,
-                workoutSessions: workoutSessions
+                walkingDoubleSupportPercentage: walkingDoubleSupportPercentage
             )
             
             self.healthData = healthData
             self.saveHealthDataToFirestore()
         }
     }
-
     
-
+    
+    
     func saveHealthDataToFirestore() {
         guard let userId = userId, let healthData = healthData else {
             print("User is not logged in, cannot save data.")
             return
         }
-
+        
         db.collection("users").document(userId).collection("healthData").addDocument(data: healthData.toDictionary()) { error in
             if let error = error {
                 print("Error saving health data: \(error.localizedDescription)")
@@ -366,7 +352,7 @@ class HealthViewModel: ObservableObject {
             print("User is not logged in, cannot fetch data.")
             return
         }
-
+        
         db.collection("users").document(userId).collection("healthData")
             .order(by: "timestamp", descending: true)
             .limit(to: 1)
@@ -375,15 +361,29 @@ class HealthViewModel: ObservableObject {
                     print("No health data found: \(error?.localizedDescription ?? "Unknown error")")
                     return
                 }
-
+                
                 let data = document.data()
                 let fetchedData = HealthData(
                     stepCount: data["stepCount"] as? Int ?? 0,
-                    heartRate: data["heartRate"] as? Double ?? 0.0
+                    distanceWalkingRunning: data["distanceWalkingRunning"] as? Double ?? 0.0,
+                    flightsClimbed: data["flightsClimbed"] as? Int ?? 0,
+                    heartRate: data["heartRate"] as? Double ?? 0.0,
+                    heartRateVariability: data["heartRateVariability"] as? Double ?? 0.0,
+                    respiratoryRate: data["respiratoryRate"] as? Double ?? 0.0,
+                    bodyMass: data["bodyMass"] as? Double ?? 0.0,
+                    height: data["height"] as? Double ?? 0.0,
+                    handwashingEventCount: data["handwashingEventCount"] as? Int ?? 0,
+                    environmentalAudioExposure: data["environmentalAudioExposure"] as? Double ?? 0.0,
+                    headphoneAudioExposure: data["headphoneAudioExposure"] as? Double ?? 0.0,
+                    sleepHours: data["sleepHours"] as? Double ?? 0.0,
+                    walkingSpeed: data["walkingSpeed"] as? Double ?? 0.0,
+                    walkingAsymmetryPercentage: data["walkingAsymmetryPercentage"] as? Double ?? 0.0,
+                    walkingDoubleSupportPercentage: data["walkingDoubleSupportPercentage"] as? Double ?? 0.0
+                    // no workoutSessions param if you're not using it!
                 )
-
+                
                 DispatchQueue.main.async {
-                    self.healthData = fetchedData // ✅ Automatically updates UI
+                    self.healthData = fetchedData
                 }
             }
     }

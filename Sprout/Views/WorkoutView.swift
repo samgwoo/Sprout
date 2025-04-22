@@ -215,7 +215,10 @@ struct WorkoutView: View {
 }
 
 
-//#Preview {
-//    WorkoutView(w: Workout(name: "Bench Press", cat: "Push", set: 3, rep: [8, 10, 12], weight: [135, 145, 155]), workoutHistory: Binding<[WorkoutHistoryEntry]>)
-//}
+#Preview {
+    WorkoutView(
+        w: Workout(name: "Bench", cat: "Push", set: 3, rep: [8, 10, 12], weight: [135, 145, 155]),
+        workoutHistory: .constant([])
+    )
+}
 

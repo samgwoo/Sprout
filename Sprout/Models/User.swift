@@ -13,13 +13,15 @@ class User: Codable {
     var email: String
     var appearance: Appearance
     var healthData: HealthData
+    var workoutHistory: [WorkoutHistoryEntry]
     var coins: Int
 
-    init(uid: String, email: String, appearance: Appearance, healthData: HealthData, coins: Int) {
+    init(uid: String, email: String, appearance: Appearance = Appearance(), healthData: HealthData = HealthData(), workoutHistory: [WorkoutHistoryEntry] = [], coins: Int = 0) {
         self.uid = uid
         self.email = email
         self.appearance = appearance
         self.healthData = healthData
+        self.workoutHistory = workoutHistory
         self.coins = coins
     }
 
