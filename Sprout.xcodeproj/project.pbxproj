@@ -373,19 +373,27 @@
 			path = Fonts;
 			sourceTree = "<group>";
 		};
+		7CCA22D32DB80595009C14E0 /* WorkoutStuff */ = {
+			isa = PBXGroup;
+			children = (
+				2BD12ADF2DA45305008A184E /* WorkoutListView.swift */,
+				2BD12AE12DA45318008A184E /* WorkoutHistoryView.swift */,
+				2BD12ADD2DA452F4008A184E /* AddWorkoutView.swift */,
+				7CCA227E2DAD84DA009C14E0 /* WorkoutHistoryDetailPopup.swift */,
+				2BD12ADB2DA452C6008A184E /* WorkoutView.swift */,
+				2BD12AE32DA4539C008A184E /* WorkoutHistoryDetailView.swift */,
+			);
+			path = WorkoutStuff;
+			sourceTree = "<group>";
+		};
 		7CEF7CBF2D78C66900D6A430 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				7CEF7CBA2D78C1C700D6A430 /* LoginView.swift */,
-				2BD12ADB2DA452C6008A184E /* WorkoutView.swift */,
-				7CCA227E2DAD84DA009C14E0 /* WorkoutHistoryDetailPopup.swift */,
-				2BD12ADD2DA452F4008A184E /* AddWorkoutView.swift */,
-				2BD12ADF2DA45305008A184E /* WorkoutListView.swift */,
-				2BD12AE12DA45318008A184E /* WorkoutHistoryView.swift */,
-				2BD12AE32DA4539C008A184E /* WorkoutHistoryDetailView.swift */,
 				7CEF7CC32D78C9C000D6A430 /* HomeView.swift */,
+				7CEF7CBA2D78C1C700D6A430 /* LoginView.swift */,
 				7CEF7CC52D7A2A5B00D6A430 /* AvatarView.swift */,
 				7CCA228F2DB6D835009C14E0 /* ShopView.swift */,
+				7CCA22D32DB80595009C14E0 /* WorkoutStuff */,
 			);
 			path = Views;
 			sourceTree = "<group>";

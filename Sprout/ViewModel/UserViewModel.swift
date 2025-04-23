@@ -14,39 +14,42 @@ class UserViewModel: ObservableObject {
     
     private let db = Firestore.firestore()
     
-    func fetchUserProfile(uid: String) {
+    func fetchUserProfile(uid: String, completion: ((Bool) -> Void)? = nil) {
         let userRef = db.collection("users").document(uid)
+        
         userRef.getDocument { [weak self] snapshot, error in
             if let error = error {
                 DispatchQueue.main.async {
                     self?.errorMessage = error.localizedDescription
+                    completion?(false)
                 }
                 return
             }
             
-            if let snapshot = snapshot, snapshot.exists, let data = snapshot.data() {
-                do {
-                    // Convert dictionary data to JSON, then decode into a User object.
-                    let jsonData = try JSONSerialization.data(withJSONObject: data, options: [])
-                    let decodedUser = try JSONDecoder().decode(User.self, from: jsonData)
+            do {
+                if let snapshot = snapshot, snapshot.exists {
+                    let decodedUser = try snapshot.data(as: User.self)
                     DispatchQueue.main.async {
                         self?.user = decodedUser
-                        print("User profile fetched: \(decodedUser)")
+                        print("✅ User profile fetched successfully")
+                        completion?(true)
                     }
-                } catch {
+                } else {
                     DispatchQueue.main.async {
-                        self?.errorMessage = "Decoding error: \(error.localizedDescription)"
+                        self?.errorMessage = "User profile does not exist."
+                        completion?(false)
                     }
                 }
-            } else {
+            } catch {
                 DispatchQueue.main.async {
-                    self?.errorMessage = "User profile does not exist."
+                    self?.errorMessage = "Decoding error: \(error.localizedDescription)"
+                    completion?(false)
                 }
             }
         }
     }
+
     
-    /// Update the user profile in Firestore using the User's dictionary.
     func updateUserProfile(newUser: User) {
         let userRef = db.collection("users").document(newUser.uid)
         let data = newUser.toDictionary()

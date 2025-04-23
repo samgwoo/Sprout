@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct AvatarView: View {
-    @Binding var user: User
+    @EnvironmentObject var user: User
 
     // Asset names
     private let skinTones        = ["skin1", "skin2", "skin3"]
@@ -91,26 +91,6 @@ private extension Array {
     }
 }
 
-#Preview {
-  AvatarView(
-    user: .constant(
-      User(
-        uid: "preview‑uid",
-        email: "preview@gmail.com",
-        appearance: Appearance(
-          skinColor: 1,
-          accessory1: 0,
-          accessory2: 1,
-          accessory3: nil,
-          unlockedSkins: [0,1,2],
-          unlockedAccessories: [0,1]
-        ),
-        healthData: HealthData(),
-        coins: 100
-      )
-    )
-  )
-}
 
 
 

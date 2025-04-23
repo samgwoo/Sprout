@@ -33,25 +33,30 @@ struct SproutApp: App {
     }
 }
 
+import SwiftUI
+
 struct RootView: View {
     @EnvironmentObject var authViewModel: AuthViewModel
     @EnvironmentObject var userViewModel: UserViewModel
+
     var body: some View {
-        ZStack{
+        ZStack {
             Color(.systemBackground)
                 .ignoresSafeArea()
-            
-            Group {
-                if authViewModel.userSession == nil {
-                    LoginView()
-                } else {
-                    HomeView()
-                        .onAppear {
-                            if let uid = authViewModel.userSession?.uid {
-                                userViewModel.fetchUserProfile(uid: uid)
+
+            if authViewModel.userSession == nil {
+                LoginView()
+            } else {
+                HomeView()
+                    .onAppear {
+                        if let uid = authViewModel.userSession?.uid {
+                            userViewModel.fetchUserProfile(uid: uid) { exists in
+                                if !exists, let email = authViewModel.userSession?.email {
+                                    userViewModel.createDefaultUserProfile(uid: uid, email: email)
+                                }
                             }
                         }
-                }
+                    }
             }
         }
     }

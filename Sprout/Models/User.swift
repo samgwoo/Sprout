@@ -8,7 +8,7 @@
 import Foundation
 import FirebaseFirestore
 
-class User: Codable {
+class User: Codable, ObservableObject {
     let uid: String  // Unique identifier from Firebase Auth
     var email: String
     var appearance: Appearance

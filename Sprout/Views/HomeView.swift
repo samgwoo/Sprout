@@ -11,6 +11,7 @@ import FirebaseAuth
 struct HomeView: View {
     @EnvironmentObject var authViewModel : AuthViewModel
     @EnvironmentObject var userViewModel : UserViewModel
+    @State private var workouts : [WorkoutHistoryEntry] = []
 
         var body: some View {
             TabView {
@@ -19,7 +20,8 @@ struct HomeView: View {
                         Label("Home", systemImage: "house")
                     }
 
-                HealthDataView()
+                WorkoutListView(workoutHistory: $workouts)
+                    .environmentObject(userViewModel)
                     .tabItem {
                         Label("Health", systemImage: "heart.fill")
                     }
@@ -29,7 +31,13 @@ struct HomeView: View {
                         Label("Profile", systemImage: "person.crop.circle")
                     }
             }
+            .onAppear {
+                    if let userWorkouts = userViewModel.user?.workoutHistory {
+                        self.workouts = userWorkouts
+                    }
+                }
         }
+    
     }
 
 struct DashboardView: View {
@@ -51,7 +59,7 @@ struct HealthDataView: View {
 }
 
 struct ProfileView: View {
-    @EnvironmentObject var viewModel: AuthViewModel
+    @EnvironmentObject var authViewModel: AuthViewModel
 
     var body: some View {
         VStack {
@@ -60,7 +68,7 @@ struct ProfileView: View {
                 .padding()
 
             Button(action: {
-                viewModel.logout()
+                authViewModel.logout()
             }) {
                 Text("Logout")
                     .font(.headline)
@@ -78,5 +86,11 @@ struct ProfileView: View {
 
 
 #Preview {
-    HomeView().environmentObject(AuthViewModel())
+    let authVM = AuthViewModel()
+
+    HomeView()
+        .environmentObject(authVM)
+        .environmentObject(UserViewModel())
+        .environmentObject(HealthViewModel(authViewModel: authVM))
+
 }

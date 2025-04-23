@@ -43,7 +43,9 @@ struct LoginView: View {
                         .padding(.horizontal)
                 }
 
-                NavigationLink(value: Route.home) {
+                Button(action: {
+                    authViewModel.login(email: email, password: password)
+                }) {
                     Text("Login")
                         .font(.headline)
                         .foregroundColor(.white)
@@ -53,9 +55,6 @@ struct LoginView: View {
                         .cornerRadius(8)
                         .padding(.horizontal)
                 }
-                .simultaneousGesture(TapGesture().onEnded {
-                    authViewModel.login(email: email, password: password)
-                })
 
                 Button("Sign Up") {
                     authViewModel.signUp(email: email, password: password)
@@ -68,9 +67,7 @@ struct LoginView: View {
             }
             .padding()
 
-            .navigationDestination(for: Route.self) { route in
-                switch route {
-                case .home:
+            .navigationDestination(isPresented: .constant(authViewModel.userSession != nil)) {
                     HomeView()
                         .environmentObject(authViewModel)
                         .environmentObject(healthViewModel)
@@ -78,7 +75,7 @@ struct LoginView: View {
             }
         }
     }
-}
+
 
 struct LoginView_Previews: PreviewProvider {
     static var previews: some View {
