@@ -16,7 +16,7 @@ class Workout: ObservableObject, Identifiable, Codable {
     @Published var set: Int
     @Published var rep: [Int]
     @Published var weight: [Int]
-
+    
     // Designated initializer now accepts an `id`
     init(
         id: UUID = UUID(),
@@ -33,13 +33,18 @@ class Workout: ObservableObject, Identifiable, Codable {
         self.rep    = rep
         self.weight = weight
     }
-
+    
+    
+    
+    
+    
+    
     // MARK: - Codable
-
+    
     enum CodingKeys: String, CodingKey {
         case id, name, cat, set, rep, weight
     }
-
+    
     required convenience init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         let id     = try container.decode(UUID.self,    forKey: .id)
@@ -57,7 +62,7 @@ class Workout: ObservableObject, Identifiable, Codable {
             weight: weight
         )
     }
-
+    
     func encode(to encoder: Encoder) throws {
         var container = encoder.container(keyedBy: CodingKeys.self)
         try container.encode(id,     forKey: .id)
@@ -67,4 +72,48 @@ class Workout: ObservableObject, Identifiable, Codable {
         try container.encode(rep,    forKey: .rep)
         try container.encode(weight, forKey: .weight)
     }
+    
+    var upperbody: Int {
+        let w = weight.max() ?? 0
+        let n = name.lowercased()
+        
+        if n.contains("bench") {
+            if w > 200{
+                return 2
+            } else if w > 100 {
+                return 1
+            } else {
+                return 0
+            }
+        }
+        return 0
+    }
+    
+    
+    var lowerbody: Int {
+        let w = weight.max() ?? 0
+        let n = name.lowercased()
+        
+        if n.contains("squat") {
+            if w > 250{
+                return 2
+            } else if w > 150 {
+                return 1
+            } else {
+                return 0
+            }
+        }
+        return 0
+    }
+    
+    
+    
+    
+    
+    
+    
+    
 }
+
+
+
