@@ -85,4 +85,29 @@ class UserViewModel: ObservableObject {
             }
         }
     }
+    func buySkin(at index: Int, price: Int) {
+            guard let current = user else { return }
+            guard !current.appearance.unlockedSkins.contains(index),
+                  current.coins >= price else { return }
+            
+            current.coins -= price
+            current.appearance.unlockedSkins.append(index)
+        
+            self.user = current
+
+            updateUserProfile(newUser: current)
+        }
+    func buyAccessory(at index: Int, price: Int) {
+            guard let current = user else { return }
+            guard !current.appearance.unlockedAccessories.contains(index),
+                  current.coins >= price else { return }
+            
+            current.coins -= price
+            current.appearance.unlockedAccessories.append(index)
+            
+            self.user = current
+
+            updateUserProfile(newUser: current)
+        }
+    
 }

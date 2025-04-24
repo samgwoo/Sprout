@@ -15,14 +15,11 @@ class HealthData: Codable {
     var distanceWalkingRunning: Double
     var flightsClimbed: Int
     
-    var heartRate: Double
     var heartRateVariability: Double
-    var respiratoryRate: Double
     
     var bodyMass: Double
     var height: Double
     
-    var handwashingEventCount: Int
     var environmentalAudioExposure: Double
     var headphoneAudioExposure: Double
     
@@ -36,12 +33,9 @@ class HealthData: Codable {
         stepCount: Int = 0,
         distanceWalkingRunning: Double = 0.0,
         flightsClimbed: Int = 0,
-        heartRate: Double = 0.0,
         heartRateVariability: Double = 0.0,
-        respiratoryRate: Double = 0.0,
         bodyMass: Double = 0.0,
         height: Double = 0.0,
-        handwashingEventCount: Int = 0,
         environmentalAudioExposure: Double = 0.0,
         headphoneAudioExposure: Double = 0.0,
         sleepHours: Double = 0.0,
@@ -53,12 +47,9 @@ class HealthData: Codable {
         self.stepCount = stepCount
         self.distanceWalkingRunning = distanceWalkingRunning
         self.flightsClimbed = flightsClimbed
-        self.heartRate = heartRate
         self.heartRateVariability = heartRateVariability
-        self.respiratoryRate = respiratoryRate
         self.bodyMass = bodyMass
         self.height = height
-        self.handwashingEventCount = handwashingEventCount
         self.environmentalAudioExposure = environmentalAudioExposure
         self.headphoneAudioExposure = headphoneAudioExposure
         self.sleepHours = sleepHours
@@ -74,12 +65,9 @@ class HealthData: Codable {
                 "stepCount": stepCount,
                 "distanceWalkingRunning": distanceWalkingRunning,
                 "flightsClimbed": flightsClimbed,
-                "heartRate": heartRate,
                 "heartRateVariability": heartRateVariability,
-                "respiratoryRate": respiratoryRate,
                 "bodyMass": bodyMass,
                 "height": height,
-                "handwashingEventCount": handwashingEventCount,
                 "environmentalAudioExposure": environmentalAudioExposure,
                 "headphoneAudioExposure": headphoneAudioExposure,
                 "sleepHours": sleepHours,

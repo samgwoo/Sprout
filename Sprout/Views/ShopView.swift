@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct ShopView: View {
-    @EnvironmentObject var appearance: Appearance
+    @EnvironmentObject var userVM: UserViewModel
     @State private var selectedTab: Tab = .skins
 
     enum Tab: String, CaseIterable {
@@ -9,103 +9,251 @@ struct ShopView: View {
         case accessories = "Accessories"
     }
 
-    // Your assets
-    private let skinOptions      = ["skin1", "skin2", "skin3"]
-    private let accessoryOptions = ["hat1", "glasses1", "necklace1"]
+    // MARK: – Assets + Prices
+    private let skinOptions      = ["purple","yellow","green"]
+    private let skinPrices       = [100,200,300]
+    private let accessoryOptions = [
+        "none",         // special “clear all” slot
+        "bag","flowers","greenbowtie",
+        "yellowbowtie","greenhair","pigtail",
+        "longhair1"
+    ]
+    private let accessoryPrices  = [0,50,75,60,60,80,70,120]
 
-    // Three flexible columns = exactly 3 items per row
     private let columns = Array(
         repeating: GridItem(.flexible(), spacing: 16),
         count: 3
     )
 
     var body: some View {
-        VStack {
-            // Picker for Skins vs Accessories
-            Picker("", selection: $selectedTab) {
-                ForEach(Tab.allCases, id: \.self) { tab in
-                    Text(tab.rawValue).tag(tab)
-                }
-            }
-            .pickerStyle(SegmentedPickerStyle())
-            .padding()
-
-            // Grid with 3 items per row
-            ScrollView {
-                LazyVGrid(columns: columns, spacing: 16) {
-                    ForEach(currentOptions.indices, id: \.self) { index in
-                        VStack(spacing: 8) {
-                            Image(currentOptions[index])
-                                .resizable()
-                                .scaledToFit()
-                                .frame(width: 80, height: 80)
-
-                            let owned = isUnlocked(index)
-                            Text(owned ? "Owned" : "Buy")
-                                .font(Constants.searchFont)
-                                .foregroundColor(owned ? .secondary : .accentGreen)
-                                .lineLimit(1)
-                                .fixedSize()
-
-                            Button(action: {
-                                if !owned {
-                                    if selectedTab == .skins {
-                                        appearance.unlockedSkins.append(index)
-                                    } else {
-                                        appearance.unlockedAccessories.append(index)
-                                    }
-                                }
-                            }) {
-                                EmptyView()
-                            }
-                            .buttonStyle(.plain)
-                            .disabled(owned)
-                        }
-                        .padding()
-                        .frame(minWidth: 0, maxWidth: .infinity) // split evenly
-                        .background(
-                            RoundedRectangle(cornerRadius: 8)
-                                .stroke(isUnlocked(index) ? Color.secondary : Color.accentGreen,
-                                        lineWidth: 2)
-                        )
+        Group {
+            if let user = userVM.user {
+                VStack(spacing: 12) {
+                    // Coin balance
+                    HStack {
+                        Image(systemName: "bitcoinsign.circle.fill")
+                            .foregroundColor(.yellow)
+                        Text("\(user.coins)")
+                            .font(.headline)
+                        Spacer()
                     }
+                    .padding(.horizontal)
+
+                    // Skins vs Accessories
+                    Picker("", selection: $selectedTab) {
+                        ForEach(Tab.allCases, id:\.self) {
+                            Text($0.rawValue).tag($0)
+                        }
+                    }
+                    .pickerStyle(SegmentedPickerStyle())
+                    .padding(.horizontal)
+
+                    // Grid
+                    ScrollView {
+                        LazyVGrid(columns: columns, spacing: 16) {
+                            ForEach(currentOptions.indices, id:\.self) { idx in
+                                let price = currentPrice(at: idx)
+                                let owned = isOwned(idx, user:user)
+                                let equipped = isEquipped(idx, user:user)
+                                let size: CGFloat = (selectedTab == .accessories) ? 100 : 80
+
+                                VStack(spacing: 8) {
+                                    if let ui = UIImage(named: currentOptions[idx]) {
+                                        let trimmed = ui.trimmingTransparentPixels()
+                                        Image(uiImage: trimmed)
+                                            .resizable()
+                                            .scaledToFit()
+                                            .frame(width: size, height: size)
+                                    } else {
+                                        Color.clear.frame(width: size, height: size)
+                                    }
+                                    
+                                    if owned {
+                                        Text(equipped ? "Equipped" : (selectedTab == .accessories && idx==0 ? "Clear All" : "Owned"))
+                                            .font(Constants.searchFont)
+                                            .foregroundColor(equipped ? .accentGreen : .secondary)
+                                    } else {
+                                        Text("\(price) coins")
+                                            .font(Constants.searchFont)
+                                            .foregroundColor(user.coins >= price ? .accentGreen : .pink)
+                                    }
+                                    
+                                    // Button: Buy / Equip / None
+                                    Button {
+                                        handleTap(idx, owned: owned, equipped: equipped, price: price)
+                                    } label: {
+                                        Text(buttonTitle(idx, owned: owned, equipped: equipped))
+                                            .font(.subheadline.bold())
+                                            .foregroundColor(.white)
+                                            .padding(.vertical,6)
+                                            .padding(.horizontal,12)
+                                            .background(buttonColor(idx, owned: owned, equipped: equipped, coins:user.coins, price:price))
+                                            .cornerRadius(6)
+                                    }
+                                    .disabled(buttonDisabled(idx, owned: owned, equipped: equipped, coins:user.coins, price:price))
+                                }
+                                .frame(maxWidth: .infinity)
+                                        .overlay(
+                                          RoundedRectangle(cornerRadius: 8)
+                                            .strokeBorder(
+                                              equipped
+                                                 ? Color.accentGreen
+                                                 : (owned
+                                                    ? Color.secondary
+                                                : Color.accentGreen),
+                                               lineWidth: 2
+                                            )
+                                        )
+                            }
+                        }
+                    }
+                    .padding(.horizontal, 16)
+
                 }
-                .padding()
+                
+                .navigationTitle("Shop")
+                .font(Constants.headerFont)
+
+            } else {
+                ProgressView("Loading…")
             }
         }
-        .navigationTitle("Shop")
-        .font(Constants.headerFont)
     }
 
-    // MARK: - Helpers
+    // MARK: – Helpers
 
     private var currentOptions: [String] {
         selectedTab == .skins ? skinOptions : accessoryOptions
     }
 
-    private func isUnlocked(_ index: Int) -> Bool {
-        if selectedTab == .skins {
-            return appearance.unlockedSkins.contains(index)
-        } else {
-            return appearance.unlockedAccessories.contains(index)
+    private func currentPrice(at index:Int) -> Int {
+        selectedTab == .skins
+            ? skinPrices[index]
+            : accessoryPrices[index]
+    }
+
+    private func isOwned(_ idx:Int, user:User) -> Bool {
+        switch selectedTab {
+        case .skins:
+            return user.appearance.unlockedSkins.contains(idx)
+        case .accessories:
+            return idx == 0 || user.appearance.unlockedAccessories.contains(idx)
+        }
+    }
+
+    private func isEquipped(_ idx:Int, user:User) -> Bool {
+        switch selectedTab {
+        case .skins:
+            return user.appearance.skinColor == idx
+        case .accessories:
+            // idx==0 (“none”) is treated equipped when all slots nil
+            if idx == 0 {
+                return user.appearance.accessory1 == nil
+                    && user.appearance.accessory2 == nil
+                    && user.appearance.accessory3 == nil
+            }
+            return [user.appearance.accessory1,
+                    user.appearance.accessory2,
+                    user.appearance.accessory3]
+                    .contains(idx)
+        }
+    }
+
+    private func handleTap(_ idx:Int, owned:Bool, equipped:Bool, price:Int) {
+        guard let user = userVM.user else { return }
+        switch selectedTab {
+        case .skins:
+            if !owned {
+                userVM.buySkin(at: idx, price: price)
+            } else if !equipped {
+                // equip skin
+                user.appearance.skinColor = idx
+                userVM.updateUserProfile(newUser: user)
+            }
+        case .accessories:
+            if !owned {
+                userVM.buyAccessory(at: idx, price: price)
+            } else {
+                // idx==0 -> clear all
+                if idx == 0 {
+                    user.appearance.accessory1 = nil
+                    user.appearance.accessory2 = nil
+                    user.appearance.accessory3 = nil
+                } else if !equipped {
+                    // roll: fill first empty slot or rotate out oldest
+                    let slots = [
+                        user.appearance.accessory1,
+                        user.appearance.accessory2,
+                        user.appearance.accessory3
+                    ]
+                    if slots[0] == nil {
+                        user.appearance.accessory1 = idx
+                    } else if slots[1] == nil {
+                        user.appearance.accessory2 = idx
+                    } else if slots[2] == nil {
+                        user.appearance.accessory3 = idx
+                    } else {
+                        // shift left
+                        user.appearance.accessory1 = slots[1]
+                        user.appearance.accessory2 = slots[2]
+                        user.appearance.accessory3 = idx
+                    }
+                }
+                userVM.updateUserProfile(newUser: user)
+            }
+        }
+    }
+
+    private func buttonTitle(_ idx:Int, owned:Bool, equipped:Bool) -> String {
+        switch selectedTab {
+        case .skins:
+            if !owned { return "Buy" }
+            return equipped ? "Equipped" : "Equip"
+        case .accessories:
+            if !owned { return "Buy" }
+            if idx == 0 { return isEquipped(idx, user: userVM.user!) ? "Equipped" : "None" }
+            return equipped ? "Equipped" : "Equip"
+        }
+    }
+
+    private func buttonColor(_ idx:Int, owned:Bool, equipped:Bool, coins:Int, price:Int) -> Color {
+        if !owned { return coins >= price ? .accentGreen : .gray }
+        return equipped ? .gray : .accentGreen
+    }
+
+    private func buttonDisabled(_ idx:Int, owned:Bool, equipped:Bool, coins:Int, price:Int) -> Bool {
+        switch selectedTab {
+        case .skins:
+            return (!owned && coins < price) || equipped
+        case .accessories:
+            if !owned { return coins < price }
+            return equipped
         }
     }
 }
 
-struct ShopView_Previews: PreviewProvider {
-    static var previews: some View {
-        NavigationView {
-            ShopView()
-                .environmentObject(
-                    Appearance(
-                        skinColor: 0,
-                        accessory1: nil,
-                        accessory2: nil,
-                        accessory3: nil,
-                        unlockedSkins: [0],
-                        unlockedAccessories: []
-                    )
-                )
-        }
+
+// Preview
+
+#Preview("Shop View Preview") {
+    let vm = UserViewModel()
+    vm.user = User(
+        uid: "previewUID",
+        email: "preview@example.com",
+        appearance: Appearance(
+            skinColor: 0,
+            accessory1: nil,
+            accessory2: nil,
+            accessory3: nil,
+            unlockedSkins: [0],
+            unlockedAccessories: [2]
+        ),
+        healthData: HealthData(),
+        workoutHistory: [],
+        coins: 250
+    )
+    return NavigationView {
+        ShopView()
+            .environmentObject(vm)
     }
 }
