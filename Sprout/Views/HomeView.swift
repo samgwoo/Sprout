@@ -42,10 +42,18 @@ struct HomeView: View {
 
 struct DashboardView: View {
     var body: some View {
-        VStack {
-            Text("Welcome to Sprout! 🌱")
-                .font(.title)
-                .padding()
+        ZStack{
+            Image("background1")
+                .resizable()
+                .aspectRatio(contentMode: .fill)
+                .ignoresSafeArea()
+                .opacity(0.3) // Static and opacity set
+
+            VStack {
+                Text("Welcome to Sprout! 🌱")
+                    .font(.title)
+                    .padding()
+            }
         }
     }
 }
