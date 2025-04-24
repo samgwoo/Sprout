@@ -55,6 +55,26 @@ struct HomeView: View {
                     }
                     .disabled(syncing)
                 }
+// <<<<<<< emmmily
+//         }
+    
+//     }
+
+// struct DashboardView: View {
+//     var body: some View {
+//         ZStack{
+//             Image("background1")
+//                 .resizable()
+//                 .aspectRatio(contentMode: .fill)
+//                 .ignoresSafeArea()
+//                 .opacity(0.3) // Static and opacity set
+
+//             VStack {
+//                 Text("Welcome to Sprout! 🌱")
+//                     .font(.title)
+//                     .padding()
+// =======
+// >>>>>>> main
             }
         }
     }
