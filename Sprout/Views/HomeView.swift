@@ -6,91 +6,96 @@
 //
 
 import SwiftUI
-import FirebaseAuth
+import FirebaseFirestore
 
 struct HomeView: View {
-    @EnvironmentObject var authViewModel : AuthViewModel
-    @EnvironmentObject var userViewModel : UserViewModel
-    @State private var workouts : [WorkoutHistoryEntry] = []
-
-        var body: some View {
+    @EnvironmentObject var authVM  : AuthViewModel          // kept for future use
+    @EnvironmentObject var userVM  : UserViewModel
+    @EnvironmentObject var healthVM: HealthViewModel
+    
+    @State private var workouts: [WorkoutHistoryEntry] = []
+    @State private var syncing = false
+    
+    var body: some View {
+        NavigationStack {
             TabView {
-                DashboardView()
-                    .tabItem {
-                        Label("Home", systemImage: "house")
-                    }
-
-                WorkoutListView(workoutHistory: $workouts)
-                    .environmentObject(userViewModel)
-                    .tabItem {
-                        Label("Health", systemImage: "heart.fill")
-                    }
-
-                ProfileView()
-                    .tabItem {
-                        Label("Profile", systemImage: "person.crop.circle")
-                    }
-            }
-            .onAppear {
-                    if let userWorkouts = userViewModel.user?.workoutHistory {
-                        self.workouts = userWorkouts
+                // ── Avatar tab ────────────────────────────────
+                Group {
+                    if let user = userVM.user {
+                        AvatarView().environmentObject(user)
+                    } else {
+                        ProgressView()
                     }
                 }
-        }
-    
-    }
-
-struct DashboardView: View {
-    var body: some View {
-        VStack {
-            Text("Welcome to Sprout! 🌱")
-                .font(.title)
-                .padding()
-        }
-    }
-}
-
-struct HealthDataView: View {
-    var body: some View {
-        Text("Health Data Coming Soon!")
-            .font(.title2)
-            .padding()
-    }
-}
-
-struct ProfileView: View {
-    @EnvironmentObject var authViewModel: AuthViewModel
-
-    var body: some View {
-        VStack {
-            Text("Your Profile")
-                .font(.title)
-                .padding()
-
-            Button(action: {
-                authViewModel.logout()
-            }) {
-                Text("Logout")
-                    .font(.headline)
-                    .foregroundColor(.white)
-                    .padding()
-                    .frame(maxWidth: .infinity)
-                    .background(Color.red)
-                    .cornerRadius(8)
+                .tabItem { Label("Home", systemImage: "house") }
+                
+                // ── Workouts tab ──────────────────────────────
+                WorkoutListView(workoutHistory: $workouts)
+                    .environmentObject(userVM)
+                    .tabItem { Label("Workouts", systemImage: "heart.fill") }
+                
+                // ── Shop tab ─────────────────────────────────
+                ShopView()
+                    .environmentObject(userVM)
+                    .tabItem { Label("Shop", systemImage: "cart") }
             }
-            .padding()
+            .navigationTitle("Sprout")
+            .onAppear {
+                // pull workouts once at launch
+                workouts = userVM.user?.workoutHistory ?? []
+            }
+            .toolbar {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button {
+                        syncNow()
+                    } label: {
+                        syncing ?
+                            AnyView(ProgressView()) :
+                            AnyView(Image(systemName: "arrow.clockwise"))
+                    }
+                    .disabled(syncing)
+                }
+            }
+        }
+    }
+    
+    /// Gets fresh HealthKit, merges it into the user object, then pushes via `userVM.updateUserProfile`.
+    private func syncNow() {
+        guard var user = userVM.user else { return }
+        syncing = true
+        
+        // 1 ── fetch HealthKit
+        healthVM.fetchHealthData()
+        
+        // 2 ── wait 1 s for HealthKit callback, merge, push, update UI
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) { [self] in
+            if let newHD = healthVM.healthData {
+                user.healthData = newHD
+                userVM.updateUserProfile(newUser: user)     // this pushes to Firestore
+                self.workouts = user.workoutHistory         // keep the local array in sync
+            }
+            self.syncing = false
         }
     }
 }
 
-
-
+// MARK: – Preview
 #Preview {
-    let authVM = AuthViewModel()
-
-    HomeView()
-        .environmentObject(authVM)
-        .environmentObject(UserViewModel())
-        .environmentObject(HealthViewModel(authViewModel: authVM))
-
+    let auth   = AuthViewModel()
+    let userVM = UserViewModel()
+    let health = HealthViewModel(authViewModel: auth)
+    
+    userVM.user = User(
+        uid: "demo",
+        email: "demo@sprout.app",
+        appearance: Appearance(skinColor: 1),
+        healthData: HealthData(sleepHours: 7),
+        workoutHistory: [],
+        coins: 200
+    )
+    
+    return HomeView()
+        .environmentObject(auth)
+        .environmentObject(userVM)
+        .environmentObject(health)
 }

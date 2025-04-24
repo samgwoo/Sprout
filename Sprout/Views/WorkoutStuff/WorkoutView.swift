@@ -1,138 +1,116 @@
-//
-//  WorkoutView.swift
-//  Test
-//
-//  Created by Neal Ahuja (student LM) on 2/19/25.
-//
-
 import SwiftUI
 
 struct WorkoutView: View {
-    @ObservedObject var w: Workout
-    @State private var showingHistoryView = false
-    @State private var selectedHistoryEntry: WorkoutHistoryEntry?
-    @State private var showingHistoryDetail = false
+    @ObservedObject var exercise: Exercise
     @Binding var workoutHistory: [WorkoutHistoryEntry]
 
     var body: some View {
         VStack {
-            VStack {
-                ZStack {
-                    Text(w.cat)
-                        .font(.title)
-                        .bold()
-                        .foregroundColor(.green)
-                }
-                Spacer()
+            // MARK: – Header
+            Text(exercise.cat)
+                .font(.title).bold().foregroundColor(.green)
+                .padding(.top)
 
-                HStack {
-                    Button {
-                        if w.set > 1 {
-                            w.set -= 1
-                            w.weight[w.weight.count - 1] = 0
-                        }
-                    } label: {
-                        Image(systemName: "minus")
-                            .foregroundColor(.red)
-                    }
-                    .padding(.horizontal)
-
-                    Spacer()
-                    Text(w.name.uppercased())
-                        .font(.headline)
-                        .foregroundColor(.gray)
-                    Spacer()
-
-                    Button {
-                        if w.set < 7 {
-                            w.set += 1
-                            w.rep.append(0)
-                            w.weight.append(0)
-                        }
-                    } label: {
-                        Image(systemName: "plus")
-                            .foregroundColor(.green)
-                    }
-                    .padding(.horizontal)
-                }
-
-                Rectangle()
-                    .fill(Color.green)
-                    .frame(height: 5)
-                    .padding(.horizontal)
-
-                HStack {
-                    Spacer()
-                    Text("Weight")
-                        .font(.caption)
-                        .bold()
-                        .foregroundColor(.gray)
-                    Spacer()
-                    Text("Reps")
-                        .font(.caption)
-                        .bold()
-                        .foregroundColor(.gray)
-                    Spacer()
-                }
-
-                ForEach(0..<w.set, id: \.self) { i in
-                    HStack {
-                        Spacer()
-                        if w.weight[i] != -5 {
-                            TextField(
-                                "0",
-                                text: Binding(
-                                    get: { "\(w.weight[i])" },
-                                    set: { if let val = Int($0) { w.weight[i] = val } }
-                                )
-                            )
-                            .keyboardType(.numberPad)
-                            .textFieldStyle(.roundedBorder)
-                            .frame(width: 50)
-                            .foregroundColor(.gray)
-                        }
-                        Spacer()
-                        TextField(
-                            "0",
-                            text: Binding(
-                                get: { "\(w.rep[i])" },
-                                set: { if let val = Int($0) { w.rep[i] = val } }
-                            )
-                        )
-                        .keyboardType(.numberPad)
-                        .textFieldStyle(.roundedBorder)
-                        .frame(width: 50)
-                        .foregroundColor(.gray)
-                        Spacer()
-                    }
+            // MARK: – Name + Set controls
+            HStack {
+                Button {
+                    guard exercise.sets.count > 1 else { return }
+                    exercise.sets.removeLast()
+                } label: {
+                    Image(systemName: "minus.circle.fill")
+                        .font(.title2)
+                        .foregroundColor(.red)
                 }
 
                 Spacer()
-            }
 
-            Button {
-                showingHistoryView = true
-            } label: {
-                VStack {
-                    Image(systemName: "arrow.up")
-                        .foregroundColor(.green)
-                    Text("History")
-                        .font(.caption)
-                        .bold()
-                        .padding(4)
+                Text(exercise.name.uppercased())
+                    .font(.headline).foregroundColor(.gray)
+
+                Spacer()
+
+                Button {
+                    guard exercise.sets.count < 7 else { return }
+                    exercise.sets.append(LiftSet(weight: 0, reps: 0))
+                } label: {
+                    Image(systemName: "plus.circle.fill")
+                        .font(.title2)
                         .foregroundColor(.green)
                 }
             }
+            .padding(.horizontal)
+
+            Divider().padding(.vertical)
+
+            // MARK: – Column headers
+            HStack {
+                Spacer()
+                Text("Weight")
+                    .font(.caption).bold().foregroundColor(.gray)
+                Spacer()
+                Text("Reps")
+                    .font(.caption).bold().foregroundColor(.gray)
+                Spacer()
+            }
+
+            // MARK: – Sets editor
+            ForEach($exercise.sets) { $set in
+                HStack {
+                    Spacer()
+
+                    TextField(
+                        "0",
+                        value: $set.weight,
+                        formatter: NumberFormatter()
+                    )
+                    .keyboardType(.numberPad)
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                    .frame(width: 50)
+
+                    Spacer()
+
+                    TextField(
+                        "0",
+                        value: $set.reps,
+                        formatter: NumberFormatter()
+                    )
+                    .keyboardType(.numberPad)
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                    .frame(width: 50)
+
+                    Spacer()
+                }
+                .padding(.vertical, 4)
+            }
+
+            Spacer()
         }
-        .sheet(isPresented: $showingHistoryView) {
-            WorkoutHistoryView(historyEntries: workoutHistory)
-        }
+        .padding()
     }
 }
 
-#Preview {
-    WorkoutView(
-        w: Workout(name: "Bench", cat: "Push", set: 3, rep: [8, 10, 12], weight: [135, 145, 155]),
-        workoutHistory: .constant([])
-    )
+struct WorkoutView_Previews: PreviewProvider {
+    @State static var sampleHistory: [WorkoutHistoryEntry] = [
+        WorkoutHistoryEntry(
+            date: Date(),
+            workout: [
+                Exercise(
+                    name: "Bench Press",
+                    cat: "Push",
+                    sets: [
+                        LiftSet(weight: 135, reps: 8),
+                        LiftSet(weight: 145, reps: 10),
+                        LiftSet(weight: 155, reps: 12)
+                    ]
+                )
+            ]
+        )
+    ]
+
+    static var previews: some View {
+        WorkoutView(
+            exercise: sampleHistory[0].workout[0],
+            workoutHistory: $sampleHistory
+        )
+    }
 }
