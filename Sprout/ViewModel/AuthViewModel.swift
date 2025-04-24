@@ -9,40 +9,35 @@ import SwiftUI
 import FirebaseAuth
 import FirebaseFirestore
 
-
 class AuthViewModel: ObservableObject {
-    @Published var userSession: FirebaseAuth.User? // Stores the logged-in user
-    @Published var errorMessage: String? // Stores authentication errors
-    
-    private var db = Firestore.firestore()
+    @Published var userSession: FirebaseAuth.User? // Raw FirebaseAuth session
+    @Published var errorMessage: String?
     
     init() {
-        self.userSession = Auth.auth().currentUser // Check if user is already logged in
+        self.userSession = Auth.auth().currentUser
     }
     
     func login(email: String, password: String) {
-        Auth.auth().signIn(withEmail: email, password: password) { result, error in
+        Auth.auth().signIn(withEmail: email, password: password) { [weak self] result, error in
             DispatchQueue.main.async {
                 if let error = error {
-                    self.errorMessage = error.localizedDescription
-                } else {
-                    self.userSession = result?.user
-                    self.fetchUserProfile()
+                    self?.errorMessage = error.localizedDescription
+                } else if let user = result?.user {
+                    self?.userSession = user
                 }
             }
         }
     }
     
-    func signUp(email: String, password: String, healthVM : HealthViewModel) {
-        Auth.auth().createUser(withEmail: email, password: password) { result, error in
+    func signUp(email: String, password: String) {
+        Auth.auth().createUser(withEmail: email, password: password) { [weak self] result, error in
             DispatchQueue.main.async {
                 if let error = error {
-                    self.errorMessage = error.localizedDescription
-                } else {
-                    self.userSession = result?.user
-                    self.createUserProfile()
-                    
-                    healthVM.fetchHealthData()
+                    self?.errorMessage = error.localizedDescription
+                    return
+                }
+                if let user = result?.user {
+                    self?.userSession = user
                 }
             }
         }
@@ -58,38 +53,4 @@ class AuthViewModel: ObservableObject {
             print("Error signing out: \(error.localizedDescription)")
         }
     }
-    private func createUserProfile() {
-            guard let user = userSession else { return }
-            let userRef = db.collection("users").document(user.uid)
-
-            let userData: [String: Any] = [
-                "email": user.email ?? "",
-                "appearance": ["skinColor": 0, "accessory1": nil, "accessory2": nil, "accessory3": nil], // default appearance
-                "healthData": ["stepCount": 0, "heartRate": 75.0] // default health data
-            ]
-
-            userRef.setData(userData) { error in
-                if let error = error {
-                    print("Error creating user profile: \(error.localizedDescription)")
-                } else {
-                    print("User profile successfully created!")
-                }
-            }
-        }
-
-        private func fetchUserProfile() {
-            guard let user = userSession else { return }
-            let userRef = db.collection("users").document(user.uid)
-
-            userRef.getDocument { snapshot, error in
-                if let error = error {
-                    print("Error fetching user profile: \(error.localizedDescription)")
-                } else if let snapshot = snapshot, snapshot.exists {
-                    let data = snapshot.data()
-                    print("User profile fetched: \(data ?? [:])")
-                    
-                }
-            }
-        }
-
 }

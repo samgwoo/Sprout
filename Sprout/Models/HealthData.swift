@@ -31,9 +31,7 @@ class HealthData: Codable {
     var walkingSpeed: Double
     var walkingAsymmetryPercentage: Double
     var walkingDoubleSupportPercentage: Double
-    
-    var workoutSessions: Int
-    
+        
     init(
         stepCount: Int = 0,
         distanceWalkingRunning: Double = 0.0,
@@ -49,8 +47,7 @@ class HealthData: Codable {
         sleepHours: Double = 0.0,
         walkingSpeed: Double = 0.0,
         walkingAsymmetryPercentage: Double = 0.0,
-        walkingDoubleSupportPercentage: Double = 0.0,
-        workoutSessions: Int = 0
+        walkingDoubleSupportPercentage: Double = 0.0
     ) {
         self.timeStamp = Date()
         self.stepCount = stepCount
@@ -68,7 +65,6 @@ class HealthData: Codable {
         self.walkingSpeed = walkingSpeed
         self.walkingAsymmetryPercentage = walkingAsymmetryPercentage
         self.walkingDoubleSupportPercentage = walkingDoubleSupportPercentage
-        self.workoutSessions = workoutSessions
     }
     
     // Convert to JSON for sharing
@@ -90,7 +86,6 @@ class HealthData: Codable {
                 "walkingSpeed": walkingSpeed,
                 "walkingAsymmetryPercentage": walkingAsymmetryPercentage,
                 "walkingDoubleSupportPercentage": walkingDoubleSupportPercentage,
-                "workoutSessions": workoutSessions
             ]
         }
 }

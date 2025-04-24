@@ -8,20 +8,20 @@
 import Foundation
 import FirebaseFirestore
 
-class User: Codable {
+class User: Codable, ObservableObject {
     let uid: String  // Unique identifier from Firebase Auth
     var email: String
-    var friends: [String]  // List of user UIDs (friend list)
     var appearance: Appearance
     var healthData: HealthData
+    var workoutHistory: [WorkoutHistoryEntry]
     var coins: Int
 
-    init(uid: String, email: String, friends: [String] = [], appearance: Appearance, healthData: HealthData, coins: Int) {
+    init(uid: String, email: String, appearance: Appearance = Appearance(), healthData: HealthData = HealthData(), workoutHistory: [WorkoutHistoryEntry] = [], coins: Int = 0) {
         self.uid = uid
         self.email = email
-        self.friends = friends
         self.appearance = appearance
         self.healthData = healthData
+        self.workoutHistory = workoutHistory
         self.coins = coins
     }
 
@@ -29,10 +29,9 @@ class User: Codable {
         return [
             "uid": uid,
             "email": email,
-            "friends": friends,
             "appearance": appearance.toDictionary(),
             "healthData": healthData.toDictionary(),
-            "coins": String(coins)
+            "coins": coins
         ]
     }
 }

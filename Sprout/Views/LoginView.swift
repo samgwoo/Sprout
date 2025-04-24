@@ -7,71 +7,82 @@
 
 import SwiftUI
 
-
 struct LoginView: View {
-    @EnvironmentObject  var viewModel : AuthViewModel
-    @EnvironmentObject var healthviewModel : HealthViewModel
-        @State private var email = ""
-        @State private var password = ""
+    @EnvironmentObject var authViewModel: AuthViewModel
+    @EnvironmentObject var healthViewModel: HealthViewModel
 
-        var body: some View {
-            NavigationView {
-                VStack(spacing: 16) {
-                    Text("Login")
-                        .font(.largeTitle)
-                        .fontWeight(.bold)
+    @State private var email    = ""
+    @State private var password = ""
+    @State private var path     = NavigationPath()
 
-                    TextField("Email", text: $email)
-                        .textFieldStyle(RoundedBorderTextFieldStyle())
-                        .keyboardType(.emailAddress)
-                        .autocapitalization(.none)
-                        .padding(.horizontal)
+    enum Route: Hashable {
+        case home
+    }
 
-                    SecureField("Password", text: $password)
-                        .textFieldStyle(RoundedBorderTextFieldStyle())
-                        .padding(.horizontal)
+    var body: some View {
+        NavigationStack(path: $path) {
+            VStack(spacing: 16) {
+                Text("Login")
+                    .font(.largeTitle)
+                    .fontWeight(.bold)
 
-                    if let errorMessage = viewModel.errorMessage {
-                        Text(errorMessage)
-                            .foregroundColor(.red)
-                            .font(.caption)
-                            .padding(.horizontal)
-                    }
-
-                    Button(action: {
-                        viewModel.login(email: email, password: password)
-                    }) {
-                        Text("Login")
-                            .font(.headline)
-                            .foregroundColor(.white)
-                            .frame(maxWidth: .infinity)
-                            .padding()
-                            .background(Color.blue)
-                            .cornerRadius(8)
-                    }
+                TextField("Email", text: $email)
+                    .textFieldStyle(.roundedBorder)
+                    .keyboardType(.emailAddress)
+                    .autocapitalization(.none)
                     .padding(.horizontal)
 
-                    Button(action: {
-                        viewModel.signUp(email: email, password: password, healthVM: healthviewModel)
-                    }) {
-                        Text("Sign Up")
-                            .font(.headline)
-                            .foregroundColor(.blue)
-                    }
-                    .padding(.top, 8)
+                SecureField("Password", text: $password)
+                    .textFieldStyle(.roundedBorder)
+                    .padding(.horizontal)
 
-                    Spacer()
+                if let error = authViewModel.errorMessage {
+                    Text(error)
+                        .foregroundColor(.red)
+                        .font(.caption)
+                        .padding(.horizontal)
                 }
-                .padding()
-                .background(
-                    NavigationLink(destination: HomeView(), isActive: .constant(viewModel.userSession != nil)) {
-                        EmptyView()
-                    }
-                    .hidden()
-                )
+
+                Button(action: {
+                    authViewModel.login(email: email, password: password)
+                }) {
+                    Text("Login")
+                        .font(.headline)
+                        .foregroundColor(.white)
+                        .frame(maxWidth: .infinity)
+                        .padding()
+                        .background(Color.blue)
+                        .cornerRadius(8)
+                        .padding(.horizontal)
+                }
+
+                Button("Sign Up") {
+                    authViewModel.signUp(email: email, password: password)
+                }
+                .font(.headline)
+                .foregroundColor(.blue)
+                .padding(.top, 8)
+
+                Spacer()
+            }
+            .padding()
+
+            .navigationDestination(isPresented: .constant(authViewModel.userSession != nil)) {
+                    HomeView()
+                        .environmentObject(authViewModel)
+                        .environmentObject(healthViewModel)
+                }
             }
         }
     }
-#Preview {
-    LoginView()
+
+
+struct LoginView_Previews: PreviewProvider {
+    static var previews: some View {
+        let authVM = AuthViewModel()
+        let healthVM = HealthViewModel(authViewModel: authVM)
+        LoginView()
+            .environmentObject(authVM)
+            .environmentObject(healthVM)
+    }
 }
