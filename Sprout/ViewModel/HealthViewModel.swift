@@ -39,23 +39,14 @@ class HealthViewModel: ObservableObject {
         if let flightsType = HKQuantityType.quantityType(forIdentifier: .flightsClimbed) {
             typesToRead.insert(flightsType)
         }
-        if let heartRateType = HKQuantityType.quantityType(forIdentifier: .heartRate) {
-            typesToRead.insert(heartRateType)
-        }
         if let hrvType = HKQuantityType.quantityType(forIdentifier: .heartRateVariabilitySDNN) {
             typesToRead.insert(hrvType)
-        }
-        if let respType = HKQuantityType.quantityType(forIdentifier: .respiratoryRate) {
-            typesToRead.insert(respType)
         }
         if let massType = HKQuantityType.quantityType(forIdentifier: .bodyMass) {
             typesToRead.insert(massType)
         }
         if let heightType = HKQuantityType.quantityType(forIdentifier: .height) {
             typesToRead.insert(heightType)
-        }
-        if let washType = HKObjectType.categoryType(forIdentifier: .handwashingEvent) {
-            typesToRead.insert(washType)
         }
         if let envAudioType = HKQuantityType.quantityType(forIdentifier: .environmentalAudioExposure) {
             typesToRead.insert(envAudioType)
@@ -103,12 +94,9 @@ class HealthViewModel: ObservableObject {
         var stepCount = 0
         var distanceWalkingRunning: Double = 0.0
         var flightsClimbed = 0
-        var heartRate: Double = 0.0
         var heartRateVariability: Double = 0.0
-        var respiratoryRate: Double = 0.0
         var bodyMass: Double = 0.0
         var height: Double = 0.0
-        var handwashingEventCount = 0
         var environmentalAudioExposure: Double = 0.0
         var headphoneAudioExposure: Double = 0.0
         var sleepHours: Double = 0.0
@@ -152,17 +140,6 @@ class HealthViewModel: ObservableObject {
             healthStore.execute(query)
         }
         
-        // HEART RATE
-        if let heartRateType = HKQuantityType.quantityType(forIdentifier: .heartRate) {
-            dispatchGroup.enter()
-            let query = HKSampleQuery(sampleType: heartRateType, predicate: nil, limit: 1, sortDescriptors: nil) { _, results, _ in
-                if let sample = results?.first as? HKQuantitySample {
-                    heartRate = sample.quantity.doubleValue(for: HKUnit.count().unitDivided(by: HKUnit.minute()))
-                }
-                dispatchGroup.leave()
-            }
-            healthStore.execute(query)
-        }
         
         // HEART RATE VARIABILITY
         if let hrvType = HKQuantityType.quantityType(forIdentifier: .heartRateVariabilitySDNN) {
@@ -176,17 +153,6 @@ class HealthViewModel: ObservableObject {
             healthStore.execute(query)
         }
         
-        // RESPIRATORY RATE
-        if let respType = HKQuantityType.quantityType(forIdentifier: .respiratoryRate) {
-            dispatchGroup.enter()
-            let query = HKSampleQuery(sampleType: respType, predicate: nil, limit: 1, sortDescriptors: nil) { _, results, _ in
-                if let sample = results?.first as? HKQuantitySample {
-                    respiratoryRate = sample.quantity.doubleValue(for: HKUnit.count().unitDivided(by: HKUnit.minute()))
-                }
-                dispatchGroup.leave()
-            }
-            healthStore.execute(query)
-        }
         
         // BODY MASS
         if let massType = HKQuantityType.quantityType(forIdentifier: .bodyMass) {
@@ -212,17 +178,6 @@ class HealthViewModel: ObservableObject {
             healthStore.execute(query)
         }
         
-        // HANDWASHING EVENT COUNT
-        if let handwashingType = HKObjectType.categoryType(forIdentifier: .handwashingEvent) {
-            dispatchGroup.enter()
-            let query = HKSampleQuery(sampleType: handwashingType, predicate: nil, limit: 0, sortDescriptors: nil) { _, results, _ in
-                if let results = results {
-                    handwashingEventCount = results.count
-                }
-                dispatchGroup.leave()
-            }
-            healthStore.execute(query)
-        }
         
         // ENVIRONMENTAL AUDIO EXPOSURE
         if let envAudioType = HKQuantityType.quantityType(forIdentifier: .environmentalAudioExposure) {
@@ -309,12 +264,9 @@ class HealthViewModel: ObservableObject {
                 stepCount: stepCount,
                 distanceWalkingRunning: distanceWalkingRunning,
                 flightsClimbed: flightsClimbed,
-                heartRate: heartRate,
                 heartRateVariability: heartRateVariability,
-                respiratoryRate: respiratoryRate,
                 bodyMass: bodyMass,
                 height: height,
-                handwashingEventCount: handwashingEventCount,
                 environmentalAudioExposure: environmentalAudioExposure,
                 headphoneAudioExposure: headphoneAudioExposure,
                 sleepHours: sleepHours,
@@ -367,12 +319,9 @@ class HealthViewModel: ObservableObject {
                     stepCount: data["stepCount"] as? Int ?? 0,
                     distanceWalkingRunning: data["distanceWalkingRunning"] as? Double ?? 0.0,
                     flightsClimbed: data["flightsClimbed"] as? Int ?? 0,
-                    heartRate: data["heartRate"] as? Double ?? 0.0,
                     heartRateVariability: data["heartRateVariability"] as? Double ?? 0.0,
-                    respiratoryRate: data["respiratoryRate"] as? Double ?? 0.0,
                     bodyMass: data["bodyMass"] as? Double ?? 0.0,
                     height: data["height"] as? Double ?? 0.0,
-                    handwashingEventCount: data["handwashingEventCount"] as? Int ?? 0,
                     environmentalAudioExposure: data["environmentalAudioExposure"] as? Double ?? 0.0,
                     headphoneAudioExposure: data["headphoneAudioExposure"] as? Double ?? 0.0,
                     sleepHours: data["sleepHours"] as? Double ?? 0.0,

@@ -1,96 +1,122 @@
-//
-//  AvatarView.swift
-//  Sprout
-//
-//  Created by Samuel Wu (student LM) on 3/6/25.
-//
-
 import SwiftUI
 
 struct AvatarView: View {
     @EnvironmentObject var user: User
-
-    // Asset names
-    private let skinTones        = ["skin1", "skin2", "skin3"]
-    private let accessoryAssets  = ["hat1", "glasses1", "necklace1"]
-
-    // Pick a border color based on heart rate
-    private var borderColor: Color {
-        let hr = user.healthData.heartRate
-        switch hr {
-        case ..<60:    return .blue    // resting
-        case 60..<100: return .green   // normal
-        default:       return .red     // elevated
+    
+    // MARK: static tables
+    private let skins   = ["green", "purple", "yellow"]
+    private let accKeys = ["greenbowtie", "greenhair", "pigtail", "longhair", "yellowbowtie"]
+    
+    // MARK:- runtime helpers
+    private var prefix: String                     { skins[user.appearance.skinColor] }
+    private var latest: WorkoutHistoryEntry?       { user.workoutHistory.max { $0.date < $1.date } }
+    private var hd: HealthData                     { user.healthData }
+    
+    private var upper: Int {
+        guard let w = latest else { return 0 }
+        return max(w.pushStrength, w.pullStrength)
+    }
+    private var lower: Int { latest?.legStrength ?? 0 }
+    
+    // missing-sleep ⇒ no eyes
+    private var showEyes: Bool {
+        hd.sleepHours >= 6          // slept enough?  yes ⇒ draw eyes
+    }
+    // high gait asymmetry (>10 %) ⇒ drop right foot
+    private var showRightFoot: Bool {
+        hd.walkingAsymmetryPercentage < 10
+    }
+    
+    private var torso: String? {
+        switch upper {
+        case 1: return "\(prefix)torso1"
+        case 2: return "\(prefix)torso2"
+        default: return nil
         }
     }
-
-    var body: some View {
-        AvatarPreview(
-            skinImage:     skinTones[safe: user.appearance.skinColor] ?? skinTones[0],
-            accessories:   selectedAccessories()
-        )
-        .frame(height: 250)
-        .padding()
-        .overlay(
-            RoundedRectangle(cornerRadius: 12)
-                .stroke(borderColor, lineWidth: 4)
-        )
+    private var legs: String? {
+        switch lower {
+        case 1: return "\(prefix)legs1"
+        case 2: return "\(prefix)legs2"
+        default: return nil
+        }
     }
-
-    // Helper to pull out the chosen accessory image names
-    private func selectedAccessories() -> [String] {
+    
+    private var accessories: [String] {
         [user.appearance.accessory1,
          user.appearance.accessory2,
          user.appearance.accessory3]
-        .compactMap { $0 }                             // drop nils
-        .compactMap { accessoryAssets[safe: $0] }     // map to names, drop OOB
-    }
-}
-
-struct AvatarPreview: View {
-    let skinImage:    String
-    let accessories:  [String]
-
-    var body: some View {
-        Image("avatarBase")
-            .resizable()
-            .scaledToFit()
-            // skin tone
-            .overlay(
-                Image(skinImage)
-                    .resizable()
-                    .scaledToFit()
-            )
-            // accessories
-            .overlay(
-                ForEach(accessories.indices, id: \.self) { i in
-                    Image(accessories[i])
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 80, height: 80)
-                        .offset(accessoryOffset(for: i))
-                }
-            )
-    }
-
-    // adjust each accessory’s position
-    private func accessoryOffset(for index: Int) -> CGSize {
-        switch index {
-        case 0: return CGSize(width: 0,   height: -80)  // e.g. hat
-        case 1: return CGSize(width: 0,   height: 20)   // e.g. glasses
-        case 2: return CGSize(width: 0,   height: 80)   // e.g. necklace
-        default:return .zero
+        .compactMap { idxOpt in
+            guard let i = idxOpt, i < accKeys.count else { return nil }
+            let key = accKeys[i]
+            if key == "longhair", prefix != "purple" { return nil }          // longhair only on purple skin
+            return key == "longhair" ? "longhair\(upper + 1)" : key
         }
     }
-}
-
-// Safe‐indexing extension to avoid OOB crashes
-private extension Array {
-    subscript(safe idx: Int) -> Element? {
-        indices.contains(idx) ? self[idx] : nil
+    
+    // MARK:- view
+    var body: some View {
+        ZStack {
+            // base + heart
+            Image("\(prefix)base").resizable().scaledToFit()
+            Image("\(prefix)heart").resizable().scaledToFit()
+            
+            // conditional eye
+            if showEyes {
+                Image("\(prefix)eye").resizable().scaledToFit()
+            }
+            
+            // feet (always left, right only if gait OK)
+            Image("\(prefix)leftfoot").resizable().scaledToFit()
+            if showRightFoot {
+                Image("\(prefix)rightfoot").resizable().scaledToFit()
+            }
+            
+            // strength overlays
+            if let t = torso { Image(t).resizable().scaledToFit() }
+            if let l = legs  { Image(l).resizable().scaledToFit() }
+            
+            // accessories
+            ForEach(accessories, id: \.self) { Image($0).resizable().scaledToFit() }
+        }
+        .frame(width: 400, height: 400)          // bigger character
     }
 }
 
 
 
-
+#Preview {
+    let squat = Exercise(
+        name: "Squat",
+        cat: "legs",
+        sets: [LiftSet(weight: 260, reps: 5)]
+    )
+    
+    let bench = Exercise(
+        name: "Bench Press",
+        cat: "push",
+        sets: [LiftSet(weight: 170, reps: 5)]
+    )
+    
+    let entry = WorkoutHistoryEntry(date: .now, workout: [squat, bench])
+    
+    let previewUser = User(
+        uid: "demo",
+        email: "demo@sprout.app",
+        appearance: Appearance(
+            skinColor: 0,
+            accessory1: 0,
+            accessory2: 3
+        ),
+        healthData: {
+            var h = HealthData()
+            h.heartRateVariability = 82
+            return h
+        }(),
+        workoutHistory: [entry]
+    )
+    
+    AvatarView()
+        .environmentObject(previewUser)
+        .padding()
+}

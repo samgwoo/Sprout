@@ -15,7 +15,7 @@ struct Constants {
 }
 
 extension Color {
-    static let accentGreen  = Color("green")
+    static let accentGreen  = Color("grean")
     static let accentTeal   = Color("tealy")
-    static let accentYellow = Color("yellow")
+    static let accentYellow = Color("yello")
 }

@@ -61,3 +61,46 @@ struct RootView: View {
         }
     }
 }
+
+
+extension UIImage {
+  func trimmingTransparentPixels() -> UIImage {
+    guard let cg = cgImage,
+          let data = cg.dataProvider?.data,
+          let ptr = CFDataGetBytePtr(data)
+    else { return self }
+
+    let w = cg.width, h = cg.height
+    let bpp = cg.bitsPerPixel / 8
+    let rowBytes = cg.bytesPerRow
+
+    var minX = w, minY = h, maxX = 0, maxY = 0
+
+    for y in 0..<h {
+      for x in 0..<w {
+        let alpha = ptr[y*rowBytes + x*bpp + (bpp-1)]
+        if alpha > 0 {
+          minX = min(minX, x)
+          minY = min(minY, y)
+          maxX = max(maxX, x)
+          maxY = max(maxY, y)
+        }
+      }
+    }
+
+    let cropWidth = maxX - minX + 1
+    let cropHeight = maxY - minY + 1
+
+    // if there was no non-transparent pixel, or the computed rect is invalid, bail
+    guard cropWidth > 0, cropHeight > 0,
+          let cropped = cg.cropping(to: CGRect(x: minX,
+                                               y: minY,
+                                               width: cropWidth,
+                                               height: cropHeight))
+    else {
+      return self
+    }
+
+    return UIImage(cgImage: cropped, scale: scale, orientation: imageOrientation)
+  }
+}
