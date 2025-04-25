@@ -5,10 +5,9 @@ struct EntryRow: View {
 
     var body: some View {
         HStack {
-            Text(entry.workout.first?.cat.uppercased() ?? "—")
+            Text(entry.split.uppercased())
                 .font(.caption).bold().foregroundColor(.white)
-                .padding(5).background(Color.green)
-                .cornerRadius(7)
+                .padding(5).background(Color.green).cornerRadius(7)
             Spacer()
             Text(entry.date, style: .date)
                 .foregroundColor(.green)
@@ -41,8 +40,7 @@ struct ExerciseListView: View {
                         )
                     }
                 } else {
-                    Text("Workout not found")
-                        .foregroundColor(.secondary)
+                    Text("Workout not found").foregroundColor(.secondary)
                 }
             }
             .padding()
@@ -50,44 +48,40 @@ struct ExerciseListView: View {
         .navigationTitle("Exercises")
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
-                Button {
-                    showingAddExercise = true
-                } label: {
+                Button { showingAddExercise = true } label: {
                     Image(systemName: "plus.circle.fill")
-                        .font(.title2)
-                        .foregroundColor(.green)
+                        .font(.title2).foregroundColor(.green)
                 }
             }
         }
-        .alert("New Exercise", isPresented: $showingAddExercise, actions: {
+        .alert("New Exercise", isPresented: $showingAddExercise) {
             TextField("Exercise name", text: $newExerciseName)
             Button("Add") {
                 guard let idx = entryIndex,
                       !newExerciseName.trimmingCharacters(in: .whitespaces).isEmpty
                 else { return }
-
-                // create with one empty LiftSet
                 let added = Exercise(
                     name: newExerciseName,
                     cat: newExerciseName,
                     sets: [LiftSet(weight: 0, reps: 0)]
                 )
                 historyEntries[idx].workout.append(added)
-
-                // persist back to userVM
                 if var u = userVM.user {
                     u.workoutHistory = historyEntries
                     userVM.updateUserProfile(newUser: u)
                 }
-
                 newExerciseName = ""
             }
-            Button("Cancel", role: .cancel) {
-                newExerciseName = ""
-            }
-        }, message: {
+            Button("Cancel", role: .cancel) { newExerciseName = "" }
+        } message: {
             Text("Enter a name for your new exercise")
-        })
+        }
+        .onChange(of: historyEntries) { newValue in
+            if var u = userVM.user {
+                u.workoutHistory = newValue
+                userVM.updateUserProfile(newUser: u)
+            }
+        }
     }
 }
 
@@ -96,7 +90,6 @@ struct WorkoutListView: View {
     @EnvironmentObject var userVM: UserViewModel
     @State private var showingAddWorkout = false
 
-    // present entries in reverse chronological order
     private var sortedEntries: [WorkoutHistoryEntry] {
         workoutHistory.sorted { $0.date > $1.date }
     }
@@ -126,18 +119,12 @@ struct WorkoutListView: View {
                 }
             }
             .sheet(isPresented: $showingAddWorkout) {
-                AddSplitView { newExercise in
-                    let newEntry = WorkoutHistoryEntry(
-                        date: Date(),
-                        workout: [newExercise]
-                    )
+                AddSplitView { newEntry in
                     workoutHistory.append(newEntry)
-
                     if var u = userVM.user {
                         u.workoutHistory = workoutHistory
                         userVM.updateUserProfile(newUser: u)
                     }
-
                     showingAddWorkout = false
                 }
             }
@@ -149,18 +136,10 @@ struct WorkoutListView_Previews: PreviewProvider {
     @State static var sampleHistory: [WorkoutHistoryEntry] = [
         WorkoutHistoryEntry(
             date: Date().addingTimeInterval(-3600),
+            split: "Push",
             workout: [
                 Exercise(
                     name: "Bench Press",
-                    cat: "Push",
-                    sets: [
-                        LiftSet(weight: 135, reps: 8),
-                        LiftSet(weight: 145, reps: 10),
-                        LiftSet(weight: 155, reps: 12)
-                    ]
-                ),
-                Exercise(
-                    name: "Overhead Press",
                     cat: "Push",
                     sets: [
                         LiftSet(weight: 135, reps: 8),
@@ -172,6 +151,7 @@ struct WorkoutListView_Previews: PreviewProvider {
         ),
         WorkoutHistoryEntry(
             date: Date().addingTimeInterval(-86400),
+            split: "Legs",
             workout: [
                 Exercise(
                     name: "Squat",
@@ -188,7 +168,18 @@ struct WorkoutListView_Previews: PreviewProvider {
     ]
 
     static var previews: some View {
-        WorkoutListView(workoutHistory: $sampleHistory)
-            .environmentObject(UserViewModel())
+        let auth = AuthViewModel()
+        let userVM = UserViewModel(authVM: auth)
+        userVM.user = User(
+            uid: "previewUID",
+            email: "preview@sprout.app",
+            appearance: Appearance(skinColor: 0),
+            healthData: [],
+            workoutHistory: sampleHistory,
+            coins: 0
+        )
+
+        return WorkoutListView(workoutHistory: $sampleHistory)
+            .environmentObject(userVM)
     }
 }

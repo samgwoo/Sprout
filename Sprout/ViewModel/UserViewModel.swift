@@ -7,106 +7,91 @@
 
 import SwiftUI
 import FirebaseFirestore
+import FirebaseAuth
 
-class UserViewModel: ObservableObject {
+@MainActor
+final class UserViewModel: ObservableObject {
+    
     @Published var user: User?
     @Published var errorMessage: String?
     
     private let db = Firestore.firestore()
+    private let authVM: AuthViewModel
+
+    init(authVM: AuthViewModel) {
+            self.authVM = authVM
+        }
     
-    func fetchUserProfile(uid: String, completion: ((Bool) -> Void)? = nil) {
-        let userRef = db.collection("users").document(uid)
-        
-        userRef.getDocument { [weak self] snapshot, error in
-            if let error = error {
-                DispatchQueue.main.async {
-                    self?.errorMessage = error.localizedDescription
-                    completion?(false)
-                }
-                return
-            }
-            
-            do {
-                if let snapshot = snapshot, snapshot.exists {
-                    let decodedUser = try snapshot.data(as: User.self)
-                    DispatchQueue.main.async {
-                        self?.user = decodedUser
-                        print("✅ User profile fetched successfully")
+    private var uid: String? { authVM.userSession?.uid }
+
+    
+    func fetchUserProfile(completion: ((Bool) -> Void)? = nil) {
+            guard let uid else { completion?(false); return }
+            let ref = db.collection("users").document(uid)
+            ref.getDocument { [weak self] snap, err in
+                if let err { self?.errorMessage = err.localizedDescription; completion?(false); return }
+                do {
+                    if let snap, snap.exists {
+                        self?.user = try snap.data(as: User.self)
                         completion?(true)
-                    }
-                } else {
-                    DispatchQueue.main.async {
+                    } else {
                         self?.errorMessage = "User profile does not exist."
                         completion?(false)
                     }
-                }
-            } catch {
-                DispatchQueue.main.async {
+                } catch {
                     self?.errorMessage = "Decoding error: \(error.localizedDescription)"
                     completion?(false)
                 }
             }
         }
-    }
 
     
     func updateUserProfile(newUser: User) {
-        let userRef = db.collection("users").document(newUser.uid)
-        let data = newUser.toDictionary()
-        userRef.setData(data) { [weak self] error in
-            if let error = error {
-                DispatchQueue.main.async {
-                    self?.errorMessage = error.localizedDescription
-                }
-            } else {
-                DispatchQueue.main.async {
-                    self?.user = newUser
-                    print("User profile updated successfully!")
-                }
+            guard let uid else { return }
+            let ref = db.collection("users").document(uid)
+            ref.setData(newUser.toDictionary()) { [weak self] err in
+                if let err { self?.errorMessage = err.localizedDescription }
+                else { self?.user = newUser }
             }
         }
-    }
     
-    func createDefaultUserProfile(uid: String, email: String) {
-        let defaultAppearance = Appearance(skinColor: 0, accessory1: nil, accessory2: nil, accessory3: nil, unlockedSkins: [], unlockedAccessories: [])
-        let defaultHealthData = HealthData()
-        let defaultUser = User(uid: uid, email: email, appearance: defaultAppearance, healthData: defaultHealthData, coins: 0)
-        let userRef = db.collection("users").document(uid)
-        userRef.setData(defaultUser.toDictionary()) { [weak self] error in
-            if let error = error {
-                DispatchQueue.main.async {
-                    self?.errorMessage = error.localizedDescription
-                }
-            } else {
-                DispatchQueue.main.async {
-                    self?.user = defaultUser
-                    print("Default user profile created!")
-                }
-            }
+    func createDefaultUserProfile(email: String) {
+            guard let uid else { return }
+            let defaultUser = User(
+                uid: uid,
+                email: email,
+                appearance: Appearance(skinColor: 0),
+                healthData: [],
+                workoutHistory: [],
+                coins: 0
+            )
+            updateUserProfile(newUser: defaultUser)
         }
-    }
+    
     func buySkin(at index: Int, price: Int) {
-            guard let current = user else { return }
-            guard !current.appearance.unlockedSkins.contains(index),
+            guard var current = user,
+                  !current.appearance.unlockedSkins.contains(index),
                   current.coins >= price else { return }
-            
             current.coins -= price
             current.appearance.unlockedSkins.append(index)
-        
-            self.user = current
-
+            user = current
             updateUserProfile(newUser: current)
         }
+    
     func buyAccessory(at index: Int, price: Int) {
-            guard let current = user else { return }
-            guard !current.appearance.unlockedAccessories.contains(index),
+            guard var current = user,
+                  !current.appearance.unlockedAccessories.contains(index),
                   current.coins >= price else { return }
-            
             current.coins -= price
             current.appearance.unlockedAccessories.append(index)
-            
-            self.user = current
-
+            user = current
+            updateUserProfile(newUser: current)
+        }
+    
+    func appendHealthData(_ newData: HealthData) {
+            guard var current = user else { return }
+            current.healthData.append(newData)
+            user = current
             updateUserProfile(newUser: current)
         }
     

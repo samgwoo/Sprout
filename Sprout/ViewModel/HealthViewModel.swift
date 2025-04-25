@@ -1,20 +1,23 @@
 import SwiftUI
 import HealthKit
 import FirebaseFirestore
+import FirebaseAuth
 
-class HealthViewModel: ObservableObject {
+@MainActor
+final class HealthViewModel: ObservableObject {
     
     @Published var healthData: HealthData?
-    private let db = Firestore.firestore()
+    
     private let healthStore = HKHealthStore()
-    private var authViewModel: AuthViewModel  // Link to AuthViewModel
+    private var authVM: AuthViewModel
+    private let userVM : UserViewModel
     
-    var userId: String? {
-        return authViewModel.userSession?.uid  // Get user ID from AuthViewModel
-    }
     
-    init(authViewModel: AuthViewModel) {
-        self.authViewModel = authViewModel
+    private var userId: String? {  authVM.userSession?.uid }
+    
+    init(authVM: AuthViewModel, userVM: UserViewModel) {
+        self.authVM = authVM
+        self.userVM = userVM
         requestHealthKitPermission()
     }
     
@@ -22,245 +25,102 @@ class HealthViewModel: ObservableObject {
         return HKHealthStore.isHealthDataAvailable()
     }
     
-    func requestHealthKitPermission() {
-        guard isHealthKitAvailable() else {
-            print("HealthKit is not available on this device")
-            return
-        }
+    private func requestHealthKitPermission() {
+        guard HKHealthStore.isHealthDataAvailable() else { return }
         
-        var typesToRead = Set<HKObjectType>()
+        let toRead: Set<HKObjectType> = [
+            .quantityType(forIdentifier: .stepCount)!,
+            .quantityType(forIdentifier: .distanceWalkingRunning)!,
+            .quantityType(forIdentifier: .flightsClimbed)!,
+            .quantityType(forIdentifier: .heartRateVariabilitySDNN)!,
+            .quantityType(forIdentifier: .bodyMass)!,
+            .quantityType(forIdentifier: .height)!,
+            .quantityType(forIdentifier: .environmentalAudioExposure)!,
+            .quantityType(forIdentifier: .headphoneAudioExposure)!,
+            .categoryType(forIdentifier: .sleepAnalysis)!,
+            .quantityType(forIdentifier: .walkingSpeed)!,
+            .quantityType(forIdentifier: .walkingAsymmetryPercentage)!,
+            .quantityType(forIdentifier: .walkingDoubleSupportPercentage)!
+        ]
         
-        if let stepType = HKQuantityType.quantityType(forIdentifier: .stepCount) {
-            typesToRead.insert(stepType)
-        }
-        if let distanceType = HKQuantityType.quantityType(forIdentifier: .distanceWalkingRunning) {
-            typesToRead.insert(distanceType)
-        }
-        if let flightsType = HKQuantityType.quantityType(forIdentifier: .flightsClimbed) {
-            typesToRead.insert(flightsType)
-        }
-        if let hrvType = HKQuantityType.quantityType(forIdentifier: .heartRateVariabilitySDNN) {
-            typesToRead.insert(hrvType)
-        }
-        if let massType = HKQuantityType.quantityType(forIdentifier: .bodyMass) {
-            typesToRead.insert(massType)
-        }
-        if let heightType = HKQuantityType.quantityType(forIdentifier: .height) {
-            typesToRead.insert(heightType)
-        }
-        if let envAudioType = HKQuantityType.quantityType(forIdentifier: .environmentalAudioExposure) {
-            typesToRead.insert(envAudioType)
-        }
-        if let headphoneAudioType = HKQuantityType.quantityType(forIdentifier: .headphoneAudioExposure) {
-            typesToRead.insert(headphoneAudioType)
-        }
-        if let sleepType = HKObjectType.categoryType(forIdentifier: .sleepAnalysis) {
-            typesToRead.insert(sleepType)
-        }
-        if let walkingSpeedType = HKQuantityType.quantityType(forIdentifier: .walkingSpeed) {
-            typesToRead.insert(walkingSpeedType)
-        }
-        if let walkingAsymmetryType = HKQuantityType.quantityType(forIdentifier: .walkingAsymmetryPercentage) {
-            typesToRead.insert(walkingAsymmetryType)
-        }
-        if let walkingDoubleSupportType = HKQuantityType.quantityType(forIdentifier: .walkingDoubleSupportPercentage) {
-            typesToRead.insert(walkingDoubleSupportType)
-        }
-        
-        guard !typesToRead.isEmpty else {
-            print("No HealthKit types available to request authorization for")
-            return
-        }
-        
-        healthStore.requestAuthorization(toShare: nil, read: typesToRead) { success, error in
-            if success {
-                print("HealthKit permission granted.")
-                self.fetchHealthData() // ✅ Fetch data after permission is granted
-            } else {
-                print("HealthKit permission denied: \(error?.localizedDescription ?? "Unknown error")")
-            }
+        healthStore.requestAuthorization(toShare: nil, read: toRead) { ok, err in
+            if ok { Task { await self.fetchHealthData() } }
         }
     }
     
     func fetchHealthData() {
-        guard let _ = userId else {
-            print("User is not logged in, cannot fetch health data.")
+        guard userId != nil else {
+            print("User not logged in; cannot fetch HealthKit data.")
             return
         }
         
-        let dispatchGroup = DispatchGroup()
+        let group = DispatchGroup()
         
-        // Initialize variables with default values
-        var stepCount = 0
-        var distanceWalkingRunning: Double = 0.0
-        var flightsClimbed = 0
-        var heartRateVariability: Double = 0.0
-        var bodyMass: Double = 0.0
-        var height: Double = 0.0
-        var environmentalAudioExposure: Double = 0.0
-        var headphoneAudioExposure: Double = 0.0
-        var sleepHours: Double = 0.0
-        var walkingSpeed: Double = 0.0
-        var walkingAsymmetryPercentage: Double = 0.0
-        var walkingDoubleSupportPercentage: Double = 0.0
+        var stepCount                  = 0
+        var distanceWalkingRunning     = 0.0
+        var flightsClimbed             = 0
+        var heartRateVariability       = 0.0
+        var bodyMass                   = 0.0
+        var height                     = 0.0
+        var environmentalAudioExposure = 0.0
+        var headphoneAudioExposure     = 0.0
+        var sleepHours                 = 0.0
+        var walkingSpeed               = 0.0
+        var walkingAsymmetryPercentage = 0.0
+        var walkingDoubleSupportPercentage = 0.0
         
-        // STEP COUNT
-        if let stepType = HKQuantityType.quantityType(forIdentifier: .stepCount) {
-            dispatchGroup.enter()
-            let query = HKSampleQuery(sampleType: stepType, predicate: nil, limit: 1, sortDescriptors: nil) { _, results, _ in
-                if let sample = results?.first as? HKQuantitySample {
-                    stepCount = Int(sample.quantity.doubleValue(for: HKUnit.count()))
-                }
-                dispatchGroup.leave()
-            }
-            healthStore.execute(query)
-        }
-        
-        // DISTANCE WALKING/RUNNING
-        if let distanceType = HKQuantityType.quantityType(forIdentifier: .distanceWalkingRunning) {
-            dispatchGroup.enter()
-            let query = HKSampleQuery(sampleType: distanceType, predicate: nil, limit: 1, sortDescriptors: nil) { _, results, _ in
-                if let sample = results?.first as? HKQuantitySample {
-                    distanceWalkingRunning = sample.quantity.doubleValue(for: HKUnit.meter())
-                }
-                dispatchGroup.leave()
-            }
-            healthStore.execute(query)
-        }
-        
-        // FLIGHTS CLIMBED
-        if let flightsType = HKQuantityType.quantityType(forIdentifier: .flightsClimbed) {
-            dispatchGroup.enter()
-            let query = HKSampleQuery(sampleType: flightsType, predicate: nil, limit: 1, sortDescriptors: nil) { _, results, _ in
-                if let sample = results?.first as? HKQuantitySample {
-                    flightsClimbed = Int(sample.quantity.doubleValue(for: HKUnit.count()))
-                }
-                dispatchGroup.leave()
-            }
-            healthStore.execute(query)
-        }
-        
-        
-        // HEART RATE VARIABILITY
-        if let hrvType = HKQuantityType.quantityType(forIdentifier: .heartRateVariabilitySDNN) {
-            dispatchGroup.enter()
-            let query = HKSampleQuery(sampleType: hrvType, predicate: nil, limit: 1, sortDescriptors: nil) { _, results, _ in
-                if let sample = results?.first as? HKQuantitySample {
-                    heartRateVariability = sample.quantity.doubleValue(for: HKUnit.secondUnit(with: .milli))
-                }
-                dispatchGroup.leave()
-            }
-            healthStore.execute(query)
-        }
-        
-        
-        // BODY MASS
-        if let massType = HKQuantityType.quantityType(forIdentifier: .bodyMass) {
-            dispatchGroup.enter()
-            let query = HKSampleQuery(sampleType: massType, predicate: nil, limit: 1, sortDescriptors: nil) { _, results, _ in
-                if let sample = results?.first as? HKQuantitySample {
-                    bodyMass = sample.quantity.doubleValue(for: HKUnit.gramUnit(with: .kilo))
-                }
-                dispatchGroup.leave()
-            }
-            healthStore.execute(query)
-        }
-        
-        // HEIGHT
-        if let heightType = HKQuantityType.quantityType(forIdentifier: .height) {
-            dispatchGroup.enter()
-            let query = HKSampleQuery(sampleType: heightType, predicate: nil, limit: 1, sortDescriptors: nil) { _, results, _ in
-                if let sample = results?.first as? HKQuantitySample {
-                    height = sample.quantity.doubleValue(for: HKUnit.meter())
-                }
-                dispatchGroup.leave()
-            }
-            healthStore.execute(query)
-        }
-        
-        
-        // ENVIRONMENTAL AUDIO EXPOSURE
-        if let envAudioType = HKQuantityType.quantityType(forIdentifier: .environmentalAudioExposure) {
-            dispatchGroup.enter()
-            let query = HKSampleQuery(sampleType: envAudioType, predicate: nil, limit: 1, sortDescriptors: nil) { _, results, _ in
-                if let sample = results?.first as? HKQuantitySample {
-                    environmentalAudioExposure = sample.quantity.doubleValue(for: HKUnit.decibelAWeightedSoundPressureLevel())
-                }
-                dispatchGroup.leave()
-            }
-            healthStore.execute(query)
-        }
-        
-        // HEADPHONE AUDIO EXPOSURE
-        if let headphoneAudioType = HKQuantityType.quantityType(forIdentifier: .headphoneAudioExposure) {
-            dispatchGroup.enter()
-            let query = HKSampleQuery(sampleType: headphoneAudioType, predicate: nil, limit: 1, sortDescriptors: nil) { _, results, _ in
-                if let sample = results?.first as? HKQuantitySample {
-                    headphoneAudioExposure = sample.quantity.doubleValue(for: HKUnit.decibelAWeightedSoundPressureLevel())
-                }
-                dispatchGroup.leave()
-            }
-            healthStore.execute(query)
-        }
-        
-        // SLEEP HOURS (using sleep analysis data)
-        if let sleepType = HKObjectType.categoryType(forIdentifier: .sleepAnalysis) {
-            let oneDayAgo = Calendar.current.date(byAdding: .day, value: -1, to: Date())
-            let predicate = HKQuery.predicateForSamples(withStart: oneDayAgo, end: Date(), options: .strictEndDate)
-            dispatchGroup.enter()
-            let query = HKSampleQuery(sampleType: sleepType, predicate: predicate, limit: HKObjectQueryNoLimit, sortDescriptors: nil) { _, results, _ in
-                var totalSleep: Double = 0.0
-                if let sleepResults = results as? [HKCategorySample] {
-                    for sample in sleepResults {
-                        totalSleep += sample.endDate.timeIntervalSince(sample.startDate)
+        // helper for one-off quantity samples
+        func sample(
+            _ id: HKQuantityTypeIdentifier,
+            unit: HKUnit,
+            assign: @escaping (Double) -> Void
+        ) {
+            if let type = HKQuantityType.quantityType(forIdentifier: id) {
+                group.enter()
+                let q = HKSampleQuery(sampleType: type,
+                                      predicate: nil,
+                                      limit: 1,
+                                      sortDescriptors: [.init(key: HKSampleSortIdentifierStartDate,
+                                                              ascending: false)]) { _, res, _ in
+                    if let s = res?.first as? HKQuantitySample {
+                        assign(s.quantity.doubleValue(for: unit))
                     }
+                    group.leave()
                 }
-                sleepHours = totalSleep / 3600.0
-                dispatchGroup.leave()
+                healthStore.execute(q)
             }
-            healthStore.execute(query)
         }
         
-        // WALKING SPEED
-        if let walkingSpeedType = HKQuantityType.quantityType(forIdentifier: .walkingSpeed) {
-            dispatchGroup.enter()
-            let query = HKSampleQuery(sampleType: walkingSpeedType, predicate: nil, limit: 1, sortDescriptors: nil) { _, results, _ in
-                if let sample = results?.first as? HKQuantitySample {
-                    walkingSpeed = sample.quantity.doubleValue(for: HKUnit.meter().unitDivided(by: HKUnit.second()))
-                }
-                dispatchGroup.leave()
+        sample(.stepCount,                       unit: .count()) { stepCount = Int($0) }
+        sample(.distanceWalkingRunning,          unit: .meter()) { distanceWalkingRunning = $0 }
+        sample(.flightsClimbed,                  unit: .count()) { flightsClimbed = Int($0) }
+        sample(.heartRateVariabilitySDNN,        unit: .secondUnit(with: .milli)) { heartRateVariability = $0 }
+        sample(.bodyMass,                        unit: .gramUnit(with: .kilo))   { bodyMass = $0 }
+        sample(.height,                          unit: .meter())                { height = $0 }
+        sample(.environmentalAudioExposure,      unit: .decibelAWeightedSoundPressureLevel()) { environmentalAudioExposure = $0 }
+        sample(.headphoneAudioExposure,          unit: .decibelAWeightedSoundPressureLevel()) { headphoneAudioExposure = $0 }
+        sample(.walkingSpeed,                    unit: .meter().unitDivided(by: .second()))  { walkingSpeed = $0 }
+        sample(.walkingAsymmetryPercentage,      unit: .percent())              { walkingAsymmetryPercentage = $0 }
+        sample(.walkingDoubleSupportPercentage,  unit: .percent())              { walkingDoubleSupportPercentage = $0 }
+        
+        // sleep last 24 h
+        if let sleepType = HKObjectType.categoryType(forIdentifier: .sleepAnalysis) {
+            let since = Calendar.current.date(byAdding: .day, value: -1, to: .now)!
+            let pred  = HKQuery.predicateForSamples(withStart: since, end: .now, options: .strictEndDate)
+            group.enter()
+            let q = HKSampleQuery(sampleType: sleepType, predicate: pred,
+                                  limit: HKObjectQueryNoLimit, sortDescriptors: nil) { _, res, _ in
+                let seconds = (res as? [HKCategorySample])?
+                    .reduce(0) { $0 + $1.endDate.timeIntervalSince($1.startDate) } ?? 0
+                sleepHours = seconds / 3600
+                group.leave()
             }
-            healthStore.execute(query)
+            healthStore.execute(q)
         }
         
-        // WALKING ASYMMETRY PERCENTAGE
-        if let walkingAsymmetryType = HKQuantityType.quantityType(forIdentifier: .walkingAsymmetryPercentage) {
-            dispatchGroup.enter()
-            let query = HKSampleQuery(sampleType: walkingAsymmetryType, predicate: nil, limit: 1, sortDescriptors: nil) { _, results, _ in
-                if let sample = results?.first as? HKQuantitySample {
-                    walkingAsymmetryPercentage = sample.quantity.doubleValue(for: HKUnit.percent())
-                }
-                dispatchGroup.leave()
-            }
-            healthStore.execute(query)
-        }
-        
-        // WALKING DOUBLE SUPPORT PERCENTAGE
-        if let walkingDoubleSupportType = HKQuantityType.quantityType(forIdentifier: .walkingDoubleSupportPercentage) {
-            dispatchGroup.enter()
-            let query = HKSampleQuery(sampleType: walkingDoubleSupportType, predicate: nil, limit: 1, sortDescriptors: nil) { _, results, _ in
-                if let sample = results?.first as? HKQuantitySample {
-                    walkingDoubleSupportPercentage = sample.quantity.doubleValue(for: HKUnit.percent())
-                }
-                dispatchGroup.leave()
-            }
-            healthStore.execute(query)
-        }
-        
-        
-        // When all queries have completed, compile the health data and save it
-        dispatchGroup.notify(queue: .main) {
-            let healthData = HealthData(
+        // finish
+        group.notify(queue: .main) {
+            let hd = HealthData(
                 stepCount: stepCount,
                 distanceWalkingRunning: distanceWalkingRunning,
                 flightsClimbed: flightsClimbed,
@@ -275,65 +135,25 @@ class HealthViewModel: ObservableObject {
                 walkingDoubleSupportPercentage: walkingDoubleSupportPercentage
             )
             
-            self.healthData = healthData
-            self.saveHealthDataToFirestore()
+            self.healthData = hd
+            self.userVM.appendHealthData(hd)   // persist via UserViewModel
         }
     }
     
     
     
-    func saveHealthDataToFirestore() {
-        guard let userId = userId, let healthData = healthData else {
-            print("User is not logged in, cannot save data.")
-            return
-        }
-        
-        db.collection("users").document(userId).collection("healthData").addDocument(data: healthData.toDictionary()) { error in
-            if let error = error {
-                print("Error saving health data: \(error.localizedDescription)")
-            } else {
-                print("Health data successfully saved!")
-            }
-        }
+    private func saveHealthDataToUser() {
+        guard let hd = healthData else { return }
+        userVM.appendHealthData(hd)   // single source of truth
     }
     
     
     
-    func fetchLatestHealthDataFromFirestore() {
-        guard let userId = userId else {
-            print("User is not logged in, cannot fetch data.")
+    func refreshLocalHealthData() {
+        guard let latest = userVM.user?.healthData.max(by: { $0.timeStamp < $1.timeStamp }) else {
+            print("No health data stored for this user.")
             return
         }
-        
-        db.collection("users").document(userId).collection("healthData")
-            .order(by: "timestamp", descending: true)
-            .limit(to: 1)
-            .getDocuments { (snapshot, error) in
-                guard let documents = snapshot?.documents, let document = documents.first else {
-                    print("No health data found: \(error?.localizedDescription ?? "Unknown error")")
-                    return
-                }
-                
-                let data = document.data()
-                let fetchedData = HealthData(
-                    stepCount: data["stepCount"] as? Int ?? 0,
-                    distanceWalkingRunning: data["distanceWalkingRunning"] as? Double ?? 0.0,
-                    flightsClimbed: data["flightsClimbed"] as? Int ?? 0,
-                    heartRateVariability: data["heartRateVariability"] as? Double ?? 0.0,
-                    bodyMass: data["bodyMass"] as? Double ?? 0.0,
-                    height: data["height"] as? Double ?? 0.0,
-                    environmentalAudioExposure: data["environmentalAudioExposure"] as? Double ?? 0.0,
-                    headphoneAudioExposure: data["headphoneAudioExposure"] as? Double ?? 0.0,
-                    sleepHours: data["sleepHours"] as? Double ?? 0.0,
-                    walkingSpeed: data["walkingSpeed"] as? Double ?? 0.0,
-                    walkingAsymmetryPercentage: data["walkingAsymmetryPercentage"] as? Double ?? 0.0,
-                    walkingDoubleSupportPercentage: data["walkingDoubleSupportPercentage"] as? Double ?? 0.0
-                    // no workoutSessions param if you're not using it!
-                )
-                
-                DispatchQueue.main.async {
-                    self.healthData = fetchedData
-                }
-            }
+        healthData = latest
     }
 }

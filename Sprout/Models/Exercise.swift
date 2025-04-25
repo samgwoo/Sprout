@@ -75,3 +75,8 @@ struct LiftSet: Identifiable, Codable {
         self.reps = reps
     }
 }
+extension LiftSet: Equatable {}
+
+extension Exercise: Equatable {
+    static func == (lhs: Exercise, rhs: Exercise) -> Bool { lhs.id == rhs.id }
+}

@@ -76,7 +76,6 @@
 		7CCA22CD2DB6DA3C009C14E0 /* Cabin_SemiCondensed-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7CCA229D2DB6DA3C009C14E0 /* Cabin_SemiCondensed-BoldItalic.ttf */; };
 		7CCA22CE2DB6DA3C009C14E0 /* Cabin-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7CCA22A62DB6DA3C009C14E0 /* Cabin-Italic.ttf */; };
 		7CCA22CF2DB6DA3C009C14E0 /* Cabin_Condensed-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7CCA229A2DB6DA3C009C14E0 /* Cabin_Condensed-SemiBold.ttf */; };
-		7CCA22D02DB6DA3C009C14E0 /* LICENSE.txt in Resources */ = {isa = PBXBuildFile; fileRef = 7CCA22AF2DB6DA3C009C14E0 /* LICENSE.txt */; };
 		7CCA22D12DB6DA3C009C14E0 /* Cabin-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7CCA22A92DB6DA3C009C14E0 /* Cabin-SemiBold.ttf */; };
 		7CCA22D22DB6DA3C009C14E0 /* Cabin_Condensed-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7CCA22942DB6DA3C009C14E0 /* Cabin_Condensed-Bold.ttf */; };
 		7CCA22D52DBA9DD1009C14E0 /* AddSplitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7CCA22D42DBA9DD1009C14E0 /* AddSplitView.swift */; };
@@ -151,7 +150,6 @@
 		7CCA22AA2DB6DA3C009C14E0 /* Cabin-SemiBoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Cabin-SemiBoldItalic.ttf"; sourceTree = "<group>"; };
 		7CCA22AC2DB6DA3C009C14E0 /* Cabin-Italic-VariableFont_wdth,wght.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Cabin-Italic-VariableFont_wdth,wght.ttf"; sourceTree = "<group>"; };
 		7CCA22AD2DB6DA3C009C14E0 /* Cabin-VariableFont_wdth,wght.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Cabin-VariableFont_wdth,wght.ttf"; sourceTree = "<group>"; };
-		7CCA22AF2DB6DA3C009C14E0 /* LICENSE.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE.txt; sourceTree = "<group>"; };
 		7CCA22B22DB6DA3C009C14E0 /* Cabin-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Cabin-Regular.ttf"; sourceTree = "<group>"; };
 		7CCA22B32DB6DA3C009C14E0 /* Chewy-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Chewy-Regular.ttf"; sourceTree = "<group>"; };
 		7CCA22B42DB6DA3C009C14E0 /* Dekko-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Dekko-Regular.ttf"; sourceTree = "<group>"; };
@@ -339,19 +337,10 @@
 			path = Cabin;
 			sourceTree = "<group>";
 		};
-		7CCA22B02DB6DA3C009C14E0 /* Chewy */ = {
-			isa = PBXGroup;
-			children = (
-				7CCA22AF2DB6DA3C009C14E0 /* LICENSE.txt */,
-			);
-			path = Chewy;
-			sourceTree = "<group>";
-		};
 		7CCA22B12DB6DA3C009C14E0 /* Cabin,Chewy,Dekko */ = {
 			isa = PBXGroup;
 			children = (
 				7CCA22AE2DB6DA3C009C14E0 /* Cabin */,
-				7CCA22B02DB6DA3C009C14E0 /* Chewy */,
 			);
 			path = "Cabin,Chewy,Dekko";
 			sourceTree = "<group>";
@@ -550,7 +539,6 @@
 				7CCA22CD2DB6DA3C009C14E0 /* Cabin_SemiCondensed-BoldItalic.ttf in Resources */,
 				7CCA22CE2DB6DA3C009C14E0 /* Cabin-Italic.ttf in Resources */,
 				7CCA22CF2DB6DA3C009C14E0 /* Cabin_Condensed-SemiBold.ttf in Resources */,
-				7CCA22D02DB6DA3C009C14E0 /* LICENSE.txt in Resources */,
 				7CCA22D12DB6DA3C009C14E0 /* Cabin-SemiBold.ttf in Resources */,
 				7CCA22D22DB6DA3C009C14E0 /* Cabin_Condensed-Bold.ttf in Resources */,
 				7C5FA98F2D5E46C200DF8F8B /* Assets.xcassets in Resources */,

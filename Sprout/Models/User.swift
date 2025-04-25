@@ -13,7 +13,7 @@ class User: Codable, ObservableObject {
     let uid: String  // Unique identifier from Firebase Auth
     var email: String
     @Published var appearance: Appearance
-    @Published var healthData: HealthData
+    @Published var healthData: [HealthData]
     @Published var workoutHistory: [WorkoutHistoryEntry]
     @Published var coins: Int
 
@@ -26,12 +26,12 @@ class User: Codable, ObservableObject {
             uid               = try container.decode(String.self, forKey: .uid)
             email             = try container.decode(String.self, forKey: .email)
             appearance        = try container.decode(Appearance.self, forKey: .appearance)
-            healthData        = try container.decode(HealthData.self, forKey: .healthData)
+            healthData        = try container.decode([HealthData].self, forKey: .healthData)
             workoutHistory    = try container.decode([WorkoutHistoryEntry].self, forKey: .workoutHistory)
             coins             = try container.decode(Int.self, forKey: .coins)
         }
     
-    init(uid: String, email: String, appearance: Appearance = Appearance(), healthData: HealthData = HealthData(), workoutHistory: [WorkoutHistoryEntry] = [], coins: Int = 0) {
+    init(uid: String, email: String, appearance: Appearance = Appearance(), healthData: [HealthData] = [HealthData()], workoutHistory: [WorkoutHistoryEntry] = [], coins: Int = 0) {
         self.uid = uid
         self.email = email
         self.appearance = appearance
@@ -55,7 +55,7 @@ class User: Codable, ObservableObject {
             "uid": uid,
             "email": email,
             "appearance": appearance.toDictionary(),
-            "healthData": healthData.toDictionary(),
+            "healthData": healthData.map {$0.toDictionary() },
             "workoutHistory": workoutHistory.map { $0.toDictionary() },
             "coins": coins
         ]

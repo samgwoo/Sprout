@@ -8,6 +8,7 @@ import SwiftUI
 
 struct LoginView: View {
     @EnvironmentObject var authViewModel: AuthViewModel
+    @EnvironmentObject var userViewModel: UserViewModel
     @EnvironmentObject var healthViewModel: HealthViewModel
 
     @State private var email = ""
@@ -16,27 +17,21 @@ struct LoginView: View {
 
     @State private var showLogo = false
     @State private var showForm = false
-    @State private var progress: CGFloat = 0.0 // Progress for the progress bar
-
-    enum Route: Hashable {
-        case home
-    }
+    @State private var progress: CGFloat = 0.0
 
     var body: some View {
         NavigationStack(path: $path) {
             ZStack {
-                // Static background
                 Image("background1")
                     .resizable()
                     .aspectRatio(contentMode: .fill)
                     .ignoresSafeArea()
-                    .opacity(0.3) // Static and opacity set
+                    .opacity(0.3)
 
                 VStack {
-                    Spacer() // Push the logo and progress bar to the middle of the screen
+                    Spacer()
 
                     if showLogo {
-                        // Logo Display - Centered in the middle of the screen
                         Image("logo")
                             .resizable()
                             .scaledToFit()
@@ -46,7 +41,6 @@ struct LoginView: View {
                     }
 
                     if !showForm {
-                        // Progress bar - Centered below the logo
                         ProgressView(value: progress, total: 1.0)
                             .progressViewStyle(LinearProgressViewStyle(tint: .green))
                             .frame(width: 200)
@@ -58,13 +52,12 @@ struct LoginView: View {
                             }
                     }
 
-                    Spacer() // Push the form down below the center
+                    Spacer()
 
                     if showForm {
-                        // Login Form (email/password fields) - Will appear after progress bar finishes
                         VStack(spacing: 16) {
                             Text("Login")
-                                .font(.largeTitle)
+                                .font(Constants.headerFont)
                                 .fontWeight(.bold)
                                 .transition(.move(edge: .bottom).combined(with: .opacity))
 
@@ -73,10 +66,12 @@ struct LoginView: View {
                                 .keyboardType(.emailAddress)
                                 .autocapitalization(.none)
                                 .padding(.horizontal)
+                                .font(Constants.addressFont)
 
                             SecureField("Password", text: $password)
                                 .textFieldStyle(.roundedBorder)
                                 .padding(.horizontal)
+                                .font(Constants.addressFont)
 
                             if let error = authViewModel.errorMessage {
                                 Text(error)
@@ -85,11 +80,11 @@ struct LoginView: View {
                                     .padding(.horizontal)
                             }
 
-                            Button(action: {
+                            Button {
                                 authViewModel.login(email: email, password: password)
-                            }) {
+                            } label: {
                                 Text("Login")
-                                    .font(.headline)
+                                    .font(Constants.searchFont)
                                     .foregroundColor(.white)
                                     .frame(maxWidth: .infinity)
                                     .padding()
@@ -101,40 +96,30 @@ struct LoginView: View {
                             Button("Sign Up") {
                                 authViewModel.signUp(email: email, password: password)
                             }
-                            .font(.headline)
+                            .font(Constants.searchFont)
                             .foregroundColor(.blue)
                             .padding(.top, 8)
                         }
                         .transition(.opacity.combined(with: .move(edge: .bottom)))
                     }
 
-                    Spacer() // Ensure the content is centered vertically
+                    Spacer()
                 }
                 .padding()
             }
             .onAppear {
-                // Initially animate the logo in
-                withAnimation(.easeOut(duration: 0.6)) {
-                    showLogo = true
-                }
-
-                // After the logo animates, start the progress bar loading
+                withAnimation(.easeOut(duration: 0.6)) { showLogo = true }
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.6) {
-                    withAnimation(.easeInOut(duration: 2.5)) {
-                        progress = 1.0
-                    }
+                    withAnimation(.easeInOut(duration: 2.5)) { progress = 1.0 }
                 }
-
-                // After the progress bar finishes, show the form
                 DispatchQueue.main.asyncAfter(deadline: .now() + 3.2) {
-                    withAnimation(.easeOut(duration: 0.6)) {
-                        showForm = true
-                    }
+                    withAnimation(.easeOut(duration: 0.6)) { showForm = true }
                 }
             }
             .navigationDestination(isPresented: .constant(authViewModel.userSession != nil)) {
                 HomeView()
                     .environmentObject(authViewModel)
+                    .environmentObject(userViewModel)
                     .environmentObject(healthViewModel)
             }
         }
@@ -144,9 +129,12 @@ struct LoginView: View {
 struct LoginView_Previews: PreviewProvider {
     static var previews: some View {
         let authVM = AuthViewModel()
-        let healthVM = HealthViewModel(authViewModel: authVM)
+        let userVM = UserViewModel(authVM: authVM)
+        let healthVM = HealthViewModel(authVM: authVM, userVM: userVM)
+
         LoginView()
             .environmentObject(authVM)
+            .environmentObject(userVM)
             .environmentObject(healthVM)
     }
 }

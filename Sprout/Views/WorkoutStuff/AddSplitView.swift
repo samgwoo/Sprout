@@ -9,7 +9,7 @@ struct AddSplitView: View {
     }
 
     @State private var selectedSplit: Split = .push
-    var onSave: (Exercise) -> Void
+    var onSave: (WorkoutHistoryEntry) -> Void
 
     @Environment(\.dismiss) private var dismiss
 
@@ -25,10 +25,14 @@ struct AddSplitView: View {
             }
             .pickerStyle(.segmented)
 
-            Button(action: save) {
-                Text("Save")
-                    .font(.body).bold()
-                    .frame(maxWidth: .infinity)
+            Button("Save") {
+                let entry = WorkoutHistoryEntry(
+                    date: Date(),
+                    split: selectedSplit.rawValue,
+                    workout: []
+                )
+                onSave(entry)
+                dismiss()
             }
             .buttonStyle(.borderedProminent)
         }
@@ -36,16 +40,6 @@ struct AddSplitView: View {
         .frame(width: 300)
         .background(Color(.systemBackground))
         .cornerRadius(12)
-        .shadow(color: .black.opacity(0.15), radius: 8, x: 0, y: 4)
-    }
-
-    private func save() {
-        let newExercise = Exercise(
-            name: selectedSplit.rawValue,
-            cat: selectedSplit.rawValue,
-            sets: [LiftSet(weight: 0, reps: 0)]
-        )
-        onSave(newExercise)
-        dismiss()
+        .shadow(radius: 8)
     }
 }

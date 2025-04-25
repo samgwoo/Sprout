@@ -93,6 +93,7 @@ struct WorkoutView_Previews: PreviewProvider {
     @State static var sampleHistory: [WorkoutHistoryEntry] = [
         WorkoutHistoryEntry(
             date: Date(),
+            split: "Push",
             workout: [
                 Exercise(
                     name: "Bench Press",

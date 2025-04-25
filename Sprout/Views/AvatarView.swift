@@ -1,28 +1,36 @@
 import SwiftUI
 
 struct AvatarView: View {
-    @EnvironmentObject var user: User
+    @EnvironmentObject var userVM: UserViewModel
     
-    // MARK: static tables
-    private let skins   = ["green", "purple", "yellow"]
-    private let accKeys = ["greenbowtie", "greenhair", "pigtail", "longhair", "yellowbowtie"]
+
+    private let skins   = ["purple", "green", "yellow"]
+    private let accKeys = ["flowers","greenbowtie",
+                           "greenhair","longhair1","pigtail",
+                           "yellowbowtie"]
     
-    // MARK:- runtime helpers
-    private var prefix: String                     { skins[user.appearance.skinColor] }
-    private var latest: WorkoutHistoryEntry?       { user.workoutHistory.max { $0.date < $1.date } }
-    private var hd: HealthData                     { user.healthData }
+    private var user: User?          { userVM.user }
+    
+    private var prefix: String       { skins[user?.appearance.skinColor ?? 0] }
+    
+    private var latestWorkout: WorkoutHistoryEntry? {
+            user?.workoutHistory.max { $0.date < $1.date }
+        }
+    private var hd: HealthData {
+        user?.healthData.max { $0.timeStamp < $1.timeStamp } ?? HealthData()
+    }
+    
     
     private var upper: Int {
-        guard let w = latest else { return 0 }
+        guard let w = latestWorkout else { return 0 }
         return max(w.pushStrength, w.pullStrength)
     }
-    private var lower: Int { latest?.legStrength ?? 0 }
+    private var lower: Int { latestWorkout?.legStrength ?? 0 }
     
     // missing-sleep ⇒ no eyes
     private var showEyes: Bool {
-        hd.sleepHours >= 6          // slept enough?  yes ⇒ draw eyes
+        hd.sleepHours >= 6
     }
-    // high gait asymmetry (>10 %) ⇒ drop right foot
     private var showRightFoot: Bool {
         hd.walkingAsymmetryPercentage < 10
     }
@@ -43,15 +51,21 @@ struct AvatarView: View {
     }
     
     private var accessories: [String] {
-        [user.appearance.accessory1,
-         user.appearance.accessory2,
-         user.appearance.accessory3]
-        .compactMap { idxOpt in
-            guard let i = idxOpt, i < accKeys.count else { return nil }
-            let key = accKeys[i]
-            if key == "longhair", prefix != "purple" { return nil }          // longhair only on purple skin
-            return key == "longhair" ? "longhair\(upper + 1)" : key
-        }
+        guard let ap = user?.appearance else { return [] }
+
+        return [ap.accessory1, ap.accessory2, ap.accessory3]
+            .compactMap { idxOpt in
+                guard let i = idxOpt, i < accKeys.count else { return nil }
+                let key = accKeys[i]
+
+                if key.starts(with: "longhair") {
+                    guard prefix == "purple" else { return nil }
+
+                    return "longhair\(upper + 1)"
+                }
+
+                return key
+            }
     }
     
     // MARK:- view
@@ -79,44 +93,48 @@ struct AvatarView: View {
             // accessories
             ForEach(accessories, id: \.self) { Image($0).resizable().scaledToFit() }
         }
-        .frame(width: 400, height: 400)          // bigger character
+        .frame(width: 600, height: 600)          // bigger character
     }
 }
 
 
 
 #Preview {
-    let squat = Exercise(
-        name: "Squat",
-        cat: "legs",
-        sets: [LiftSet(weight: 260, reps: 5)]
-    )
-    
-    let bench = Exercise(
-        name: "Bench Press",
-        cat: "push",
-        sets: [LiftSet(weight: 170, reps: 5)]
-    )
-    
-    let entry = WorkoutHistoryEntry(date: .now, workout: [squat, bench])
-    
+    let auth = AuthViewModel()
     let previewUser = User(
         uid: "demo",
         email: "demo@sprout.app",
-        appearance: Appearance(
-            skinColor: 0,
-            accessory1: 0,
-            accessory2: 3
-        ),
-        healthData: {
-            var h = HealthData()
-            h.heartRateVariability = 82
-            return h
-        }(),
-        workoutHistory: [entry]
+        appearance: Appearance(skinColor: 0, accessory1: 0, accessory2: 3),
+        healthData: [
+            HealthData(
+                stepCount: 0,
+                distanceWalkingRunning: 0,
+                flightsClimbed: 0,
+                heartRateVariability: 82,
+                bodyMass: 0,
+                height: 0,
+                environmentalAudioExposure: 0,
+                headphoneAudioExposure: 0,
+                sleepHours: 5,
+                walkingSpeed: 0,
+                walkingAsymmetryPercentage: 15,
+                walkingDoubleSupportPercentage: 0
+            )
+        ],
+        workoutHistory: [
+            WorkoutHistoryEntry(date: .now, split: "legs", workout: [
+                Exercise(name: "Squat", cat: "legs", sets: [LiftSet(weight: 150, reps: 5)]),
+                Exercise(name: "Bench Press", cat: "push", sets: [LiftSet(weight: 170, reps: 5)])
+            ])
+        ],
+        coins: 0
     )
-    
+    let vm: UserViewModel = {
+        let v = UserViewModel(authVM: auth)
+        v.user = previewUser
+        return v
+    }()
     AvatarView()
-        .environmentObject(previewUser)
+        .environmentObject(vm)
         .padding()
 }

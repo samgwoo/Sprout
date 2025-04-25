@@ -78,3 +78,8 @@ class HealthData: Codable {
         }
 }
 
+extension HealthData: Equatable {
+    static func == (lhs: HealthData, rhs: HealthData) -> Bool {
+        lhs.timeStamp == rhs.timeStamp     // two samples taken at the same instant
+    }
+}
