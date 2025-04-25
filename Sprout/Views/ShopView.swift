@@ -26,96 +26,115 @@ struct ShopView: View {
     )
 
     var body: some View {
-        Group {
-            if let user = userVM.user {
-                VStack(spacing: 12) {
-                    // Coin balance
-                    HStack {
-                        Image(systemName: "bitcoinsign.circle.fill")
-                            .foregroundColor(.yellow)
-                        Text("\(user.coins)")
-                            .font(.headline)
-                        Spacer()
-                    }
-                    .padding(.horizontal)
-
-                    // Skins vs Accessories
-                    Picker("", selection: $selectedTab) {
-                        ForEach(Tab.allCases, id:\.self) {
-                            Text($0.rawValue).tag($0)
+    
+        ZStack {
+            Image("background1")
+                .resizable()
+                .aspectRatio(contentMode: .fill)
+                .ignoresSafeArea()
+                .opacity(0.3) // Static and opacity set
+            Group {
+                if let user = userVM.user {
+                    VStack(spacing: 12) {
+                        // Coin balance
+                        HStack {
+                            Image(systemName: "bitcoinsign.circle.fill")
+                                .foregroundColor(.yellow)
+                            Text("\(user.coins)")
+                                .font(.headline)
+                            Spacer()
                         }
-                    }
-                    .pickerStyle(SegmentedPickerStyle())
-                    .padding(.horizontal)
+                        .padding(.horizontal)
+                        .padding(.top, 30) // Add space below navigation title
 
-                    // Grid
-                    ScrollView {
-                        LazyVGrid(columns: columns, spacing: 16) {
-                            ForEach(currentOptions.indices, id:\.self) { idx in
-                                let price = currentPrice(at: idx)
-                                let owned = isOwned(idx, user:user)
-                                let equipped = isEquipped(idx, user:user)
-                                let size: CGFloat = (selectedTab == .accessories) ? 100 : 80
-
-                                VStack(spacing: 8) {
-                                    if let ui = UIImage(named: currentOptions[idx]) {
-                                        let trimmed = ui.trimmingTransparentPixels()
-                                        Image(uiImage: trimmed)
-                                            .resizable()
-                                            .scaledToFit()
-                                            .frame(width: size, height: size)
-                                    } else {
-                                        Color.clear.frame(width: size, height: size)
-                                    }
-                                    
-                                    if owned {
-                                        Text(equipped ? "Equipped" : (selectedTab == .accessories && idx==0 ? "Clear All" : "Owned"))
-                                            .font(Constants.searchFont)
-                                            .foregroundColor(equipped ? .accentGreen : .secondary)
-                                    } else {
-                                        Text("\(price) coins")
-                                            .font(Constants.searchFont)
-                                            .foregroundColor(user.coins >= price ? .accentGreen : .pink)
-                                    }
-                                    
-                                    // Button: Buy / Equip / None
-                                    Button {
-                                        handleTap(idx, owned: owned, equipped: equipped, price: price)
-                                    } label: {
-                                        Text(buttonTitle(idx, owned: owned, equipped: equipped))
-                                            .font(.subheadline.bold())
-                                            .foregroundColor(.white)
-                                            .padding(.vertical,6)
-                                            .padding(.horizontal,12)
-                                            .background(buttonColor(idx, owned: owned, equipped: equipped, coins:user.coins, price:price))
-                                            .cornerRadius(6)
-                                    }
-                                    .disabled(buttonDisabled(idx, owned: owned, equipped: equipped, coins:user.coins, price:price))
-                                }
-                                .frame(maxWidth: .infinity)
-                                        .overlay(
-                                          RoundedRectangle(cornerRadius: 8)
-                                            .strokeBorder(
-                                              equipped
-                                                 ? Color.accentGreen
-                                                 : (owned
-                                                    ? Color.secondary
-                                                : Color.accentGreen),
-                                               lineWidth: 2
-                                            )
-                                        )
+                        
+                        // Skins vs Accessories
+                        Picker("", selection: $selectedTab) {
+                            ForEach(Tab.allCases, id:\.self) {
+                                Text($0.rawValue).tag($0)
                             }
                         }
+                        .pickerStyle(SegmentedPickerStyle())
+                        .padding(.horizontal)
+                        
+                        // Grid
+                        ScrollView {
+                            LazyVGrid(columns: columns, spacing: 16) {
+                                ForEach(currentOptions.indices, id:\.self) { idx in
+                                    let price = currentPrice(at: idx)
+                                    let owned = isOwned(idx, user:user)
+                                    let equipped = isEquipped(idx, user:user)
+                                    let size: CGFloat = (selectedTab == .accessories) ? 100 : 80
+                                    
+                                    VStack(spacing: 8) {
+                                        ZStack {
+                                            // Background to make transparent areas less awkward
+                                            
+                                            RoundedRectangle(cornerRadius: 10)
+                                                .fill(Color.white)
+                                                .frame(width: size, height: size)
+                                                .shadow(radius: 2)
+                                                .padding(.top)
+                                            
+                                            if let ui = UIImage(named: currentOptions[idx]) {
+                                                let trimmed = ui.trimmingTransparentPixels()
+                                                Image(uiImage: trimmed)
+                                                    .resizable()
+                                                    .scaledToFit()
+                                                    .frame(width: size * 0.8, height: size * 0.8)
+                                                    .clipped()
+                                            }
+                                        }
+                                        .frame(width: size, height: size)
+                                        
+                                        if owned {
+                                            Text(equipped ? "Equipped" : (selectedTab == .accessories && idx==0 ? "Clear All" : "Owned"))
+                                                .font(Constants.searchFont)
+                                                .foregroundColor(equipped ? .accentGreen : .secondary)
+                                        } else {
+                                            Text("\(price) coins")
+                                                .font(Constants.searchFont)
+                                                .foregroundColor(user.coins >= price ? .accentGreen : .pink)
+                                        }
+                                        
+                                        // Button: Buy / Equip / None
+                                        Button {
+                                            handleTap(idx, owned: owned, equipped: equipped, price: price)
+                                        } label: {
+                                            Text(buttonTitle(idx, owned: owned, equipped: equipped))
+                                                .font(.subheadline.bold())
+                                                .foregroundColor(.white)
+                                                .padding(.vertical,6)
+                                                .padding(.horizontal,12)
+                                                .background(buttonColor(idx, owned: owned, equipped: equipped, coins:user.coins, price:price))
+                                                .cornerRadius(6)
+                                        }
+                                        .disabled(buttonDisabled(idx, owned: owned, equipped: equipped, coins:user.coins, price:price))
+                                    }
+                                    .frame(maxWidth: .infinity)
+                                    .overlay(
+                                        RoundedRectangle(cornerRadius: 8)
+                                            .strokeBorder(
+                                                equipped
+                                                ? Color.accentGreen
+                                                : (owned
+                                                   ? Color.secondary
+                                                   : Color.accentGreen),
+                                                lineWidth: 2
+                                            )
+                                    )
+                                }
+                            }
+                        }
+                        .padding(.horizontal, 16)
+                        
                     }
-                    .padding(.horizontal, 16)
-
+                    .navigationTitle("Shop")
+                    .font(Constants.headerFont)
+                    
+                } else {
+                    ProgressView("Loading…")
                 }
-                
-                .navigationTitle("Shop")
-                .font(Constants.headerFont)
-
-            } else {
-                ProgressView("Loading…")
             }
         }
     }
@@ -255,5 +274,6 @@ struct ShopView: View {
     return NavigationView {
         ShopView()
             .environmentObject(vm)
+
     }
 }
