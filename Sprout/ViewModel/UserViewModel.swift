@@ -63,7 +63,7 @@ final class UserViewModel: ObservableObject {
                 appearance: Appearance(skinColor: 0),
                 healthData: [],
                 workoutHistory: [],
-                coins: 0
+                coins: 700
             )
             updateUserProfile(newUser: defaultUser)
         }

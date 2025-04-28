@@ -76,12 +76,6 @@ struct ExerciseListView: View {
         } message: {
             Text("Enter a name for your new exercise")
         }
-        .onChange(of: historyEntries) { newValue in
-            if var u = userVM.user {
-                u.workoutHistory = newValue
-                userVM.updateUserProfile(newUser: u)
-            }
-        }
     }
 }
 

@@ -19,13 +19,20 @@ struct AvatarView: View {
     private var hd: HealthData {
         user?.healthData.max { $0.timeStamp < $1.timeStamp } ?? HealthData()
     }
-    
+    private var recentWorkouts: [WorkoutHistoryEntry] {
+        guard let history = user?.workoutHistory else { return [] }
+        return history.sorted { $0.date > $1.date }.prefix(3).map { $0 }
+    }
     
     private var upper: Int {
-        guard let w = latestWorkout else { return 0 }
-        return max(w.pushStrength, w.pullStrength)
+        let push = recentWorkouts.map(\.pushStrength).max() ?? 0
+        let pull = recentWorkouts.map(\.pullStrength).max() ?? 0
+        return max(push, pull)
     }
-    private var lower: Int { latestWorkout?.legStrength ?? 0 }
+    
+    private var lower: Int {
+        recentWorkouts.map(\.legStrength).max() ?? 0
+    }
     
     // missing-sleep ⇒ no eyes
     private var showEyes: Bool {
@@ -105,7 +112,7 @@ struct AvatarView: View {
                             
                             ForEach(accessories, id: \.self) { Image($0).resizable().scaledToFit() }
                         }
-                        .frame(width: 300, height: 300)
+                        .frame(width: 500, height: 500)
                     }
                 }
                 .frame(width: geo.size.width, height: geo.size.height) // force VStack to fill screen

@@ -31,7 +31,7 @@ class User: Codable, ObservableObject {
             coins             = try container.decode(Int.self, forKey: .coins)
         }
     
-    init(uid: String, email: String, appearance: Appearance = Appearance(), healthData: [HealthData] = [HealthData()], workoutHistory: [WorkoutHistoryEntry] = [], coins: Int = 0) {
+    init(uid: String, email: String, appearance: Appearance = Appearance(), healthData: [HealthData] = [HealthData()], workoutHistory: [WorkoutHistoryEntry] = [], coins: Int = 700) {
         self.uid = uid
         self.email = email
         self.appearance = appearance
