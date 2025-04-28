@@ -3,7 +3,7 @@ import SwiftUI
 struct AvatarView: View {
     @EnvironmentObject var userVM: UserViewModel
     
-
+    
     private let skins   = ["purple", "green", "yellow"]
     private let accKeys = ["flowers","greenbowtie",
                            "greenhair","longhair1","pigtail",
@@ -14,8 +14,8 @@ struct AvatarView: View {
     private var prefix: String       { skins[user?.appearance.skinColor ?? 0] }
     
     private var latestWorkout: WorkoutHistoryEntry? {
-            user?.workoutHistory.max { $0.date < $1.date }
-        }
+        user?.workoutHistory.max { $0.date < $1.date }
+    }
     private var hd: HealthData {
         user?.healthData.max { $0.timeStamp < $1.timeStamp } ?? HealthData()
     }
@@ -52,18 +52,18 @@ struct AvatarView: View {
     
     private var accessories: [String] {
         guard let ap = user?.appearance else { return [] }
-
+        
         return [ap.accessory1, ap.accessory2, ap.accessory3]
             .compactMap { idxOpt in
                 guard let i = idxOpt, i < accKeys.count else { return nil }
                 let key = accKeys[i]
-
+                
                 if key.starts(with: "longhair") {
                     guard prefix == "purple" else { return nil }
-
+                    
                     return "longhair\(upper + 1)"
                 }
-
+                
                 return key
             }
     }
@@ -71,31 +71,50 @@ struct AvatarView: View {
     // MARK:- view
     var body: some View {
         ZStack {
-            // base + heart
-            Image("\(prefix)base").resizable().scaledToFit()
-            Image("\(prefix)heart").resizable().scaledToFit()
+            // Background
+            Image("background1")
+                .resizable()
+                .aspectRatio(contentMode: .fill)
+                .opacity(0.3)
+                .ignoresSafeArea()
             
-            // conditional eye
-            if showEyes {
-                Image("\(prefix)eye").resizable().scaledToFit()
+            GeometryReader { geo in
+                VStack {
+                    ZStack {
+                        RoundedRectangle(cornerRadius: 30)
+                            .fill(Color.white)
+                            .frame(width: 320, height: 520)
+                            .shadow(color: .gray.opacity(0.4), radius: 10, x: 0, y: 5)
+                        
+                        ZStack {
+                            // base + heart
+                            Image("\(prefix)base").resizable().scaledToFit()
+                            Image("\(prefix)heart").resizable().scaledToFit()
+                            
+                            if showEyes {
+                                Image("\(prefix)eye").resizable().scaledToFit()
+                            }
+                            
+                            Image("\(prefix)leftfoot").resizable().scaledToFit()
+                            if showRightFoot {
+                                Image("\(prefix)rightfoot").resizable().scaledToFit()
+                            }
+                            
+                            if let t = torso { Image(t).resizable().scaledToFit() }
+                            if let l = legs  { Image(l).resizable().scaledToFit() }
+                            
+                            ForEach(accessories, id: \.self) { Image($0).resizable().scaledToFit() }
+                        }
+                        .frame(width: 300, height: 300)
+                    }
+                }
+                .frame(width: geo.size.width, height: geo.size.height) // force VStack to fill screen
+                .contentShape(Rectangle())
             }
-            
-            // feet (always left, right only if gait OK)
-            Image("\(prefix)leftfoot").resizable().scaledToFit()
-            if showRightFoot {
-                Image("\(prefix)rightfoot").resizable().scaledToFit()
-            }
-            
-            // strength overlays
-            if let t = torso { Image(t).resizable().scaledToFit() }
-            if let l = legs  { Image(l).resizable().scaledToFit() }
-            
-            // accessories
-            ForEach(accessories, id: \.self) { Image($0).resizable().scaledToFit() }
         }
-        .frame(width: 600, height: 600)          // bigger character
     }
 }
+
 
 
 

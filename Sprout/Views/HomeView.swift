@@ -44,7 +44,7 @@ struct HomeView: View {
                     .environmentObject(userVM)
                     .tabItem { Label("Shop", systemImage: "cart") }
             }
-            .navigationTitle("Sprout")
+            .navigationTitle("")
             .onAppear {
                 workouts = userVM.user?.workoutHistory ?? []
                 healthVM.fetchHealthData()
